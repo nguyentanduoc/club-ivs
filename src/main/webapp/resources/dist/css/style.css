@@ -1,0 +1,17 @@
+.delete{
+	color:#c0392b;
+	cursor:pointer;	
+}
+.delete:hover{
+	color:#e74c3c
+}
+.edit{
+	color:#2980b9;
+	cursor:pointer;	
+}
+.edit:hover{
+	color:#3498db;
+}
+table tr td span{
+	margin-left:1rem;
+}
