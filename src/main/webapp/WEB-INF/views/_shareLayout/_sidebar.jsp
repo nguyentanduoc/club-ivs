@@ -33,6 +33,9 @@ pageEncoding="UTF-8" session="false"%>
               </p>
             </a>            
           </li>
+          
+          
+          
           <!--  menu role -->
            <li class="nav-item has-treeview ${action1 eq  'role' ? 'menu-open' : ''}">
             <a href="#" class="nav-link ${action1 eq  'role' ? 'active' : ''}">
@@ -43,54 +46,54 @@ pageEncoding="UTF-8" session="false"%>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href='<c:url value="/role/"/>' class="nav-link ${action2 eq  'index' ? 'active' : ''}">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Index</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/forms/advanced.html" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Advanced Elements</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/forms/editors.html" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Editors</p>
-                </a>
-              </li>
-            </ul>            
+	              <li class="nav-item">
+	                <a href='<c:url value="/role/"/>' class="nav-link ${action2 eq  'index' ? 'active' : ''}">
+	                  <i class="fa fa-circle-o nav-icon"></i>
+	                  <p>Index</p>
+	                </a>
+            	</li>
+            </ul>
           </li>
-          <!-- .//menu role -->
-          <li class="nav-item has-treeview">
+              
+              
+              <!--  menu role -->
+              <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <!-- <i class="nav-icon fa fa-edit"></i> -->
               <p>
-                Thành Viên
+                Date Of Week
                 <i class="fa fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href='<c:url value="/role/"/>' class="nav-link">
-               <!--    <i class="fa fa-circle-o nav-icon"></i> -->
-                  <p>Chức Vụ</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/forms/advanced.html" class="nav-link">
+                <a href='<c:url value="/dow/"/>' class="nav-link ${action2 eq  'index' ? 'active' : ''}">
                   <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Advanced Elements</p>
+                  <p>Index</p>
                 </a>
               </li>
+              
+            </ul>            
+          </li>
+          
+          
+          <!-- .//menu role -->
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <!-- <i class="nav-icon fa fa-edit"></i> -->
+              <p>
+                Schedule
+                <i class="fa fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/forms/editors.html" class="nav-link">
+                <a href='<c:url value="/schedule/"/>' class="nav-link ${action2 eq  'index' ? 'active' : ''}">
                   <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Editors</p>
+                  <p>Index</p>
                 </a>
               </li>
+              
             </ul>
             
           </li>

@@ -13,6 +13,12 @@ pageEncoding="UTF-8" session="false"%>
   <!-- Theme style -->
   <link rel="stylesheet" href="<c:url value="/resources/dist/css/adminlte.min.css"/>">
   <!-- modefide -->
+  
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="<c:url value="/resources/plugins/colorpicker/bootstrap-colorpicker.min.css"/>">
+   <link rel="stylesheet" href="<c:url value="/resources/plugins/timepicker/bootstrap-timepicker.min.css"/>">
+  <!-- Bootstrap time Picker -->
+
   <link rel="stylesheet" href="<c:url value="/resources/dist/css/style.css"/>">
   <!-- iCheck -->
   <link rel="stylesheet" href="<c:url value="/resources/plugins/iCheck/flat/blue.css"/>">

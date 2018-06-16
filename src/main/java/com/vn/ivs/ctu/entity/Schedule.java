@@ -1,5 +1,6 @@
 package com.vn.ivs.ctu.entity;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 
 import javax.persistence.*;
@@ -16,13 +17,15 @@ public class Schedule {
 	private String nameSchedule;
 	
 	@Column(name="TIME_SCHEDULE")
-	private Timestamp timeSchedule;
+	private String timeSchedule;
 	
 	@Column(name="LOCATION_SCHEDULE")
 	private String locationSchedule;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="ID_DOW")
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name="ID_DOW")
+	@OneToOne(cascade =CascadeType.PERSIST,fetch = FetchType.EAGER)
+	@JoinColumn(name="ID_DOW",referencedColumnName="ID_DOW")
 	private DateOfWeek dateOfWeek;
 	
 	
@@ -42,11 +45,11 @@ public class Schedule {
 		this.nameSchedule = nameSchedule;
 	}
 
-	public Timestamp getTimeSchedule() {
+	public String getTimeSchedule() {
 		return timeSchedule;
 	}
 
-	public void setTimeSchedule(Timestamp timeSchedule) {
+	public void setTimeSchedule(String timeSchedule) {
 		this.timeSchedule = timeSchedule;
 	}
 

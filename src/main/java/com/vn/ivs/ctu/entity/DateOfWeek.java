@@ -8,7 +8,7 @@ public class DateOfWeek {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID_DOW")
-	private long idDow;
+	private int idDow;
 	
 	@Column(name="NAME_DOW",length=20)
 	private String nameDow;
@@ -16,11 +16,11 @@ public class DateOfWeek {
 	@Column(name="VARIABLE_DOW")
 	private int variableDow;
 
-	public long getIdDow() {
+	public int getIdDow() {
 		return idDow;
 	}
 
-	public void setIdDow(long idDow) {
+	public void setIdDow(int idDow) {
 		this.idDow = idDow;
 	}
 

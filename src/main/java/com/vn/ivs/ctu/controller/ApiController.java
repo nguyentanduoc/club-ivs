@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.entity.Role;
+import com.vn.ivs.ctu.service.impl.DowServiceImpl;
 import com.vn.ivs.ctu.service.impl.RoleServiceImpl;
 
 @Controller
@@ -16,6 +17,7 @@ public class ApiController {
 	
 	@Autowired
 	RoleServiceImpl roleServiceImpl;
+	
 	
 	@GetMapping("deleteRole")
 	@ResponseBody
@@ -27,4 +29,19 @@ public class ApiController {
 			return "false";
 		}
 	}
+	@Autowired
+	DowServiceImpl dowServiceImpl;
+	
+	
+	@GetMapping("deleteDow")
+	@ResponseBody
+	public String deleteDow(@RequestParam int id) {		
+		boolean rs = dowServiceImpl.deleteDow(id);
+		if(rs) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
+	
 }
