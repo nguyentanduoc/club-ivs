@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.entity.Role;
+import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.service.impl.DowServiceImpl;
 import com.vn.ivs.ctu.service.impl.RoleServiceImpl;
+import com.vn.ivs.ctu.service.impl.ScheduleServiceImpl;
 
 @Controller
 @RequestMapping("api/")
@@ -17,7 +19,6 @@ public class ApiController {
 	
 	@Autowired
 	RoleServiceImpl roleServiceImpl;
-	
 	
 	@GetMapping("deleteRole")
 	@ResponseBody
@@ -29,9 +30,10 @@ public class ApiController {
 			return "false";
 		}
 	}
+	
+	
 	@Autowired
 	DowServiceImpl dowServiceImpl;
-	
 	
 	@GetMapping("deleteDow")
 	@ResponseBody
@@ -43,5 +45,17 @@ public class ApiController {
 			return "false";
 		}
 	}
+	@Autowired
+	ScheduleServiceImpl scheduleServiceImpl;
 	
+	@GetMapping("deleteSchedule")
+	@ResponseBody
+	public String deleteSchedule(@RequestParam int id) {		
+		boolean rs = scheduleServiceImpl.deleteSchedule(id);
+		if(rs) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
 }

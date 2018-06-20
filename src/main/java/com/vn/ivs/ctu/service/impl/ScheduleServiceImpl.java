@@ -21,11 +21,13 @@ public class ScheduleServiceImpl implements ScheduleService{
 	public long create(Schedule schedule) {
 		return scheduleDAOImpl.create(schedule);		
 	}
+	
+	public boolean deleteSchedule(int id) {
+		return scheduleDAOImpl.deleteSchedule(id);
+	}
 	public List<Schedule> getAll() {
 		return scheduleDAOImpl.getAll();
 	}
 	
-	public long delete(Schedule schedule) {
-		return scheduleDAOImpl.create(schedule);		
-	}
+	
 }

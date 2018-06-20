@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mysql.cj.api.xdevapi.Result;
 import com.vn.ivs.ctu.entity.DateOfWeek;
@@ -41,20 +42,18 @@ public class ScheduleController {
 		modelMap.put("listDow",dowServiceImpl.getAll());
 		modelMap.put("listSchedule",scheduleServiceImpl.getAll());
 		
+		
+		
 		return "schedule/index";
 	}
 	@PostMapping
 	public String createSchedule(@ModelAttribute("schedule") Schedule schedule, BindingResult result, ModelMap modelMap) {		
-		System.out.println(schedule.getTimeSchedule());
-//		System.out.println("date"+schedule.getDateOfWeek());
-//			if (scheduleServiceImpl.create(schedule)>0) {
-//			modelMap.put("status", "Add complete");
-//			
-//		}else {
-//			modelMap.put("status", "Add fail");
-//		}
 		
+			if (scheduleServiceImpl.create(schedule)>0) {
+			modelMap.put("status", "add complete");
+		}else {
+			modelMap.put("status", "add fail");
+		}
 		return "redirect:/schedule/";
 	}
-	
 }

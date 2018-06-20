@@ -33,15 +33,20 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		currentSession().saveOrUpdate(schedule);
 		return schedule.getIdSchedule();
 	}
-	
 	@Transactional
 	public List<Schedule> getAll() {	
 		
 		return currentSession().createQuery("from schedule").list();
 	}
 	@Transactional
-	public long delete(Schedule schedule) {
-		currentSession().delete(schedule);
-		return schedule.getIdSchedule();
+	public boolean deleteSchedule(int id) {
+		try {
+			Schedule loadSchedule = currentSession().load(Schedule.class,id);
+			currentSession().delete(loadSchedule);
+			return true;
+		}	catch(Exception ex) {
+			System.out.println("deleteSchedule-"+ ex.toString());
+			return false;
+		}	
 	}
 }

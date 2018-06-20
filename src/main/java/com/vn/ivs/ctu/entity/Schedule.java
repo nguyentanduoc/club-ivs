@@ -11,7 +11,7 @@ public class Schedule {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID_SCHEDULE")
-	private long idSchedule;
+	private int idSchedule;
 	
 	@Column(name="NAME_SCHEDULE",length=100)
 	private String nameSchedule;
@@ -29,11 +29,11 @@ public class Schedule {
 	private DateOfWeek dateOfWeek;
 	
 	
-	public long getIdSchedule() {
+	public int getIdSchedule() {
 		return idSchedule;
 	}
 
-	public void setIdSchedule(long idSchedule) {
+	public void setIdSchedule(int idSchedule) {
 		this.idSchedule = idSchedule;
 	}
 

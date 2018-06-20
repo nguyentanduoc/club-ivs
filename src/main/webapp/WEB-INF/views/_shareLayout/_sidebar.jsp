@@ -77,7 +77,7 @@ pageEncoding="UTF-8" session="false"%>
           </li>
           
           
-          <!-- .//menu role -->
+          <!-- .//menu schedule -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <!-- <i class="nav-icon fa fa-edit"></i> -->
@@ -97,6 +97,28 @@ pageEncoding="UTF-8" session="false"%>
             </ul>
             
           </li>
+          
+          <!-- .//menu schedule -->
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <!-- <i class="nav-icon fa fa-edit"></i> -->
+              <p>
+                Train
+                <i class="fa fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href='<c:url value="/train/"/>' class="nav-link ${action2 eq  'index' ? 'active' : ''}">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              
+            </ul>
+            
+          </li>
+          
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

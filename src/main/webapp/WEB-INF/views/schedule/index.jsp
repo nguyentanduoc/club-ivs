@@ -51,7 +51,7 @@
 		                </c:if>
 		                  <div class="form-group">
 		                    <label for="nameSchedule">Tên Event</label>
-		                    <!-- <input type="text" name=nameSchedule class="form-control" id="nameSchedule" placeholder="Nhập Tên Evnet"> -->
+		                    
 		                  	<form:input type="text" path="nameSchedule" class="form-control" id="nameSchedule" placeholder="Nhập Tên Event"/>
 		                  </div>
 		                   <div class="form-group">
@@ -67,7 +67,7 @@
                     <label>Time picker:</label>
                     <div class="input-group">
                     <form:input type="text" path="timeSchedule" class="form-control timepicker" id="timeSchedule"/>
-                     <!--  <input type="text" class="form-control"> -->
+                     
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
                       </div>
@@ -91,6 +91,7 @@
 	            </div>
 	            <!-- /.card -->
 		    	</div>
+		    	
 		    	<div class="col-md-6">
 		            <div class="card">
 		              <div class="card-header">
@@ -117,12 +118,14 @@
 				                    <td>${schedule.getTimeSchedule()}</td>
 				                    <td>${schedule.getLocationSchedule()}</td>	                    
 				                    <td>
+				                    
 				                    	<span class="deleteSchedule" data-id = "${schedule.getIdSchedule()}"><i class="fa fa-times delete"></i></span>		                    	
 				                    	<span class="editSchedule" data-id = "${schedule.getIdSchedule()}"> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal" data-target="#editSchedule"></i></span>
-				                    </td>	                          
+				                    </td>                          
 			                  </tr>	
 	                  	 </c:forEach>                  
 		                </table>
+		                
 		              </div>
 		              <!-- /.card-body -->
 		            </div>
@@ -131,31 +134,9 @@
 		   </div>
 	    </section>
 	    <!-- /.content -->
-	    <!-- modal -->
-	    <div id="editBranch" class="modal fade" role="dialog">
-		  <div class="modal-dialog">
+	    
 
-   			 <!-- Modal content-->
-		    <div class="modal-content">
-		      <div class="modal-header">
-		      <h4 class="modal-title">Chỉnh sửa Chi Nhánh</h4>
-		        <button type="button" class="close" data-dismiss="modal">&times;</button>		        
-		      </div>
-		      <div class="modal-body">
-		      <input name="idEditRole" type="hidden" id="idEditRole">
-		       	<div class="form-group">
-                   <label for="exampleInputEmail1">Tên Chức Vụ</label>
-                   <input type="text" name="nameEditRole" class="form-control" id="nameEditRole" placeholder="Nhập Tên Chức Vụ">
-                 </div>
-		      </div>
-		      <div class="modal-footer">
-		      	<button type="button" id="saveChangeRole" class="btn btn-primary">Lưu</button>
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		      </div>
-		    </div>		
-		  </div>
-		</div>
-		   <!--/.modal -->
+   			 
   	</div>    	
     	<jsp:include page="../_shareLayout/_footer.jsp"></jsp:include>
     </div>

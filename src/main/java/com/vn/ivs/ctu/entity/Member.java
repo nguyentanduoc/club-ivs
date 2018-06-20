@@ -29,7 +29,7 @@ public class Member {
 	@Column(name="SEX_MEMBER")
 	private boolean sexMember;
 	
-	@Column(name="PHONE_NUMBER_MEMBER")
+	@Column(name="PHONE_NUM_MEMBER")
 	private String phoneNumberMember;
 	
 	@Column(name="USER_NAME_MEMBER")
@@ -41,9 +41,9 @@ public class Member {
 	@Column(name="AVARTAR_MEMBER")
 	private String avartarMember;
 	
-	@OneToOne(cascade =CascadeType.ALL)
-	@JoinColumn(name="ID_ROLE")
-	private Role role;
+//	@OneToOne(cascade =CascadeType.ALL)
+//	@JoinColumn(name="ID_ROLE")
+//	private Role role;
 
 	public long getIdMember() {
 		return idMember;
@@ -109,13 +109,13 @@ public class Member {
 		this.avartarMember = avartarMember;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
+//	public Role getRole() {
+//		return role;
+//	}
+//
+//	public void setRole(Role role) {
+//		this.role = role;
+//	}
 	
 	
 }
