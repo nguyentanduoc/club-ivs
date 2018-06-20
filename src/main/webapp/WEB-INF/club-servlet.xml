@@ -13,17 +13,11 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-	<context:component-scan	base-package="com.vn.ivs.ctu.controller" />
-	<context:component-scan	base-package="com.vn.ivs.ctu.entity" />	
-	<context:component-scan	base-package="com.vn.ivs.ctu.service" />
-	<context:component-scan	base-package="com.vn.ivs.ctu.dao" />
-	<mvc:resources location="/resources/" mapping="/resources/**" />
-	<mvc:annotation-driven />
-	<import resource="classpath:IoC.xml"/>
-	
-	
-   
-	<bean id="viewResolver"
+
+   	<context:component-scan	base-package="com.vn.ivs.ctu.controller" />
+		<mvc:annotation-driven />
+		<mvc:resources location="/resources/" mapping="/resources/**" />
+		<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
 			<value>/WEB-INF/views/</value>

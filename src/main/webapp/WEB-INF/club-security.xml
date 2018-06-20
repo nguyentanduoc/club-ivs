@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd
+		">
+	
+	<http auto-config="false" use-expressions="true">
+		<intercept-url pattern="/admin*"
+			access="hasRole('ADMIN')" />
+		<intercept-url pattern="/otc**" access="hasRole('OTC')" />
+		<intercept-url pattern="/otcclub**"
+			access="hasRole('OTC_CLUB')" />
+		<intercept-url pattern="/member**"
+			access="hasRole('MEMBER')" />
+		<!-- access denied page -->
+		<access-denied-handler error-page="/403" />
+		<form-login login-page="/login"
+			default-target-url="/admin/home"
+			authentication-failure-url="/login?error"
+			username-parameter="j_username" password-parameter="j_password"
+			login-processing-url="/j_spring_security_check"
+			authentication-success-handler-ref="mySuccessHandler" />
+		<logout logout-success-url="/login?logout" />
+		<!-- enable csrf protection -->
+		<csrf />
+	</http>
+	<!-- <user-service> <user name="user" password="$2a$04$GYGsaJj9l6kH2GikK6QVzO0v3sOCxt3vdkiA2/tcoSw8erI85ZYDG" 
+		authorities="ROLE_USER" /> </user-service> -->
+	<beans:bean id="mySuccessHandler"
+		class="com.vn.ivs.ctu.security.MySuccessHandler" />
+	<!-- <beans:bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" 
+		/> -->
+	<beans:bean id="myUserDetailService"
+		class="com.vn.ivs.ctu.security.MyUserDetailsService">
+	</beans:bean>
+
+	<authentication-manager>
+		<authentication-provider
+			user-service-ref="myUserDetailService">
+			<password-encoder hash="bcrypt" />
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>
