@@ -16,6 +16,17 @@ public class Role {
 
 	@Column(name="NAME_ROLE",nullable = false,length=100)
 	private String nameRole;
+	
+	@Column(name="CODE_ROLE")
+	private String codeRole;
+	
+	public String getCodeRole() {
+		return codeRole;
+	}
+
+	public void setCodeRole(String codeRole) {
+		this.codeRole = codeRole;
+	}
 
 	public long getIdRole() {
 		return idRole;

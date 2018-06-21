@@ -1,18 +1,23 @@
 package com.vn.ivs.ctu.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity(name="member")
+@Table(name="member")
 public class Member {
 	
 	@Id
@@ -41,11 +46,35 @@ public class Member {
 	@Column(name="AVARTAR_MEMBER")
 	private String avartarMember;
 	
-//	@OneToOne(cascade =CascadeType.ALL)
-//	@JoinColumn(name="ID_ROLE")
-//	private Role role;
+	@OneToOne(cascade =CascadeType.PERSIST,fetch = FetchType.EAGER)
+	@JoinColumn(name="ID_BRANCH",referencedColumnName="ID_BRANCH")
+	private Branch branch;
+	
+	 @ManyToMany(cascade = CascadeType.PERSIST,fetch=FetchType.EAGER)
+	    @JoinTable(
+	        name = "member_role", 
+	        joinColumns = { @JoinColumn(name = "ID_MEMBER") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "ID_ROLE") }
+	    )
+	private Set<Role> roles;
+	
+	public Set<Role> getRoles() {
+		return roles;
+	}
 
-	public long getIdMember() {
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+
+	public int getIdMember() {
 		return idMember;
 	}
 

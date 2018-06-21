@@ -9,6 +9,7 @@
 	<configs>
 		<config>src/main/webapp/WEB-INF/club-servlet.xml</config>
 		<config>src/main/resources/IoC.xml</config>
+		<config>src/main/webapp/WEB-INF/club-application.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

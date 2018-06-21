@@ -16,9 +16,9 @@ public class Branch {
 	@Column(name="ADDRESS_BRANCH", length=300)
 	private String addressBranch;
 	
-	@OneToOne(cascade =CascadeType.ALL)
+	/*@OneToOne(cascade =CascadeType.ALL)
 	@JoinColumn(name="ID_MEMBER")
-	private Member member;
+	private Member member;*/
 	
 	public String getAddressBranch() {
 		return addressBranch;
@@ -28,13 +28,13 @@ public class Branch {
 		this.addressBranch = addressBranch;
 	}
 
-	public Member getMember() {
-		return member;
-	}
-
-	public void setMember(Member member) {
-		this.member = member;
-	}
+//	public Member getMember() {
+//		return member;
+//	}
+//
+//	public void setMember(Member member) {
+//		this.member = member;
+//	}
 
 	public int getIdBranch() {
 		return idBranch;

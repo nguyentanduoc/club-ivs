@@ -16,7 +16,7 @@ import com.vn.ivs.ctu.entity.DateOfWeek;
 
 
 
-@Repository("dowDAOImpl")
+@Repository()
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class DowDAOImpl implements DowDAO {
 
