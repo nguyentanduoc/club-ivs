@@ -5,12 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="_shareLayout/header.jsp"></jsp:include>
+<jsp:include page="../_shareLayout/header.jsp"></jsp:include>
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
-		<jsp:include page="_shareLayout/_navbar.jsp"></jsp:include>
-		<jsp:include page="_shareLayout/_sidebar.jsp"></jsp:include>
+		<jsp:include page="../_shareLayout/_navbar.jsp"></jsp:include>
+		<jsp:include page="../_shareLayout/_sidebar.jsp"></jsp:include>
 
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -160,8 +160,8 @@
 			</div> -->
 			<!--/.modal -->
 		</div>
-		<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
+		<jsp:include page="../_shareLayout/_footer.jsp"></jsp:include>
 	</div>
-	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
+	<jsp:include page="../_shareLayout/footer.jsp"></jsp:include>
 </body>
 </html>

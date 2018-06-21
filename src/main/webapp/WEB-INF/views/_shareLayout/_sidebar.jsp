@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
 pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="com.vn.ivs.ctu.utils.SecurityUtils" %>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">     
@@ -15,7 +16,7 @@ pageEncoding="UTF-8" session="false"%>
           <img src="<c:url value="../resources/dist/img/user2-160x160.jpg"/>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Nguyễn Tấn Được</a>
+          <a href="#" class="d-block"><%=SecurityUtils.getMyUserDetail().getNameMember() %></a>
         </div>
       </div>
 

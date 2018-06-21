@@ -32,14 +32,14 @@ public class MySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	public String determineTargetUrl(Authentication authentication) {
 		String url = "";
 		List<String> roles = SecurityUtils.getAuthorities();
-		if (isOtc(roles)) {
-			url = "/otc/home";
-		} else if (isAdmin(roles)) {
-			url = "/admin/home";
-		} else if (isMember(roles)) {
-			url = "/member/home";
+		if (isAdmin(roles)) {
+			url = "/admin";
+		} else if (isOtc(roles)) {
+			url = "/otc";
 		} else if (isOtcLub(roles)) {
-			url = "/otcclub/home";
+			url = "/otcclub";
+		} else if (isMember(roles)) {
+			url = "/member";
 		}
 		return url;
 	}

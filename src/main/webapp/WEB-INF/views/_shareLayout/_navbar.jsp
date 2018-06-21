@@ -30,9 +30,9 @@ pageEncoding="UTF-8" session="false"%>
     </form>
 
     <!-- Right navbar links -->
-    <%-- <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <%-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="fa fa-comments-o"></i>
           <span class="badge badge-danger navbar-badge">3</span>
@@ -116,11 +116,13 @@ pageEncoding="UTF-8" session="false"%>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
-      </li>
+      </li> --%>     
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
-            class="fa fa-th-large"></i></a>
+        <a class="nav-link" href='<c:url value="/logout"/>'>       
+        	<i class="fa fa-sign-out" aria-hidden="true"></i>
+        	 Sign out
+        </a>
       </li>
-    </ul> --%>
+    </ul>
   </nav>
   <!-- /.navbar -->

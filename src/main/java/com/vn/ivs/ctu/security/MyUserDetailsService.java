@@ -42,9 +42,9 @@ public class MyUserDetailsService implements UserDetailsService {
 		}		
 		
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		for (Role role : member.getRoles()) {
+		for (Role role : member.getRoles()) {			
 			authorities.add(new SimpleGrantedAuthority(role.getCodeRole()));
-		}
+		}		
 		MyUserDetail myUserDetail = new MyUserDetail(username, member.getPassWordMember(), true, true, true, true, authorities);
 		BeanUtils.copyProperties(member, myUserDetail);
 		return myUserDetail;
