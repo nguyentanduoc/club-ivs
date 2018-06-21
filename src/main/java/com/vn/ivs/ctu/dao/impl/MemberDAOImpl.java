@@ -47,7 +47,6 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	public Member findByUseName(String name) {
-
 		try {
 			List<Member> list  = currentSession().createQuery("from member where userNameMember = ?",Member.class).setParameter(0, name)
 					.list();

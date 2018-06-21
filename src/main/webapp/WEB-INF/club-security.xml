@@ -8,24 +8,36 @@
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd
 		">
-	
+
 	<http auto-config="false" use-expressions="true">
-		<intercept-url pattern="/admin*"
-			access="hasRole('ADMIN')" />
-		<intercept-url pattern="/otc**" access="hasRole('OTC')" />
-		<intercept-url pattern="/otcclub**"
-			access="hasRole('OTC_CLUB')" />
-		<intercept-url pattern="/member**"
-			access="hasRole('MEMBER')" />
+		
+		<!-- <intercept-url pattern="/*" access="permitAll"/> -->
+		<intercept-url pattern="/login*" access="permitAll"/>
+        <intercept-url pattern="/logout*" access="permitAll"/>
+		<intercept-url pattern="/resources/**" access="permitAll"/>
+		
+		<!-- <intercept-url pattern="/otc/*" access="hasRole('OTC')" /> -->
+		<!-- <intercept-url pattern="/otc/index/" access="hasRole('OTC')" /> -->
+		
+		<!-- <intercept-url pattern="/admin/*" access="hasRole('ADMIN')" /> -->
+		<!-- <intercept-url pattern="/admin/index/" access="hasRole('ADMIN')" /> -->
+		
+		
+		<!-- <intercept-url pattern="/otcclub/**" access="hasRole('CLUB') and isAuthenticated()" />
+		<intercept-url pattern="/member/**" access="hasRole('MEMBER') and isAuthenticated()" /> -->
+			
+		
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+		
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />
 		<form-login login-page="/login"
-			default-target-url="/admin/home"
 			authentication-failure-url="/login?error"
 			username-parameter="j_username" password-parameter="j_password"
 			login-processing-url="/j_spring_security_check"
 			authentication-success-handler-ref="mySuccessHandler" />
-		<logout logout-success-url="/login?logout" />
+		<logout 
+			delete-cookies="JSESSIONID" />
 		<!-- enable csrf protection -->
 		<csrf />
 	</http>

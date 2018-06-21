@@ -8,22 +8,20 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/club-database.xml,
-           /WEB-INF/club-security.xml,
-           /WEB-INF/club-application.xml
+           	/WEB-INF/club-security.xml,
+           	/WEB-INF/club-application.xml
         </param-value>
 	</context-param>
 	<listener>
-          <listener-class>
-             org.springframework.web.context.ContextLoaderListener
-          </listener-class>
-       </listener>
-       <listener>
-          <listener-class>
-             org.springframework.web.context.request.RequestContextListener
-          </listener-class>
-       </listener>
-
-	
+        <listener-class>
+           org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+     </listener>
+     <listener>
+        <listener-class>
+            org.springframework.web.context.request.RequestContextListener
+        </listener-class>
+     </listener>	
 	<!-- Dispartcher -->
 	<servlet>
 		<servlet-name>springDispatcherServlet</servlet-name>

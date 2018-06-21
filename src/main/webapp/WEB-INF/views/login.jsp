@@ -41,7 +41,10 @@ pageEncoding="UTF-8" session="false"%>
 					method="post">
 					<c:if test="${param.error!=null}">
 						<div class="alert alert-danger" role="alert">Sai mật khẩu
-							hoặt tài khoản khôn tồn tại!</div>
+							hoặc tài khoản không tồn tại!</div>
+					</c:if>
+					<c:if test="${param.accessDinied!=null}">
+						<div class="alert alert-danger" role="alert">Bạn không có quyền truy cập</div>
 					</c:if>
 					<div class="form-group has-feedback">
 						<input type="text" class="form-control" placeholder="Email"

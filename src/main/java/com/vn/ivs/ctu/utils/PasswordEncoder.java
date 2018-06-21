@@ -9,7 +9,10 @@ public class PasswordEncoder {
 	public static String BCryptPassdEncoder(String rawPassword) {
 		return new  BCryptPasswordEncoder().encode(rawPassword);
 	}
-	public static void main(String[] args ) {
-		System.out.println(BCryptPassdEncoder("admin@123"));
-	}
+	/*public static void main(String[] args ) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String result = encoder.encode("123456");
+		System.out.println(result);
+		System.out.println(encoder.matches("myPassword", "$2a$10$ovGyFeg3Y99UsEc9t/Lpte1wbE9cRp6tH4aZTJBHhJiS/JeHfSOLC"));
+	}*/
 }
