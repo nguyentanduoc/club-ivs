@@ -42,7 +42,7 @@
 	              </div>
 	              <!-- /.card-header -->
 	              <!-- form start -->
-	              <form:form method="post" action="" modelAttribute="dow">
+	              <form:form method="post" action="${pageContext.request.contextPath}/dow/create" modelAttribute="dow">
 	                <div class="card-body">
 	                  <div class="form-group">
 	                    <label for="nameDow">Thứ</label>	                   
@@ -51,6 +51,8 @@
 	                    <form:input type="text" path="variableDow" class="form-control" id="variableDow" placeholder="Nhập giá trị"/>
 	                  </div>
 	                </div>
+	                 <input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
 	                <!-- /.card-body -->	
 	                <div class="card-footer">
 	                  <input type="submit" class="btn btn-primary" value="Thêm"/>

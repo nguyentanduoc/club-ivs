@@ -48,7 +48,7 @@ public class ScheduleController {
 		
 		return "schedule";
 	}
-	@PostMapping
+	@PostMapping ("/create")
 	public String createSchedule(@ModelAttribute("schedule") Schedule schedule, BindingResult result, ModelMap modelMap) {		
 		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idLeader);

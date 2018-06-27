@@ -70,11 +70,12 @@ public class TrainController {
 		Date myDate = dateTrain;
 		Calendar cal = Calendar.getInstance();
         cal.setTime(myDate);
-        int weekend = cal.getWeeksInWeekYear();
+        
+		int week = cal.get(Calendar.WEEK_OF_YEAR);
         int year = cal.getWeekYear();
 		if(scheduleService.create(schedule)>0) {
 			train.setSchedule(schedule);
-			train.setWeekend(weekend);
+			train.setWeekend(week);
 			train.setYear(year);
 			if(trainService.create(train)>0)
 			{

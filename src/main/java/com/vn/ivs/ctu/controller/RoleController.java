@@ -34,12 +34,12 @@ public class RoleController {
 		
 		return "role";
 	}
-	@PostMapping ("")
+	@PostMapping ("/create")
 	public String insertRole(@RequestParam String nameRole) {		
 		Role role = new Role();
 		role.setNameRole(nameRole);
 		roleServiceImpl.create(role);		
-		return "redirect:/admin/role";
+		return "redirect:/role/index";
 	}
 	
 }

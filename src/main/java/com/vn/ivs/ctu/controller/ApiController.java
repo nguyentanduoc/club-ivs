@@ -66,6 +66,19 @@ public class ApiController {
 			return "false";
 		}
 	}
+	
+	@Autowired TrainService trainservice;
+	@GetMapping("deleteTrain")
+	@ResponseBody
+	public String deleteTrain(@RequestParam int id)
+	{
+		boolean rs = trainservice.deleteTrain(id);
+		if(rs) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
 //	@Autowired TrainService trainService;
 //	
 //	

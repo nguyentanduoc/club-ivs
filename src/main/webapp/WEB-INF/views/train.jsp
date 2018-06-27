@@ -150,7 +150,7 @@
 							         </c:choose>
 				                    </td>
 				                    <td>
-				                    	<span class="deleteSchedule" data-id = "${train.getSchedule().getIdSchedule()}"><i class="fa fa-times delete"></i></span>		                    	
+				                    	<span class="deleteTrain" data-id = "${train.getIdTrain()}"><i class="fa fa-times delete"></i></span>		                    	
 				                    	<span class="editSchedule" data-id = "${train.getSchedule().getIdSchedule()}"> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal" data-target="#editSchedule"></i></span>
 				                    </td>                          
 			                  </tr>	

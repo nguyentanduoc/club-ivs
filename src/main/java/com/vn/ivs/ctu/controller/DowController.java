@@ -30,7 +30,7 @@ public class DowController {
 		
 		return "dow";
 	}
-	@PostMapping("")
+	@PostMapping("/create")
 	public String insertDow(@ModelAttribute("dow")DateOfWeek dow,BindingResult result, ModelMap modelMap) {
 		dowServiceImpl.create(dow);	
 		return "redirect:/dow/index";

@@ -1,5 +1,7 @@
 package com.vn.ivs.ctu.dao.impl;
 
+import java.time.Year;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -62,9 +64,11 @@ public class TrainDAOImpl implements TrainDAO{
 				return null;
 			}
 	}
-	public List<Train> getAllTrainOnWeek() {	
+	public List<Train> getAllTrainOnWeek() {
+		Calendar cal = Calendar.getInstance();
+		int week = cal.get(Calendar.WEEK_OF_YEAR);
 		try {
-		return currentSession().createQuery("from train t where t.weekend=?",Train.class).setParameter(0, 52).list();
+		return currentSession().createQuery("from train t where t.weekend=?",Train.class).setParameter(0, week).list();
 		}catch (Exception e) {
 			return null;
 		}

@@ -30,129 +30,54 @@
 	        </div><!-- /.row -->
 	      </div><!-- /.container-fluid -->
 	    </div><!-- /.content-header -->
-	    <!-- Main content -->
-	    <section class="content">
-	      <div class="container-fluid">
-	      	<div class="row">
-	          <!-- left column -->
-	          <%-- <div class="col-md-4">
-	            <!-- general form elements -->
-	            <div class="card card-primary">
-	              <div class="card-header">
-	                <h3 class="card-title">Thêm Sự kiện</h3>
-	              </div>
-	              <!-- /.card-header -->
-	              <!-- form start -->
-	              <form method="POST" action="${pageContext.request.contextPath}/train/create">	          
-	                <div class="card-body">
-	                <c:choose>
-	                	<c:when test="${status==200}">
-	                		<div class="alert alert-success">
-			                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			                  <h5><i class="icon fa fa-check"></i> ${message}</h5>
-			                </div>
-	                	</c:when>
-	                	<c:when test="${status==400}">
-	                		<div class="alert alert-danger">
-			                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			                  <i class="icon fa fa-check"></i> ${message}
-			                </div>
-	                	</c:when>
-	                </c:choose>
-		                
-		                  <div class="form-group">
-		                    <label for="nameSchedule">Tên Event</label>
-		                  	<input type="text" name="nameSchedule" class="form-control" id="nameSchedule" placeholder="Nhập Tên Event"/>
-		                  </div>
-		                   
-		                  <!-- dateTrain -->
-		                  <div class="form-group">
-		                    <label for="dateTrain">Ngày cụ thể</label>
-		                    <input type="text" class="form-control datepicker" name="dateTrain" id="dateTrain" placeholder="Ngày tháng năm"/>
-		                    </div>
-		                  <!-- /dateTrain -->
-		                  
-		                 <div class="bootstrap-timepicker">
-	                  <div class="form-group">
-	                    <label>Thời gian:</label>
-	                    <div class="input-group">
-	                    <input type="text"  name="timeSchedule" class="form-control timepicker" id="timeSchedule"/>
-	                     
-	                      <div class="input-group-append">
-	                        <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
-	                      </div>
-	                    </div>
-	                    <!-- /.input group -->
-	                  </div>
-                  <!-- /.form group -->
-                </div>
-		                  <div class="form-group">
-		                    <label for="locationSchedule">Địa điểm</label>
-		                   
-		                    <textarea  name="locationSchedule" class="form-control"  id="locationSchedule" placeholder="Nhập địa điểm" rows="3"></textarea>
-		                  </div>
-		                  <div class="form-group">
-		                    <label>Sắp lịch</label>
-		                  
-						  <input type="radio" name="autoSchedule" value="0" checked/> Thủ công
-                  		</div>
-		                </div>
-		                <input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" />
-	                <!-- /.card-body -->	
-	                <div class="card-footer">
-	                  <input type="submit" class="btn btn-primary" value="Thêm"/>
-	                </div>
-	             
-	              </form>
-	            </div>
-	            <!-- /.card -->
-		    	</div> --%>
-		    	
-		    	<div class="col-md-8">
+	   <!-- Small Box (Stat card) -->
+        
+        <div class="row p-2">
+         <c:forEach var="train" items="${listAllTrainOnWeek}">
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>${train.getSchedule().getClub().getNameClub()}</h3>
+                <p>${train.getSchedule().getNameSchedule()}</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-star"></i>
+              </div>
+              <a href="#" class="small-box-footer diemdanh" data-toggle="modal" data-target="#attendance" data-id="${train.getIdTrain()}">
+                Điểm danh <i class="fa fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+          </c:forEach>
+          <div class="modal fade" id="attendance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="attendance">Điểm danh</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="col-md-12">
 		            <div class="card">
-		              <div class="card-header">
-		                <h3 class="card-title">Sự kiện được tạo thủ công</h3>
-		                
-		              </div>
-		              <!-- /.card-header -->
-		              <div class="card-body p-0">
+		              
+		              <div class="card-body p-1">
 		                <table class="table">
 		                  <tr>		                   
 		                    
-		                    <th>Tên Sự kiện</th>
-		                    <th>Ngày</th>
-		                    <th>Thời gian</th>      
-		                    <th>Địa điểm</th>
-		                    <th>Sắp lịch</th>
-		                                 
-		                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
+		                    <th>STT</th>
+		                    <th>Họ tên</th>
+		                    <th>Thuộc Club</th>      
+		                    <th>Điểm danh</th>
+		                             	 
 		                  </tr>
-	                      	   <c:forEach var="train" items="${listAllTrainOnWeek}">
+	                      	   <c:forEach var="v" items="${listJoinClubByClub}">
 				                       <tr>
 				                  	
-				                    <td>${train.getSchedule().getNameSchedule()}</td>
-				                    <td>
-				                    <fmt:formatDate value="${train.getDateTrain()}" pattern="dd-MM-yyyy"/>
-				                    </td>	 
-				                      
-				                    <td>${train.getSchedule().getTimeSchedule()}</td>
-				                    <td>${train.getWeekend()}</td>	                    
-				                    <td>
-				                    <c:choose>
-					                    <c:when test ="${train.getSchedule().getAutoSchedule()==true}">
-								            tự động
-								         </c:when>
-								         
-								         <c:when test ="${train.getSchedule().getAutoSchedule()==false}">
-								            thủ công
-								         </c:when>
-							         </c:choose>
-				                    </td>
-				                    <td>
-				                    	<span class="deleteSchedule" data-id = "${train.getSchedule().getIdSchedule()}"><i class="fa fa-times delete"></i></span>		                    	
-				                    	<span class="editSchedule" data-id = "${train.getSchedule().getIdSchedule()}"> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal" data-target="#editSchedule"></i></span>
-				                    </td>                          
+				                    <td>${v.getMember().getNameMember()}</td>
+				                                     
 			                  </tr>	
 	                  	 </c:forEach>                  
 		                </table>
@@ -161,10 +86,17 @@
 		              <!-- /.card-body -->
 		            </div>
 		    	</div>
-		    </div>
-		   </div>
-	    </section>
-	    <!-- /.content -->
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary">Save changes</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+         
+        </div>
+        <!-- /.row -->
 	    
   	</div>    	
     	<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>

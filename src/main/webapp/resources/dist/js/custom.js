@@ -69,14 +69,14 @@ $(document).ready(function(){
 });
 //
 $(document).ready(function(){
-	$(".ListAllTrainOnWeek").click(function(){
+	$(".deleteTrain").click(function(){
 		var r = confirm("Bạn thật sự muốn xoá?");
 		if(r){
 			var self = $(this);
 			var id = $(this).attr('data-id');
 			$.ajax({
-				url:"/Club-IVS/api/ListAllTrainOnWeek",
-				type:"POST",
+				url:"/Club-IVS/api/deleteTrain",
+				type:"GET",
 				data:{
 					id:id
 				},

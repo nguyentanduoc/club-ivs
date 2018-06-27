@@ -28,25 +28,24 @@ public class TrainComponent {
 	@Autowired JoinClubService joinClubService;
 	@Autowired AttendanceService attendanceService;
 	
-	@Scheduled(cron = "0 57 9 * * TUE")
+	@Scheduled(cron = "0 23 16 * * WED")
 	public void showCalendar() {
 		List<Schedule> schedules = scheduleService.getListScheduleAuto();
-		for (Schedule schedule: schedules) {	
+		for (Schedule schedule: schedules) {
 			Date myDate = new Date();
 			Calendar cal = Calendar.getInstance();
 	        cal.setTime(myDate);
+			int week = cal.get(Calendar.WEEK_OF_YEAR);
+	        int year = cal.getWeekYear();
 	        cal.add(Calendar.DATE, schedule.getDateOfWeek().getVariableDow());
 	        Train train = new Train();
 	        train.setDateTrain(cal.getTime());
 	        train.setSchedule(schedule);
+	        train.setWeekend(week);
+			train.setYear(year);
 	        trainService.create(train);
-	        
-	        	
-	        
 	        List<JoinClub> joinClubs = joinClubService.getJoinClubByClub(schedule.getClub().getIdClub());
-	  
 	        if(joinClubs!=null) {
-	        	
 	        	for(JoinClub joinClub:joinClubs) {
 	        		AttendanceID attendanceID = new AttendanceID();
 	        		attendanceID.setIdMember(joinClub.getMember().getIdMember());
@@ -57,8 +56,6 @@ public class TrainComponent {
 	        		System.out.println(attendanceService.createOrUpdate(attendance));
 	        	}
 	        }
-	        
-			
 		}
 	}
 }

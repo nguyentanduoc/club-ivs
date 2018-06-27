@@ -47,7 +47,7 @@
 								</div>
 								<!-- /.card-header -->
 								<!-- form start -->
-								<form:form method="POST" modelAttribute="schedule" action="">
+								<form:form method="POST" path="schedule" modelAttribute="schedule" action="${pageContext.request.contextPath}/schedule/create">
 									<div class="card-body">
 										<c:if test="${status}">
 											<div class="alert alert-danger">
@@ -100,6 +100,8 @@
 											
 										</div>
 									</div>
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}" />
 									<!-- /.card-body -->
 									<div class="card-footer">
 										<input type="submit" class="btn btn-primary" value="Thêm" />

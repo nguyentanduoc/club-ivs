@@ -41,13 +41,15 @@
 	              </div>
 	              <!-- /.card-header -->
 	              <!-- form start -->
-	              <form method="post" action="">
+	              <form method="post" action="${pageContext.request.contextPath}/role/create">
 	                <div class="card-body">
 	                  <div class="form-group">
 	                    <label for="nameRole">Tên Chức Vụ</label>
 	                    <input type="text" name="nameRole" class="form-control" id="nameRole" placeholder="Nhập Tên Chức Vụ">
 	                  </div>
 	                </div>
+	                 <input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
 	                <!-- /.card-body -->	
 	                <div class="card-footer">
 	                  <input type="submit" class="btn btn-primary" value="Thêm"/>
