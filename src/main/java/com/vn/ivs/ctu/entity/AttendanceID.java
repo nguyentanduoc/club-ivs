@@ -29,5 +29,29 @@ public class AttendanceID implements Serializable{
 	public void setIdTrain(int idTrain) {
 		this.idTrain = idTrain;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idMember;
+		result = prime * result + idTrain;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AttendanceID other = (AttendanceID) obj;
+		if (idMember != other.idMember)
+			return false;
+		if (idTrain != other.idTrain)
+			return false;
+		return true;
+	}
+	
 	
 }

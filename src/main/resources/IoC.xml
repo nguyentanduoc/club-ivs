@@ -15,5 +15,5 @@
 
 	
 	<!-- to run fixed rate scheduler -->
-	<bean id="CronSchedule" class="com.vn.ivs.ctu.schedule.CronSchedule"></bean>
+	<bean id="CronSchedule" class="com.vn.ivs.ctu.component.CronSchedule"></bean>
 </beans>

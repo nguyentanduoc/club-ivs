@@ -1,4 +1,3 @@
-
 package com.vn.ivs.ctu.dao.impl;
 
 import java.util.List;
@@ -14,12 +13,14 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.MemberDAO;
+import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
 
 @Repository()
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Transactional()
 public class MemberDAOImpl implements MemberDAO {
+	
 	@Autowired
 	SessionFactory sessionFactory;
 
@@ -61,6 +62,58 @@ public class MemberDAOImpl implements MemberDAO {
 	public List<Member> findAll() {
 		List<Member>  list = (List<Member>)currentSession().createQuery("from member", Member.class).list();		
 		return list;
+	}
+
+	@Override
+	public List<Member> getAllRoleOTC() {
+		try {
+			List<Member> members = currentSession().
+					createQuery("SELECT m FROM member m JOIN m.roles r  WHERE r.codeRole = ?",Member.class).
+					setParameter(0, "OTC").list();
+			if (members != null) {
+				return members;
+			}
+		}catch(Exception e) {
+			return null;
+		}
+		return null;
+	}
+
+	public List<Member> getAllByBranch(int idBranch) {
+		try {
+			List<Member> members = currentSession().
+					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch = ?",Member.class).
+					setParameter(0, idBranch).list();
+			if (members != null) {
+				return members;
+			}
+		}
+		catch (Exception e) {
+			return null;
+		}
+		return null;
+	}
+	public List<Member> getMemberNoClub(){
+		/*try {
+			List<Member> members = currentSession().
+					createQuery("SELECT m FROM member m LEFT JOIN  = ?",Member.class).
+					setParameter(0, idBranch).list();
+			
+		}catch(Exception e) {
+			return null;
+		}	*/
+		 return null;
+	}
+	public boolean joinClub(JoinClub joinClub) {
+		try {
+			currentSession().saveOrUpdate(joinClub);
+			return true;
+		}catch(Exception e) {
+			return false;
+		}		
+	}
+	public 	Member getMemberById(int idMember) {
+		return currentSession().find(Member.class, idMember);
 	}
 
 }

@@ -16,48 +16,49 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Entity(name="member")
-@Table(name="member")
+import org.hibernate.annotations.Proxy;
+
+
+@Entity(name = "member")
+@Table(name = "member")
+@Proxy(lazy = false)
 public class Member {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID_MEMBER")
+	@Column(name = "ID_MEMBER")
 	private int idMember;
-	
-	@Column(name = "NAME_MEMBER", nullable = false, length = 100 )
+
+	@Column(name = "NAME_MEMBER", nullable = false, length = 100)
 	private String nameMember;
-	
-	@Column(name="BIRTH_DAY_MEMBER")
+
+	@Column(name = "BIRTH_DAY_MEMBER")
 	private Date birthDayMember;
-	
-	@Column(name="SEX_MEMBER")
+
+	@Column(name = "SEX_MEMBER")
 	private boolean sexMember;
-	
-	@Column(name="PHONE_NUM_MEMBER")
+
+	@Column(name = "PHONE_NUM_MEMBER")
 	private String phoneNumberMember;
-	
-	@Column(name="USER_NAME_MEMBER")
+
+	@Column(name = "USER_NAME_MEMBER")
 	private String userNameMember;
-	
-	@Column(name="PASSWORD_MEMBER")
+
+	@Column(name = "PASSWORD_MEMBER")
 	private String passWordMember;
-	
-	@Column(name="AVARTAR_MEMBER")
+
+	@Column(name = "AVARTAR_MEMBER")
 	private String avartarMember;
-	
-	@OneToOne(cascade =CascadeType.PERSIST,fetch = FetchType.EAGER)
-	@JoinColumn(name="ID_BRANCH",referencedColumnName="ID_BRANCH")
+
+	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ID_BRANCH", referencedColumnName = "ID_BRANCH")
 	private Branch branch;
-	
-	 @ManyToMany(cascade = CascadeType.PERSIST,fetch=FetchType.EAGER)
-	    @JoinTable(
-	        name = "member_role", 
-	        joinColumns = { @JoinColumn(name = "ID_MEMBER") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "ID_ROLE") }
-	    )
-	private Set<Role> roles;
-	
+
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinTable(name = "member_role", joinColumns = { @JoinColumn(name = "ID_MEMBER") }, inverseJoinColumns = {
+			@JoinColumn(name = "ID_ROLE") })
+	private Set<Role> roles ;
+
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -66,7 +67,7 @@ public class Member {
 		this.roles = roles;
 	}
 
-	public Branch getBranch() {
+	public Branch getBranch() {	
 		return branch;
 	}
 
@@ -138,13 +139,4 @@ public class Member {
 		this.avartarMember = avartarMember;
 	}
 
-//	public Role getRole() {
-//		return role;
-//	}
-//
-//	public void setRole(Role role) {
-//		this.role = role;
-//	}
-	
-	
 }

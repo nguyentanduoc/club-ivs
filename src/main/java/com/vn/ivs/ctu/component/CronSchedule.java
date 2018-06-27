@@ -1,4 +1,4 @@
-package com.vn.ivs.ctu.schedule;
+package com.vn.ivs.ctu.component;
 
 import java.util.Calendar;
 import java.util.Date;

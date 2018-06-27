@@ -31,7 +31,7 @@ pageEncoding="UTF-8" session="false"%>
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<b>IVS</b>CLUB
+			<b>IVS</b> - CLUB
 		</div>
 		<!-- /.login-logo -->
 		<div class="card">
@@ -48,13 +48,11 @@ pageEncoding="UTF-8" session="false"%>
 					</c:if>
 					<div class="form-group has-feedback">
 						<input type="text" class="form-control" placeholder="Email"
-							name="j_username"> <span
-							class="fa fa-envelope form-control-feedback"></span>
+							name="j_username">
 					</div>
 					<div class="form-group has-feedback">
 						<input type="password" class="form-control" placeholder="Password"
-							name="j_password"> <span
-							class="fa fa-lock form-control-feedback"></span>
+							name="j_password">
 					</div>
 					<div class="row">
 						<div class="col-8">
@@ -84,14 +82,6 @@ pageEncoding="UTF-8" session="false"%>
         </a>
       </div> -->
 				<!-- /.social-auth-links -->
-
-				<p class="mb-1">
-					<a href="#">I forgot my password</a>
-				</p>
-				<p class="mb-0">
-					<a href="register.html" class="text-center">Register a new
-						membership</a>
-				</p>
 			</div>
 			<!-- /.login-card-body -->
 		</div>

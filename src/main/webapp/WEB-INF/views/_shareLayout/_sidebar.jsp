@@ -37,27 +37,27 @@ pageEncoding="UTF-8" session="false"%>
           
           
           
-          <!--  menu role -->
-           <li class="nav-item has-treeview ${action1 eq  'role' ? 'menu-open' : ''}">
-            <a href="#" class="nav-link ${action1 eq  'role' ? 'active' : ''}">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <!-- <i class="nav-icon fa fa-edit"></i> -->
               <p>
-                Chức Vụ
+                Chức Vụ
                 <i class="fa fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-	              <li class="nav-item">
-	                <a href='<c:url value="/role/"/>' class="nav-link ${action2 eq  'index' ? 'active' : ''}">
-	                  <i class="fa fa-circle-o nav-icon"></i>
-	                  <p>Index</p>
-	                </a>
-            	</li>
-            </ul>
+              <li class="nav-item">
+                <a href='<c:url value="/role/index"/>' class="nav-link ${action2 eq  'role' ? 'active' : ''}">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              
+            </ul>            
           </li>
               
               
-              <!--  menu role -->
+              <!--  menu dow -->
               <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <!-- <i class="nav-icon fa fa-edit"></i> -->
@@ -68,7 +68,7 @@ pageEncoding="UTF-8" session="false"%>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href='<c:url value="/dow/"/>' class="nav-link ${action2 eq  'index' ? 'active' : ''}">
+                <a href='<c:url value="/dow/index"/>' class="nav-link ${action2 eq  'dow' ? 'active' : ''}">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>Index</p>
                 </a>
@@ -89,7 +89,7 @@ pageEncoding="UTF-8" session="false"%>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href='<c:url value="/schedule/"/>' class="nav-link ${action2 eq  'index' ? 'active' : ''}">
+                <a href='<c:url value="/schedule/index"/>' class="nav-link ${action2 eq  'schedule' ? 'active' : ''}">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>Index</p>
                 </a>
@@ -110,17 +110,41 @@ pageEncoding="UTF-8" session="false"%>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href='<c:url value="/train/"/>' class="nav-link ${action2 eq  'index' ? 'active' : ''}">
+                <a href='<c:url value="/train/index"/>' class="nav-link ${action2 eq  'train' ? 'active' : ''}">
                   <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Index</p>
+                  <p>Lịch thủ công</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href='<c:url value="/train/trainauto"/>' class="nav-link ${action2 eq  'trainauto' ? 'active' : ''}">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Lịch tự động</p>
                 </a>
               </li>
               
             </ul>
             
+            
           </li>
+          <!--  menu dow -->
+              <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <!-- <i class="nav-icon fa fa-edit"></i> -->
+              <p>
+                Điểm Danh
+                <i class="fa fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href='<c:url value="/attendance/index"/>' class="nav-link ${action2 eq  'attendance' ? 'active' : ''}">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Index</p>
+                </a>
+              </li>
           
         </ul>
+        
       </nav>
       <!-- /.sidebar-menu -->
     </div>

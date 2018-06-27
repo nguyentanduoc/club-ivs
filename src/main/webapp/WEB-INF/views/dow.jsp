@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 	<head>		
-		<jsp:include page="../_shareLayout/header.jsp"></jsp:include>
+		<jsp:include page="_shareLayout/header.jsp"></jsp:include>
 	</head>
 	<body class="hold-transition sidebar-mini">
 	 <div class="wrapper">
-    	<jsp:include page="../_shareLayout/_navbar.jsp"></jsp:include>
-    	<jsp:include page="../_shareLayout/_sidebar.jsp"></jsp:include>	
+    	<jsp:include page="_shareLayout/_navbar.jsp"></jsp:include>
+    	<jsp:include page="_shareLayout/_sidebar.jsp"></jsp:include>	
     	
     	<div class="content-wrapper">
 	    <!-- Content Header (Page header) -->
@@ -41,21 +42,20 @@
 	              </div>
 	              <!-- /.card-header -->
 	              <!-- form start -->
-	              <form dow="form" method="post" action="">
+	              <form:form method="post" action="" modelAttribute="dow">
 	                <div class="card-body">
 	                  <div class="form-group">
-	                    <label for="exampleInputEmail1">Thứ</label>
-	                    <input type="text" name="nameDow" class="form-control" id="nameDow" placeholder="Nhập thứ">
-	                  	
-	                    <label for="exampleInputEmail1">Giá trị</label>
-	                    <input type="text" name="variableDow" class="form-control" id="variableDow" placeholder="Nhập giá trị">
+	                    <label for="nameDow">Thứ</label>	                   
+	                  	<form:input type="text" path="nameDow" class="form-control" id="nameDow" placeholder="Nhập thứ"/>
+	                    <label for="variableDow">Giá trị</label>
+	                    <form:input type="text" path="variableDow" class="form-control" id="variableDow" placeholder="Nhập giá trị"/>
 	                  </div>
 	                </div>
 	                <!-- /.card-body -->	
 	                <div class="card-footer">
 	                  <input type="submit" class="btn btn-primary" value="Thêm"/>
 	                </div>
-	              </form>
+	              </form:form>
 	            </div>
 	            <!-- /.card -->
 		    	</div>
@@ -95,8 +95,8 @@
 	    </section>
 	    <!-- /.content -->
   	</div>    	
-    	<jsp:include page="../_shareLayout/_footer.jsp"></jsp:include>
+    	<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
     </div>
-	<jsp:include page="../_shareLayout/footer.jsp"></jsp:include>
+	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
 	</body>
 </html>

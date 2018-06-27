@@ -7,8 +7,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
-import com.vn.ivs.ctu.dao.impl.MemberDAOImpl;
+import com.vn.ivs.ctu.dao.BranchDAO;
+import com.vn.ivs.ctu.dao.MemberDAO;
+import com.vn.ivs.ctu.entity.Branch;
+import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
+import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.MemberService;
 
 @Service
@@ -16,21 +20,43 @@ import com.vn.ivs.ctu.service.MemberService;
 public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
-	MemberDAOImpl memberDAOImpl;	
+	MemberDAO memberDAO;	
+	
+	@Autowired BranchService branchService;
 	
 	public boolean check(String name) {
-		return memberDAOImpl.check(name);
+		return memberDAO.check(name);
 	}
 	@Override
 	public int saveOrUpdate(Member member) {
-		return memberDAOImpl.saveOrUpdate(member);
+		return memberDAO.saveOrUpdate(member);
 	}
 	
 	public Member findByUseName(String name) {
-		return memberDAOImpl.findByUseName(name);
+		return memberDAO.findByUseName(name);
 	}
 	@Override
 	public List<Member> findAll() {
-		return memberDAOImpl.findAll();
+		return memberDAO.findAll();
+	}
+	@Override
+	public List<Member> getAllRoleOTC(){
+		return memberDAO.getAllRoleOTC();
+	}
+	@Override
+	public List<Member> getAllByBranch(int idBranch){
+		return memberDAO.getAllByBranch(idBranch);
+	}
+	@Override
+	public List<Member> getMemberNoClub() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean joinClub(JoinClub joinClub) {
+		return memberDAO.joinClub(joinClub);
+	}
+	public 	Member getMemberById(int idMember) {
+		return memberDAO.getMemberById(idMember);
 	}
 }

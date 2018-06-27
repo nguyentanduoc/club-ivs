@@ -7,9 +7,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
-import com.vn.ivs.ctu.dao.impl.ScheduleDAOImpl;
+import com.vn.ivs.ctu.dao.ScheduleDAO;
 import com.vn.ivs.ctu.entity.Schedule;
-
 import com.vn.ivs.ctu.service.ScheduleService;
 
 @Service
@@ -17,16 +16,22 @@ import com.vn.ivs.ctu.service.ScheduleService;
 public class ScheduleServiceImpl implements ScheduleService{
 
 	@Autowired
-	ScheduleDAOImpl scheduleDAOImpl;
+	ScheduleDAO scheduleDAO;
 	public long create(Schedule schedule) {
-		return scheduleDAOImpl.create(schedule);		
+		return scheduleDAO.create(schedule);		
 	}
 	
 	public boolean deleteSchedule(int id) {
-		return scheduleDAOImpl.deleteSchedule(id);
+		return scheduleDAO.deleteSchedule(id);
 	}
 	public List<Schedule> getAll() {
-		return scheduleDAOImpl.getAll();
+		return scheduleDAO.getAllAuto();
+	}
+
+	@Override
+	public List<Schedule> getListScheduleAuto() {
+		
+		return scheduleDAO.getListScheduleAuto();
 	}
 	
 	

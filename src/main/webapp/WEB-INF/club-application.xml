@@ -10,6 +10,7 @@
 	<context:component-scan	base-package="com.vn.ivs.ctu.entity" />	
 	<context:component-scan	base-package="com.vn.ivs.ctu.service" />
 	<context:component-scan	base-package="com.vn.ivs.ctu.dao" />	
+	<context:component-scan	base-package="com.vn.ivs.ctu.component" />	
 	<mvc:annotation-driven />
 	<import resource="classpath:IoC.xml"/>
 

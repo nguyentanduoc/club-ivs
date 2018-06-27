@@ -10,24 +10,14 @@
 		">
 
 	<http auto-config="false" use-expressions="true">
-		
-		<!-- <intercept-url pattern="/*" access="permitAll"/> -->
-		<intercept-url pattern="/login*" access="permitAll"/>
-        <intercept-url pattern="/logout*" access="permitAll"/>
-		<intercept-url pattern="/resources/**" access="permitAll"/>
-		
-		<!-- <intercept-url pattern="/otc/*" access="hasRole('OTC')" /> -->
-		<!-- <intercept-url pattern="/otc/index/" access="hasRole('OTC')" /> -->
-		
-		<!-- <intercept-url pattern="/admin/*" access="hasRole('ADMIN')" /> -->
-		<!-- <intercept-url pattern="/admin/index/" access="hasRole('ADMIN')" /> -->
+		<intercept-url pattern="/admin" access="hasAuthority('ADMIN')" />	
+		<intercept-url pattern="/admin/role" access="hasAuthority('ADMIN')" />	
+		<intercept-url pattern="/admin/dow" method="GET" access="hasAuthority('ADMIN')" />
 		
 		
-		<!-- <intercept-url pattern="/otcclub/**" access="hasRole('CLUB') and isAuthenticated()" />
-		<intercept-url pattern="/member/**" access="hasRole('MEMBER') and isAuthenticated()" /> -->
-			
-		
-		<intercept-url pattern="/**" access="isAuthenticated()" />
+		<intercept-url pattern="/otc" access="hasAuthority('OTC')" />
+		<intercept-url pattern="/otcclub/schedule" access="hasAuthority('OTC_CLUB')" />
+		<intercept-url pattern="/otcclub/train" access="hasAuthority('OTC_CLUB')" />
 		
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />

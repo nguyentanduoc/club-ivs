@@ -18,15 +18,15 @@ import com.vn.ivs.ctu.service.impl.RoleServiceImpl;
 import com.vn.ivs.ctu.entity.Role;
 
 @Controller
-@RequestMapping("admin/role/")
+@RequestMapping("role")
 public class RoleController {
 	
 	@Autowired
 	RoleServiceImpl roleServiceImpl;
 	
-	@GetMapping	
+	@GetMapping	("/index")
 	public String Index(ModelMap modelMap) {
-		modelMap.put("action1","role");
+		modelMap.put("action1","admin");
 		modelMap.put("action2","index");
 		modelMap.put("title","Role");		
 		
@@ -34,12 +34,12 @@ public class RoleController {
 		
 		return "role";
 	}
-	@PostMapping
+	@PostMapping ("")
 	public String insertRole(@RequestParam String nameRole) {		
 		Role role = new Role();
 		role.setNameRole(nameRole);
 		roleServiceImpl.create(role);		
-		return "redirect:/admin/role/";
+		return "redirect:/admin/role";
 	}
 	
 }

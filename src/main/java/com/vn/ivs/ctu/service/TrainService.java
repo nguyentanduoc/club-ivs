@@ -7,6 +7,8 @@ import com.vn.ivs.ctu.entity.Train;
 public interface TrainService {
 	
 	public long create(Train train);
-	public List<Train> getAll();
-	//public boolean deleteTrain(int id);
+	public List<Train> getAllTrainAuto();
+	public boolean deleteTrain(int id);
+	public List<Train> getAllTrain();
+	public List<Train> getListAllTrainOnWeek();
 }

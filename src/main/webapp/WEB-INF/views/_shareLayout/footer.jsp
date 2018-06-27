@@ -43,7 +43,9 @@ pageEncoding="UTF-8" session="false"%>
 <script src="<c:url value = "/resources/plugins/fastclick/fastclick.js"/>"></script>
 <!-- AdminLTE App -->
 <script src="<c:url value = "/resources/dist/js/adminlte.js"/>"></script>
+
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -56,6 +58,7 @@ pageEncoding="UTF-8" session="false"%>
     //Money Euro
     //$('[data-mask]').inputmask()
 
+    $('.datepicker').datepicker();
     //Date range picker
     $('#reservation').daterangepicker()
     //Date range picker with time picker

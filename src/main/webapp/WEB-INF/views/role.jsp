@@ -41,10 +41,10 @@
 	              </div>
 	              <!-- /.card-header -->
 	              <!-- form start -->
-	              <form role="form" method="post" action="">
+	              <form method="post" action="">
 	                <div class="card-body">
 	                  <div class="form-group">
-	                    <label for="exampleInputEmail1">Tên Chức Vụ</label>
+	                    <label for="nameRole">Tên Chức Vụ</label>
 	                    <input type="text" name="nameRole" class="form-control" id="nameRole" placeholder="Nhập Tên Chức Vụ">
 	                  </div>
 	                </div>
@@ -68,7 +68,7 @@
 		                  <tr>		                   
 		                    <th style="width: 10px">#</th>
 		                    <th>Tên Chức Vụ</th>		                  
-		                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
+		                    <th style="width:150px">Tuỳ Chỉnh</th>	          	       	 
 		                  </tr>
 		                     <c:forEach var="role" items="${listRole}">
 				                  <tr>

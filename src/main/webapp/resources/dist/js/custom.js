@@ -67,3 +67,26 @@ $(document).ready(function(){
 			
 	});
 });
+//
+$(document).ready(function(){
+	$(".ListAllTrainOnWeek").click(function(){
+		var r = confirm("Bạn thật sự muốn xoá?");
+		if(r){
+			var self = $(this);
+			var id = $(this).attr('data-id');
+			$.ajax({
+				url:"/Club-IVS/api/ListAllTrainOnWeek",
+				type:"POST",
+				data:{
+					id:id
+				},
+				success:function(data){
+					if(data="true"){
+						self.closest("tr").remove();
+					}	
+				}
+			})	
+		}
+			
+	});
+});

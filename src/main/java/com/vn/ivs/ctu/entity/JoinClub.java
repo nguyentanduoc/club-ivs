@@ -3,29 +3,38 @@ package com.vn.ivs.ctu.entity;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity(name="join_club")
-public class JoinClub {
+@Table(name = "join_club")
+public class JoinClub {	
 	
-	@EmbeddedId
-	private JoinClubId joinClubId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="ID_JOIN_CLUB")
+	private int idJoinClub;
 	
 	@Column(name="DATE_JOIN")
 	private Date dateJoin;
 	
-	@Column(name="DATE_UPDATE")
-	private Date dateUpdate;
-
-	public JoinClubId getJoinClubId() {
-		return joinClubId;
-	}
-
-	public void setJoinClubId(JoinClubId joinClubId) {
-		this.joinClubId = joinClubId;
-	}
-
+	@OneToOne
+	@JoinColumn(name="ID_MEMBER")
+	private Member member;
+	
+	@OneToOne
+	@JoinColumn(name="ID_STATUS")
+	private Status status;
+	
+	@OneToOne
+	@JoinColumn(name="ID_CLUB")
+	private Club club;
+	
 	public Date getDateJoin() {
 		return dateJoin;
 	}
@@ -34,12 +43,36 @@ public class JoinClub {
 		this.dateJoin = dateJoin;
 	}
 
-	public Date getDateUpdate() {
-		return dateUpdate;
+	public int getIdJoinClub() {
+		return idJoinClub;
 	}
 
-	public void setDateUpdate(Date dateUpdate) {
-		this.dateUpdate = dateUpdate;
+	public void setIdJoinClub(int idJoinClub) {
+		this.idJoinClub = idJoinClub;
 	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public Club getClub() {
+		return club;
+	}
+
+	public void setClub(Club club) {
+		this.club = club;
+	}	
 	
 }

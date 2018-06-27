@@ -10,24 +10,26 @@ public class Train {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_TRAIN")
-	private long idTrain;
+	private int idTrain;
 	
 	@Column(name = "DATE_TRAIN")
 	private Date dateTrain;
 	
-	@OneToOne(cascade  = CascadeType.ALL)
+	@Column(name = "WEEKEND")
+	private int weekend;
+	
+	@Column(name = "YEAR")
+	private int year;
+	
+	@OneToOne(cascade  = CascadeType.PERSIST,fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_SCHEDULE")
 	private Schedule schedule;
-	
-	@OneToOne(cascade  = CascadeType.ALL)
-	@JoinColumn(name="ID_CLUB")
-	private Club club;
 
-	public long getIdTrain() {
+	public int getIdTrain() {
 		return idTrain;
 	}
 
-	public void setIdTrain(long idTrain) {
+	public void setIdTrain(int idTrain) {
 		this.idTrain = idTrain;
 	}
 
@@ -47,13 +49,22 @@ public class Train {
 		this.schedule = schedule;
 	}
 
-	public Club getClub() {
-		return club;
+	public int getWeekend() {
+		return weekend;
 	}
 
-	public void setClub(Club club) {
-		this.club = club;
+	public void setWeekend(int weekend) {
+		this.weekend = weekend;
 	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
 	
 	
 }

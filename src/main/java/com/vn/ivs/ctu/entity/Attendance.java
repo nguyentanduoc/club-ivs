@@ -9,8 +9,8 @@ public class Attendance {
 	@EmbeddedId
 	private AttendanceID attendanceID;
 	
-	@Column(name="reason", length=500)
-	private String reason;
+	@Column(name="IS_ATTENDANCE")
+	private boolean attendance;
 
 	public AttendanceID getAttendanceID() {
 		return attendanceID;
@@ -20,13 +20,12 @@ public class Attendance {
 		this.attendanceID = attendanceID;
 	}
 
-	public String getReason() {
-		return reason;
+	public boolean isAttendance() {
+		return attendance;
 	}
 
-	public void setReason(String reason) {
-		this.reason = reason;
+	public void setAttendance(boolean attendance) {
+		this.attendance = attendance;
 	}
-	
-	
+
 }

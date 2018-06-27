@@ -19,6 +19,7 @@ import com.vn.ivs.ctu.entity.Schedule;
 
 @Repository("scheduleDAOImpl")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Transactional
 public class ScheduleDAOImpl implements ScheduleDAO {
 
 	@Autowired
@@ -28,17 +29,20 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	@Transactional
+
 	public long create(Schedule schedule) {
 		currentSession().saveOrUpdate(schedule);
 		return schedule.getIdSchedule();
 	}
-	@Transactional
-	public List<Schedule> getAll() {	
-		
-		return currentSession().createQuery("from schedule").list();
+
+	public List<Schedule> getAllAuto() {	
+		try {
+			return currentSession().createQuery("from schedule where autoSchedule=?",Schedule.class).setParameter(0, true).list();
+		}catch (Exception e) {
+			return null;
+		}
 	}
-	@Transactional
+
 	public boolean deleteSchedule(int id) {
 		try {
 			Schedule loadSchedule = currentSession().load(Schedule.class,id);
@@ -48,5 +52,14 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			System.out.println("deleteSchedule-"+ ex.toString());
 			return false;
 		}	
+	}
+
+	@Override
+	public List<Schedule> getListScheduleAuto() {
+		try {
+			return currentSession().createQuery("from schedule where autoSchedule=?",Schedule.class).setParameter(0, true).list();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

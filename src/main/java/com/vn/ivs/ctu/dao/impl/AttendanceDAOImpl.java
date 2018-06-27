@@ -11,15 +11,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
-import com.vn.ivs.ctu.dao.DowDAO;
-import com.vn.ivs.ctu.entity.DateOfWeek;
-
-
+import com.vn.ivs.ctu.dao.AttendanceDAO;
+import com.vn.ivs.ctu.entity.Attendance;
+import com.vn.ivs.ctu.entity.Train;
 
 @Repository()
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class DowDAOImpl implements DowDAO {
-
+@Transactional
+public class AttendanceDAOImpl implements AttendanceDAO{
+	
 	@Autowired
 	SessionFactory sessionFactory;
 
@@ -27,28 +27,24 @@ public class DowDAOImpl implements DowDAO {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	@Transactional
-	public long create(DateOfWeek dow) {
-		currentSession().save(dow);
-		return dow.getIdDow();
-	}
-	
-	@Transactional
-	public List<DateOfWeek> getAll() {		
-		
-		return currentSession().createQuery("from date_of_week",DateOfWeek.class).list();
+	@Override
+	public boolean createOrUpdate(Attendance attendance) {
+		try {			
+			currentSession().saveOrUpdate(attendance);
+			return true;
+		}
+		catch(Exception ex) {
+			return false;
+		}
 	}
 
-	@Transactional
-	public boolean deleteDow(int id) {
-		try {
-			DateOfWeek loadDow = currentSession().load(DateOfWeek.class,id) ;
-			currentSession().delete(loadDow);
-			return true;
-		}	catch(Exception ex) {
-			System.out.println("deleteDow-"+ ex.toString());
-			return false;
-		}	
-	}
+//	@Override
+//	public List<Attendance> getAllAttendance() {
+//		try {
+//			return currentSession().createQuery("from attendance").list();
+//			}catch (Exception e) {
+//				return null;
+//			}
+//	}
 
 }

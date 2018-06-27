@@ -1,8 +1,13 @@
 package com.vn.ivs.ctu.entity;
 
-import java.util.Set;
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 
 @Entity(name="club")
@@ -16,29 +21,14 @@ public class Club {
 	@Column(name="NAME_CLUB", length=100)
 	private String nameClub;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="ID_BRANCH")
 	private Branch branch;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="ID_MEMBER")
 	private Member member;
 	
-	
-
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="SCHEDULE_CLUB", 
-			joinColumns= {@JoinColumn(name="ID_CLUB",referencedColumnName="ID_CLUB")},
-			inverseJoinColumns = {@JoinColumn(name="ID_SCHEDULE",referencedColumnName="ID_SCHEDULE")})
-	Set<Schedule> schedules;
-	
-	public Set<Schedule> getSchedules() {
-		return schedules;
-	}
-
-	public void setSchedules(Set<Schedule> schedules) {
-		this.schedules = schedules;
-	}
 	public int getIdClub() {
 		return idClub;
 	}
