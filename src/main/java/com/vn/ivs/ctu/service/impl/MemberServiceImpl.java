@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
-import com.vn.ivs.ctu.dao.BranchDAO;
 import com.vn.ivs.ctu.dao.MemberDAO;
-import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.service.BranchService;
@@ -58,5 +56,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 	public 	Member getMemberById(int idMember) {
 		return memberDAO.getMemberById(idMember);
+	}
+	public List<Member> getAllLeaderClub(){
+		return  memberDAO.getAllLeaderClub();		
 	}
 }

@@ -17,4 +17,5 @@ public interface MemberDAO {
 	public 	List<Member> 	getMemberNoClub();
 	public 	boolean 		joinClub(JoinClub joinClub);
 	public 	Member			getMemberById(int idMember);	
+	public 	List<Member>	getAllLeaderClub();
 }

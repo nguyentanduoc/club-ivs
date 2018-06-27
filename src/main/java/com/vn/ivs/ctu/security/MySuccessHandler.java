@@ -35,9 +35,9 @@ public class MySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 		if (isAdmin(roles)) {
 			url = "/admin";
 		} else if (isOtc(roles)) {
-			url = "/otc";
+			url = "/leader";
 		} else if (isOtcLub(roles)) {
-			url = "/otcclub";
+			url = "/leaderclub";
 		} else if (isMember(roles)) {
 			url = "/member";
 		}
@@ -67,13 +67,13 @@ public class MySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	}
 
 	private boolean isOtc(List<String> roles) {
-		if (roles.contains("OTC")) {
+		if (roles.contains("LEADER")) {
 			return true;
 		}
 		return false;
 	}
 	private boolean isOtcLub(List<String> roles) {
-		if (roles.contains("OTC_CLUB")) {
+		if (roles.contains("LEADER_CLUB")) {
 			return true;
 		}
 		return false;

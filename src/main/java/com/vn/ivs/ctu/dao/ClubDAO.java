@@ -10,4 +10,7 @@ public interface ClubDAO {
 	public List<Club> getAll();
 	public List<Club> getClubByBrach(int idBranch);
 	public Club getClubByLeader(int idLeader);
+	public Club getClubById(int id);
+	public boolean deleteClub(int id);
+
 }

@@ -35,5 +35,13 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	public Club getLeaderClub(int idLeader) {
 		return clubDAO.getClubByLeader(idLeader);
-	}	
+	}		
+	@Override
+	public Club getClubById(int id) {
+		return clubDAO.getClubById(id);
+	}
+	@Override
+	public boolean deleteClub(int id) {
+		return clubDAO.deleteClub(id);
+	}
 }

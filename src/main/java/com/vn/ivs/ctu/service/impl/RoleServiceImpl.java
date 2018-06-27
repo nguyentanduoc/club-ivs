@@ -17,8 +17,8 @@ public class RoleServiceImpl implements RoleService{
 
 	@Autowired
 	RoleDAOImpl roleDAOImpl;
-	public long create(Role role) {
-		return roleDAOImpl.create(role);		
+	public long createOrUpdate(Role role) {
+		return roleDAOImpl.createOrUpdate(role);		
 	}
 
 	public List<Role> getAll() {
@@ -27,4 +27,9 @@ public class RoleServiceImpl implements RoleService{
 	public boolean deleteRole(int id) {
 		return roleDAOImpl.deleteRole(id);
 	}
+
+	public Role getRoleById(int id) {
+		return roleDAOImpl.getRoleById(id);
+	}
+	
 }

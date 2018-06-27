@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.ScheduleDAO;
-import com.vn.ivs.ctu.entity.Role;
 import com.vn.ivs.ctu.entity.Schedule;
 
 
@@ -41,6 +40,13 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		}catch (Exception e) {
 			return null;
 		}
+	}
+	
+	@Transactional
+	public List<Schedule> getAll() {	
+		
+		return currentSession().createQuery("from schedule",Schedule.class).list();
+
 	}
 
 	public boolean deleteSchedule(int id) {

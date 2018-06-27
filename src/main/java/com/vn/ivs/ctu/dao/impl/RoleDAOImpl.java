@@ -2,24 +2,21 @@ package com.vn.ivs.ctu.dao.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
 
 import com.vn.ivs.ctu.dao.RoleDAO;
 import com.vn.ivs.ctu.entity.Role;
 
 @Repository("roleDAOImpl")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Transactional
 public class RoleDAOImpl implements RoleDAO {
 
 	@Autowired
@@ -29,22 +26,18 @@ public class RoleDAOImpl implements RoleDAO {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	@Transactional
-	public long create(Role role) {
-		currentSession().save(role);
+	public long createOrUpdate(Role role) {
+		currentSession().saveOrUpdate(role);		
 		return role.getIdRole();
 	}
 	
-	@Transactional
 	public List<Role> getAll() {		
-		
-		return currentSession().createQuery("from role").list();
+		return currentSession().createQuery("from role",Role.class).list();
 	}
 
-	@Transactional
 	public boolean deleteRole(int id) {
 		try {
-			Role loadRole = currentSession().load(Role.class,id) ;
+			Role loadRole = getRoleById(id) ;
 			currentSession().delete(loadRole);
 			return true;
 		}	catch(Exception ex) {
@@ -53,4 +46,9 @@ public class RoleDAOImpl implements RoleDAO {
 		}	
 	}
 
+	public Role getRoleById(int id) {		
+		Role role = currentSession().load(Role.class,id);
+		return role;
+		
+	}
 }

@@ -7,15 +7,16 @@ pageEncoding="UTF-8" session="false"%>
 <!-- jQuery UI 1.11.4 -->
 <script src="<c:url value ="/resources/plugins/jquery/jquery-ui.min.js"/>"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
 <script src="<c:url value ="/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
-<!-- Morris.js charts -->
-<script src="<c:url value = "/resources/plugins/raphael/raphael-min.js"/>"></script>
-
+<!-- DataTables -->
+<script src="<c:url value ="/resources/plugins/datatables/jquery.dataTables.min.js"/>"></script>
+<script src="<c:url value ="/resources/plugins/datatables/dataTables.bootstrap4.min.js"/>"></script>
+<!-- Select2 -->
+<script src="<c:url value = "/resources/plugins/select2/select2.full.min.js"/>"></script>
 
 
 <script src="<c:url value = "/resources/plugins/morris/morris.min.js"/>"></script>
@@ -39,6 +40,8 @@ pageEncoding="UTF-8" session="false"%>
 <script src="<c:url value = "/resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"/>"></script>
 <!-- Slimscroll -->
 <script src="<c:url value = "/resources/plugins/slimScroll/jquery.slimscroll.min.js"/>"></script>
+<!-- iCheck 1.0.1 -->
+<script src="<c:url value = "/resources/plugins/iCheck/icheck.min.js"/>"></script>
 <!-- FastClick -->
 <script src="<c:url value = "/resources/plugins/fastclick/fastclick.js"/>"></script>
 <!-- AdminLTE App -->
@@ -48,15 +51,33 @@ pageEncoding="UTF-8" session="false"%>
 
 <script>
   $(function () {
+	  	$("#example1").DataTable();
+	    $('#example2').DataTable({
+	      "paging": false,
+	      "lengthChange": false,
+	      "searching": false,
+	      "ordering": true,
+	      "info": true,
+	      "autoWidth": false
+	    });
+	    $('.datepicker').datepicker();
+	   //month
+	  $(".month-piker").datepicker( {			  
+		  	update: new Date(),
+		    format: "mm-yyyy",
+		    viewMode: "months", 
+		    minViewMode: "months"
+		});
+	  $('.month-piker').datepicker('update', new Date());
     //Initialize Select2 Elements
-    //$('.select2').select2();
+    $('.select2').select2();
 
     //Datemask dd/mm/yyyy
     //$('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
     //Datemask2 mm/dd/yyyy
    // $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
     //Money Euro
-    //$('[data-mask]').inputmask()
+    //$('[data-mask]').inputmask() */
 
     $('.datepicker').datepicker();
     //Date range picker
@@ -87,20 +108,20 @@ pageEncoding="UTF-8" session="false"%>
     )
 
     //iCheck for checkbox and radio inputs
-    /* $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
       checkboxClass: 'icheckbox_minimal-blue',
       radioClass   : 'iradio_minimal-blue'
-    }) */
+    })
     //Red color scheme for iCheck
-    /* $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
       checkboxClass: 'icheckbox_minimal-red',
       radioClass   : 'iradio_minimal-red'
-    }) */
+    })
     //Flat red color scheme for iCheck
-    /* $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
       checkboxClass: 'icheckbox_flat-green',
       radioClass   : 'iradio_flat-green'
-    }) */
+    })
 
     //Colorpicker
     $('.my-colorpicker1').colorpicker()
@@ -111,7 +132,7 @@ pageEncoding="UTF-8" session="false"%>
     $('.timepicker').timepicker({
       showInputs: false
     })
-  })
+ });
 </script>
 <!-- custom js -->
 <script src="<c:url value ="/resources/dist/js/custom.js"/>"></script>

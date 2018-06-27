@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" 
-pageEncoding="UTF-8" session="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" session="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +31,7 @@ pageEncoding="UTF-8" session="false"%>
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<b>IVS</b> - CLUB
+			<b>IVS</b> &nbsp;-  &nbsp;CLUB
 		</div>
 		<!-- /.login-logo -->
 		<div class="card">
@@ -40,20 +40,27 @@ pageEncoding="UTF-8" session="false"%>
 				<form action="<c:url value="j_spring_security_check" />"
 					method="post">
 					<c:if test="${param.error!=null}">
-						<div class="alert alert-danger" role="alert">Sai mật khẩu
-							hoặc tài khoản không tồn tại!</div>
+						<div class="alert alert-danger text-center" role="alert">
+							Sai tên hoặc mật khẩu</div>
 					</c:if>
 					<c:if test="${param.accessDinied!=null}">
-						<div class="alert alert-danger" role="alert">Bạn không có quyền truy cập</div>
-					</c:if>
-					<div class="form-group has-feedback">
+						<div class="alert alert-danger text-center" role="alert">Bạn
+							không có quyền truy cập</div>
+					</c:if>					
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fa fa-envelope"></i></span>
+						</div>
 						<input type="text" class="form-control" placeholder="Email"
 							name="j_username">
 					</div>
-					<div class="form-group has-feedback">
-						<input type="password" class="form-control" placeholder="Password"
-							name="j_password">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fa fa-lock" style="font-size:25px;"></i></span>
+						</div>
+						<input type="password" class="form-control" placeholder="Password"	name="j_password"> 
 					</div>
+					
 					<div class="row">
 						<div class="col-8">
 							<div class="checkbox icheck">
@@ -71,17 +78,6 @@ pageEncoding="UTF-8" session="false"%>
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
 				</form>
-
-				<!-- <div class="social-auth-links text-center mb-3">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fa fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fa fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
-      </div> -->
-				<!-- /.social-auth-links -->
 			</div>
 			<!-- /.login-card-body -->
 		</div>

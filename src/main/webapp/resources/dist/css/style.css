@@ -46,3 +46,10 @@ table tr td span{
 .table-hover tbody tr:hover > td.info {
   background-color: #c4e3f3 !important;
 }
+.form-group li{
+	list-style-type:none;
+	padding-left: 20px;	
+}
+.form-group li div{
+	margin-right: 10px;
+}
