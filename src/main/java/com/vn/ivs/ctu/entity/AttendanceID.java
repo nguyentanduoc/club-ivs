@@ -53,5 +53,4 @@ public class AttendanceID implements Serializable{
 		return true;
 	}
 	
-	
 }

@@ -1,15 +1,12 @@
 package com.vn.ivs.ctu.controller;
 
 import java.util.Date;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +20,6 @@ import com.vn.ivs.ctu.entity.Status;
 import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.MemberService;
-import com.vn.ivs.ctu.service.RoleService;
-import com.vn.ivs.ctu.utils.CustomFormBinder;
 import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Controller
