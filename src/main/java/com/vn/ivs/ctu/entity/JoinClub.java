@@ -2,8 +2,10 @@ package com.vn.ivs.ctu.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,9 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 
 @Entity(name="join_club")
 @Table(name = "join_club")
+@Proxy(lazy = false)
 public class JoinClub {	
 	
 	@Id
@@ -24,15 +29,15 @@ public class JoinClub {
 	@Column(name="DATE_JOIN")
 	private Date dateJoin;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_MEMBER")
 	private Member member;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_STATUS")
 	private Status status;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_CLUB")
 	private Club club;
 	

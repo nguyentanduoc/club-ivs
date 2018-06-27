@@ -34,7 +34,7 @@
 	      <div class="container-fluid">
 	      	<div class="row">
 	          <!-- left column -->
-	          <div class="col-md-6">
+	          <div class="col-md-5">
 	            <!-- general form elements -->
 	            <div class="card card-primary">
 	              <div class="card-header">
@@ -45,13 +45,25 @@
 	              	<form method="POST" action="${pageContext.request.contextPath}/club/joinClub">	          
 		                <div class="card-body">
 		                	<c:choose>
-							    <c:when test="${status==200}">
+							    <c:when test="${status==403}">
 							        <div class="text-danger text-center">
-							        	<c:out value="${message}"/>
+							        	<h4><c:out value="${message}"/></h4>
 							        </div>
 							    </c:when>    
 							    <c:otherwise>
 							      <div class="form-group">
+							      	<c:choose>
+							      		<c:when test="${status==200}">
+									        <div class="text-success text-center">
+									        	<h4><c:out value="${message}"/></h4>
+									        </div>
+								   		</c:when> 
+								   		<c:otherwise>								   			
+									        <div class="text-success text-center">
+									        	<h4><c:out value="${message}"/></h4>
+									        </div>								   		
+								   		</c:otherwise>
+							      	</c:choose>
 					                 <label for="idMember">Chọn Thành Viên</label>					              
 					                  <select id="idMember" name="idMember"  class="form-control select2" style="width: 100%;">
 					                    <option value="0">--- Chọn Nhân Viên ---</option>
@@ -62,7 +74,7 @@
 									</div>  
 									<div class="form-group">
 					                 	<label for="clubs">Chọn câu lạc bộ</label>		
-						                 <ul>
+						                 <ul id="clubs">
 						                 	<c:forEach var="club" items="${clubs}">				                
 												<li>
 													<input class="flat-red" type="checkbox" name="clubs" value="${club.getIdClub()}"/>${club.getNameClub()}											
@@ -81,28 +93,29 @@
 	               <!-- ./form -->
 	            </div>
 	            <!-- /.card -->
-		    	</div>
-		    	<div class="col-md-6">
-		            <div class="card">
-		              <div class="card-header">
-		                <h3 class="card-title">Danh Sách lịch</h3>	
-		                
-		              </div>
-		              <!-- /.card-header -->
-		              <div class="card-body p-0">
-		                <table class="table">
-		                  <tr>		                   
-		                    <th style="width: 10px">#</th>
-		                    <th>Thứ</th>
-		                    <th>Giá trị</th>	                  
-		                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
-		                  </tr>
-		                       	                  
+		    	</div>	
+		    	<div class="col-md-7"> 
+		    		<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Danh sách Tham gia Câu Lạc Bộ</h3>
+						</div><!-- /.card-header -->
+						<div class="card-body p-0">
+							<div class="text-danger text-center" id="messageJoinClub"></div>
+							<table class="table" id="tableJoinClub">
+			                  <tr>		                   
+			                    <th>Tên câu Lạc bộ</th>
+			                    <th>Thời gian tham gia</th>		      
+			                    <th>Tình hiện tại</th>	            
+			                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
+			                  </tr>
+			                   <tbody id="listJoinClub">
+			                        
+		                  	  </tbody>	                  
 		                </table>
-		              </div>
-		              <!-- /.card-body -->
-		            </div>
-		    	</div>
+						</div>
+						<!-- /.card-body -->
+					</div>
+		    	</div>	    	
 		    </div>
 		   </div>
 	    </section>

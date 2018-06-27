@@ -22,7 +22,8 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 	@Autowired
 	SessionFactory sessionFactory;
 
-	protected Session currentSession() {
+	protected Session currentSession
+	() {
 		return sessionFactory.getCurrentSession();
 	}
 	
@@ -36,9 +37,30 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 		}catch(Exception ex) {
 			System.out.println(ex.toString());
 			return null;
+		}	
+	}
+
+	@Override
+	public int createOrUpdate(JoinClub joinClub) {
+		try {
+			currentSession().saveOrUpdate(joinClub);
+			return joinClub.getIdJoinClub();
+		}catch(Exception ex) {
+			System.out.println("joinClubDAO " + ex.toString());
+			return 0;
 		}
-		
-		
+	}
+
+	@Override
+	public List<JoinClub> getJoinClubByIdMember(int idMember) {
+		try {
+			return currentSession().
+					createQuery("FROM join_club j WHERE j.member.idMember = ?",JoinClub.class).
+					setParameter(0, idMember).list();	
+		}catch(Exception e) {
+			System.out.println("Join Club DAO "+e.toString());
+			return null;
+		}
 	}
 	
 }

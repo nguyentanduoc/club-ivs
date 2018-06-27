@@ -19,6 +19,7 @@ import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.Status;
 import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
+import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.utils.SecurityUtils;
 
@@ -29,7 +30,7 @@ public class ClubController {
 	@Autowired BranchService branchService;
 	@Autowired ClubService clubService;
 	@Autowired MemberService memberService;
-		
+	@Autowired JoinClubService joinClubService;
 	
 	@GetMapping(path="/index")
 	public String index(@RequestParam(name="message",required=false) String message, ModelMap modelMap){
@@ -61,43 +62,63 @@ public class ClubController {
 	}
 	
 	@GetMapping(path = "/joinClub")
-	public String joinClub(ModelMap modelMap) {
+	public String joinClub(@RequestParam(name="message",required=false)String message,ModelMap modelMap) {
 		modelMap.put("action1", "club");
 		modelMap.put("action2", "joinClub");
 		modelMap.put("title", "Join Club");
-
 		int idOTC = SecurityUtils.getMyUserDetail().getIdMember();
 		Branch branch = branchService.getBranchByMember(idOTC);
 		if(branch!=null) {
 			modelMap.put("members", memberService.getAllByBranch(branch.getIdBranch()));
 			modelMap.put("clubs", clubService.getClubByBranch(branch.getIdBranch()));
 		}else{
-			modelMap.put("status", "200");
+			modelMap.put("status", 403);
 			modelMap.put("message", "Bạn không phải là quản lý!");
+		}		
+		if(message!=null) {
+			if(message.equals("success")) {
+				modelMap.put("status", 200);
+				modelMap.put("message", "Thành Công!");
+			}else {
+				modelMap.put("status", 400);
+				modelMap.put("message", "Thất Bại!");
+			}
 		}
-		
 		return "joinClub";
 	}
 
 	@PostMapping(path = "/joinClub")
-	public String createJoinClub(@ModelAttribute("idMember") int idMember, @RequestParam("clubs") String[]  clubs) {
-		
-		System.out.println(idMember);
+	public String createJoinClub(@RequestParam("idMember") int idMember, @RequestParam("clubs") String[]  clubs) {
+		boolean success = true;
 		for(String s:clubs) {
-			Club club = new Club();
-			club.setIdClub(Integer.parseInt(s));
-			JoinClub joinClub = new JoinClub();
-			joinClub.setDateJoin(new Date());
-			joinClub.setClub(club);
-			Status status =new Status();
-			status.setIdStatus(1);
-			joinClub.setStatus(status);
-			Member member = new Member();
-			member.setIdMember(idMember);
-			joinClub.setMember(member);
-			
+			try {
+				Club club = new Club();			
+				club.setIdClub(Integer.parseInt(s));
+				JoinClub joinClub = new JoinClub();
+				joinClub.setDateJoin(new Date());
+				Status status =new Status();
+				club.setIdClub(Integer.parseInt(s));
+				joinClub.setClub(club);			
+				status.setIdStatus(1);
+				joinClub.setStatus(status);
+				Member member = new Member();
+				member.setIdMember(idMember);
+				joinClub.setMember(member);
+				if(joinClubService.createOrUpdate(joinClub)>0) {
+					success = true;
+				}else {
+					success = false;
+				}
+			}catch(Exception e) {
+				System.out.println(e.toString());
+				return "redirect:/club/joinClub?message=error";				
+			}			
 		}		
+		if(success) {
+			return "redirect:/club/joinClub?message=success";
+		}else {
+			return "redirect:/club/joinClub?message=error";
+		}
 		
-		return "redirect:/club/joinClub";
 	}
 }

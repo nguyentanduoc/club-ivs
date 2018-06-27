@@ -2,7 +2,10 @@ package com.vn.ivs.ctu.entity;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Proxy;
+
 @Entity(name="status")
+@Proxy(lazy = false)
 public class Status {
 	
 	@Id
