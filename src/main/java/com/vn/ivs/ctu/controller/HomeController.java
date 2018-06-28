@@ -121,6 +121,7 @@ public class HomeController {
 					System.out.println("----------------------------------------- That Bai");
 				}
 			}
+//			adhgaskduyhgalsdglaoisugdolasuigdlkuasgdlsagl
 			/**/
 			//List<Attendance>  attendances = attendanceService.getAttendanceByClub(DateUtils.getCurentMonth(),c.getIdClub());
 			
