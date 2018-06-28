@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,7 +53,7 @@ public class ApiController {
 	@Autowired TrainService trainservice;
 	@Autowired JoinClubService joinClubService;
 	@Autowired AttendanceService attendanceService;
-	
+
 //role
 	@PostMapping("deleteRole")
 	@ResponseBody
@@ -219,9 +220,9 @@ public class ApiController {
 			map.put("status", "400");
 		}		
 		return map;
-	}
-	//end club
+	}//end club
 	
+	//start schedule
 	@GetMapping("deleteSchedule")
 	@ResponseBody
 	public String deleteSchedule(@RequestParam int id) {		
@@ -231,6 +232,15 @@ public class ApiController {
 		}else {
 			return "false";
 		}
+	}//end schedule
+
+	//start join club
+	@PostMapping(path="getMemberJoinClubStatus")
+	@ResponseBody
+	public Map<String,Object> getMemberJoinClub(int idMember){
+		Map<String, Object> map = new HashMap<>();
+		
+		return map;
 	}
 	
 	@GetMapping("deleteTrain")
@@ -278,4 +288,23 @@ public class ApiController {
 		}
 		return 400;
 	}
+
+	@PostMapping(path="getJoinClub")
+	@ResponseBody
+	public Map<String,Object>getJoinClub(@RequestParam("idMember")int idMember){
+		Map<String,Object> map = new HashMap<>();
+		List<JoinClub> joinClubs = joinClubService.getJoinClubByIdMember(idMember);
+		if(joinClubs!=null){
+			if(joinClubs.size()>0) {
+				map.put("status", 200);
+				map.put("joinClubs", joinClubs);
+			}else {
+				map.put("status", 404);
+			}
+		}else {
+			map.put("status", 400);
+		}
+		return map;
+	}
+	//end join club
 }

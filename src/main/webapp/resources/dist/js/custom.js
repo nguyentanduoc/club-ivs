@@ -346,9 +346,54 @@ $(document).ready(function(){
 		}		
 	})//end club
 	//start join club
+	$("#tableJoinClub").hide();
 	$("#idMember").change(function(){
+		
+		$("#messageJoinClub").empty();
+		$("#listJoinClub").empty();
 		var idMember = $("#idMember").val();
-		console.log(idMember);
+		$.ajax({
+			url:"/Club-IVS/api/getJoinClub",
+			type:"POST",
+			data:{
+				"idMember":idMember,				
+			},
+			success:function(data){
+				if(data.status==200){	
+					$("#tableJoinClub").show();	
+					var view;
+					$.each(data.joinClubs, function (index, row) {
+						var date = new Date(parseInt(row.dateJoin));
+						var dd = date.getDate();
+						var mm = date.getMonth()+1;
+						var yyyy = date.getFullYear();
+						if(dd<10){
+						    dd='0'+dd;
+						} 
+						if(mm<10){
+						    mm='0'+mm;
+						} 
+						var dateJoin = dd+'/'+mm+'/'+yyyy;
+						view +=  "<tr>" 
+								+"<td>"+row.club.nameClub+"</td>"
+								+"<td>"+dateJoin+"</td>"
+								+"<td>"+row.status.nameStatus+"</td>"
+								+"</tr>"; 
+						 /*$("#clubs").each(function(index1,element){
+						        console.log(element);
+						    });*/
+                    })
+					$("#listJoinClub").append(view);
+				}else{
+					if(data.status==404){
+						$("#messageJoinClub").append("Thành viên này chưa tham gia câu lạc bộ nào!");
+					}else{
+						$("#messageJoinClub").append("Đã xảy ra lỗi!");
+					}
+				}
+				
+			}
+		});	
 	});
 	//end join club
 	//attendence
