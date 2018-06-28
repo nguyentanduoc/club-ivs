@@ -29,18 +29,13 @@ public class AttendanceController {
 
 		modelMap.put("action1","attendance");
 		modelMap.put("action2","index");
-		modelMap.put("title","Attendance");		
-		modelMap.put("listAllTrainOnWeek", trainService.getListAllTrainOnWeek());
+		modelMap.put("title","Attendance");
 		int idLeader =  SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idLeader);
 		if(club!=null) {
-			modelMap.put("listJoinClubByClub", joinclubService.getJoinClubByClub(club.getIdClub()));
-			
+			modelMap.put("listAllTrainOnWeek", trainService.getListAllTrainOnWeek(club.getIdClub()));			
 		}else {
-			
 		}	
-		
 		return "attendance";
-
-}
+	}
 }

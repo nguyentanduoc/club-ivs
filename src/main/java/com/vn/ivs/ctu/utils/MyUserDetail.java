@@ -23,7 +23,7 @@ public class MyUserDetail extends User {
 	private boolean sexMember;
 	private String phoneNumberMember;
 	private String avartarMember;
-
+	
 	public int getIdMember() {
 		return idMember;
 	}
@@ -60,5 +60,5 @@ public class MyUserDetail extends User {
 	public void setAvartarMember(String avartarMember) {
 		this.avartarMember = avartarMember;
 	}
-	
+
 }

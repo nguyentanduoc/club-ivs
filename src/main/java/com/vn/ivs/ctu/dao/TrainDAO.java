@@ -13,4 +13,5 @@ public interface TrainDAO {
 	public boolean deleteTrain(int id);
 	public List<Train> getAllTrainAuto();
 	public List<Train> getAllTrainOnWeek();
+	public List<Train> getListAllTrainOnWeek(int idClub);
 }

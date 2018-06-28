@@ -72,11 +72,11 @@ public class TrainController {
         cal.setTime(myDate);
         
 		int week = cal.get(Calendar.WEEK_OF_YEAR);
-        int year = cal.getWeekYear();
+        
 		if(scheduleService.create(schedule)>0) {
 			train.setSchedule(schedule);
 			train.setWeekend(week);
-			train.setYear(year);
+			
 			if(trainService.create(train)>0)
 			{
 				List<JoinClub> joinClubs = joinClubService.getJoinClubByClub(schedule.getClub().getIdClub());

@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.ClubDAO;
-import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
 
 @Repository("clubDAOImpl")
@@ -52,8 +51,23 @@ public class ClubDAOImpl implements ClubDAO{
 			return currentSession().createQuery("from club c where c.member.idMember = ?",Club.class).setParameter(0, idLeader).getSingleResult();
 		}catch(Exception e) {
 			return null;
-		}
-		
-	}
+		}		
+	}	
 	
+	@Override
+	public Club getClubById(int id) {
+		return currentSession().load(Club.class, id);
+	}
+
+	@Override
+	public boolean deleteClub(int id) {
+		try {
+			currentSession().delete(currentSession().load(Club.class,id));
+			return true;
+		}	catch(Exception ex) {
+			System.out.println("Delete ClubDAo -"+ ex.toString());
+			return false;
+		}	
+	}
+		
 }

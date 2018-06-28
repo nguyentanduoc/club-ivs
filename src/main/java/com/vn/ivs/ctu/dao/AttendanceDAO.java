@@ -7,6 +7,5 @@ import com.vn.ivs.ctu.entity.Attendance;
 public interface AttendanceDAO {
 	
 	public boolean createOrUpdate(Attendance attendance);
-
-	//public List<Attendance> getAllAttendance();
+	public List<Attendance> getAttendanceByTrain(int id);
 }

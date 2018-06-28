@@ -1,45 +1,51 @@
 package com.vn.ivs.ctu.controller;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.vn.ivs.ctu.service.impl.RoleServiceImpl;
 import com.vn.ivs.ctu.entity.Role;
+import com.vn.ivs.ctu.service.impl.RoleServiceImpl;
 
 @Controller
-@RequestMapping("role")
+@RequestMapping("role/")
 public class RoleController {
 	
-	@Autowired
-	RoleServiceImpl roleServiceImpl;
-	
-	@GetMapping	("/index")
-	public String Index(ModelMap modelMap) {
-		modelMap.put("action1","admin");
+	@Autowired	RoleServiceImpl roleServiceImpl;
+
+	@GetMapping(path="index")
+	public String Index(@RequestParam(name="message",required=false)String message ,ModelMap modelMap) {
+		modelMap.put("action1","role");
 		modelMap.put("action2","index");
-		modelMap.put("title","Role");		
-		
-		modelMap.put("listRole",roleServiceImpl.getAll());
-		
+		modelMap.put("title","Role");				
+		modelMap.put("role", new Role());
+		modelMap.put("listRole",roleServiceImpl.getAll());		
+		if(message!=null) {			
+			if(message.equals("200")) {
+				modelMap.put("status", 200);
+				modelMap.put("message", "Thành Công!");
+			}			
+			else {
+				modelMap.put("status", 400);
+				modelMap.put("message", "Thất Bại!");
+			}
+		}		
 		return "role";
 	}
-	@PostMapping ("/create")
-	public String insertRole(@RequestParam String nameRole) {		
-		Role role = new Role();
-		role.setNameRole(nameRole);
-		roleServiceImpl.create(role);		
-		return "redirect:/role/index";
-	}
-	
+
+	@PostMapping(path="insert")
+	public String insertRole(@ModelAttribute("role") Role role) {		
+				
+		if(roleServiceImpl.createOrUpdate(role) > 0 ) {
+			return "redirect:/role/index?message=200";
+		}else {
+			return "redirect:/role/index?message=400";
+		}
+	}	
+
 }

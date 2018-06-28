@@ -65,21 +65,17 @@
 		              
 		              <div class="card-body p-1">
 		                <table class="table">
-		                  <tr>		                   
+		                  <tr>
 		                    
-		                    <th>STT</th>
 		                    <th>Họ tên</th>
-		                    <th>Thuộc Club</th>      
+		                    <th>Giới tính</th>      
+		                    <th>Có mặt</th>
 		                    <th>Điểm danh</th>
-		                             	 
-		                  </tr>
-	                      	   <c:forEach var="v" items="${listJoinClubByClub}">
-				                       <tr>
-				                  	
-				                    <td>${v.getMember().getNameMember()}</td>
-				                                     
-			                  </tr>	
-	                  	 </c:forEach>                  
+		                   
+		                    </tr> 
+		                    <tbody id="ListAttendace">
+		                    
+		                    </tbody>   
 		                </table>
 		                
 		              </div>

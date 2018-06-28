@@ -4,7 +4,10 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Proxy;
+
 @Entity(name="train")
+@Proxy(lazy=false)
 public class Train {
 	
 	@Id
@@ -17,10 +20,7 @@ public class Train {
 	
 	@Column(name = "WEEKEND")
 	private int weekend;
-	
-	@Column(name = "YEAR")
-	private int year;
-	
+		
 	@OneToOne(cascade  = CascadeType.PERSIST,fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_SCHEDULE")
 	private Schedule schedule;
@@ -57,14 +57,26 @@ public class Train {
 		this.weekend = weekend;
 	}
 
-	public int getYear() {
-		return year;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idTrain;
+		return result;
 	}
 
-	public void setYear(int year) {
-		this.year = year;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Train other = (Train) obj;
+		if (idTrain != other.idTrain)
+			return false;
+		return true;
 	}
-
-	
 	
 }

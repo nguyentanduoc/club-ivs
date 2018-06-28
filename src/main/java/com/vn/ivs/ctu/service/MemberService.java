@@ -14,5 +14,7 @@ public interface MemberService {
 	public List<Member> getAllByBranch(int idBranch);
 	public List<Member> getMemberNoClub();
 	public boolean joinClub(JoinClub joinClub);
-	public 	Member getMemberById(int idMember);
+	public Member getMemberById(int idMember);
+	public List<Member> getAllLeaderClub();
+
 }

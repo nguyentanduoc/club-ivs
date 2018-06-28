@@ -38,13 +38,15 @@ public class AttendanceDAOImpl implements AttendanceDAO{
 		}
 	}
 
-//	@Override
-//	public List<Attendance> getAllAttendance() {
-//		try {
-//			return currentSession().createQuery("from attendance").list();
-//			}catch (Exception e) {
-//				return null;
-//			}
-//	}
-
+	@Override
+	public List<Attendance> getAttendanceByTrain(int id) {
+		try {
+			return currentSession().createQuery("from attendance a where a.attendanceID.idTrain=?", Attendance.class).setParameter(0, id).list();
+		}
+		catch (Exception ex)
+		{
+			System.out.println(ex.toString());
+			return null;
+		}
+	}
 }

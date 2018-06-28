@@ -1,0 +1,115 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" session="true"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<!DOCTYPE html>
+<html>
+	<head>		
+		<jsp:include page="_shareLayout/header.jsp"></jsp:include>
+	</head>
+	<body class="hold-transition sidebar-mini">
+	 <div class="wrapper">
+    	<jsp:include page="_shareLayout/_navbar.jsp"></jsp:include>
+    	<jsp:include page="_shareLayout/_sidebar.jsp"></jsp:include>	
+    	
+    	<div class="content-wrapper">
+	    <!-- Content Header (Page header) -->
+	    <div class="content-header">
+	      <div class="container-fluid">
+	        <div class="row mb-2">
+	          <div class="col-sm-6">
+	            <h1 class="m-0 text-dark">Thêm thành viên vào nhóm</h1>
+	          </div><!-- /.col -->
+	          <div class="col-sm-6">
+	            <ol class="breadcrumb float-sm-right">
+	              <li class="breadcrumb-item"><a href="#">Thêm thành viên</a></li>
+	              <li class="breadcrumb-item active">Thành Viên</li>
+	            </ol>
+	          </div><!-- /.col -->
+	        </div><!-- /.row -->
+	      </div><!-- /.container-fluid -->
+	    </div><!-- /.content-header -->
+	    <!-- Main content -->
+	    <section class="content">
+	      <div class="container-fluid">
+	      	<div class="row">
+	          <!-- left column -->
+	          <div class="col-md-6">
+	            <!-- general form elements -->
+	            <div class="card card-primary">
+	              <div class="card-header">
+	                <h3 class="card-title">Thêm Thành Viên Vào Nhóm</h3>
+	              </div>
+	              <!-- /.card-header -->
+	              <!-- form -->
+	              	<form method="POST" action="${pageContext.request.contextPath}/club/joinClub">	          
+		                <div class="card-body">
+		                	<c:choose>
+							    <c:when test="${status==200}">
+							        <div class="text-danger text-center">
+							        	<c:out value="${message}"/>
+							        </div>
+							    </c:when>    
+							    <c:otherwise>
+							      <div class="form-group">
+					                 <label for="idMember">Chọn Thành Viên</label>					              
+					                  <select id="idMember" name="idMember"  class="form-control select2" style="width: 100%;">
+					                    <option value="0">--- Chọn Nhân Viên ---</option>
+					                      <c:forEach var="member" items="${members}">									
+											  <option value="${member.getIdMember()}">${member.getNameMember()}</option>
+										</c:forEach>
+					                  </select>
+									</div>  
+									<div class="form-group">
+					                 	<label for="clubs">Chọn câu lạc bộ</label>		
+						                 <ul>
+						                 	<c:forEach var="club" items="${clubs}">				                
+												<li>
+													<input class="flat-red" type="checkbox" name="clubs" value="${club.getIdClub()}"/>${club.getNameClub()}											
+												</li>
+											</c:forEach>
+						                 </ul>                   
+									</div> 
+							    </c:otherwise>
+							</c:choose>
+			             </div><!-- /.card-body -->	
+			            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		                <div class="card-footer">
+		                  <input type="submit" class="btn btn-primary float-right" value="Thêm"/>
+		                </div>	             
+	              </form>
+	               <!-- ./form -->
+	            </div>
+	            <!-- /.card -->
+		    	</div>
+		    	<div class="col-md-6">
+		            <div class="card">
+		              <div class="card-header">
+		                <h3 class="card-title">Danh Sách lịch</h3>	
+		                
+		              </div>
+		              <!-- /.card-header -->
+		              <div class="card-body p-0">
+		                <table class="table">
+		                  <tr>		                   
+		                    <th style="width: 10px">#</th>
+		                    <th>Thứ</th>
+		                    <th>Giá trị</th>	                  
+		                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
+		                  </tr>
+		                       	                  
+		                </table>
+		              </div>
+		              <!-- /.card-body -->
+		            </div>
+		    	</div>
+		    </div>
+		   </div>
+	    </section>
+	    <!-- /.content -->
+  	</div>    	
+    	<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
+    </div>
+	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
+	</body>
+</html>

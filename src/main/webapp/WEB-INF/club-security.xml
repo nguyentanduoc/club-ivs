@@ -10,14 +10,10 @@
 		">
 
 	<http auto-config="false" use-expressions="true">
+				
 		<intercept-url pattern="/admin" access="hasAuthority('ADMIN')" />	
-		<intercept-url pattern="/admin/role" access="hasAuthority('ADMIN')" />	
-		<intercept-url pattern="/admin/dow" method="GET" access="hasAuthority('ADMIN')" />
-		
-		
-		<intercept-url pattern="/otc" access="hasAuthority('OTC')" />
-		<intercept-url pattern="/otcclub/schedule" access="hasAuthority('OTC_CLUB')" />
-		<intercept-url pattern="/otcclub/train" access="hasAuthority('OTC_CLUB')" />
+		<intercept-url pattern="/admin/branch" access="hasAuthority('ADMIN')" />	
+		<intercept-url pattern="/**" access="permitAll"/>
 		
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />
@@ -29,18 +25,17 @@
 		<logout 
 			delete-cookies="JSESSIONID" />
 		<!-- enable csrf protection -->
-		<csrf />
+		<csrf/>
 	</http>
-	<!-- <user-service> <user name="user" password="$2a$04$GYGsaJj9l6kH2GikK6QVzO0v3sOCxt3vdkiA2/tcoSw8erI85ZYDG" 
-		authorities="ROLE_USER" /> </user-service> -->
+	<!-- <user-service> <user name="user" password="$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG" 
+		authorities="OTC" /> </user-service> -->
 	<beans:bean id="mySuccessHandler"
 		class="com.vn.ivs.ctu.security.MySuccessHandler" />
-	<!-- <beans:bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" 
-		/> -->
+	
 	<beans:bean id="myUserDetailService"
 		class="com.vn.ivs.ctu.security.MyUserDetailsService">
 	</beans:bean>
-
+	<!-- <beans:bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> -->
 	<authentication-manager>
 		<authentication-provider
 			user-service-ref="myUserDetailService">

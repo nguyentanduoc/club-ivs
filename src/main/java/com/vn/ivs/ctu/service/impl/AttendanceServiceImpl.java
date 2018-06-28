@@ -15,13 +15,15 @@ import com.vn.ivs.ctu.service.AttendanceService;
 public class AttendanceServiceImpl implements AttendanceService{
 
 	@Autowired AttendanceDAO attendanceDAO;
+	
 	@Override
 	public boolean createOrUpdate(Attendance attendance) {
 		return attendanceDAO.createOrUpdate(attendance);
 	}
-//	@Override
-//	public List<Attendance> getAllAttendance() {
-//		return attendanceDAO.getAllAttendance();
-//	}
+	
+	@Override
+	public List<Attendance> getAttendanceByTrain(int id) {
+		return attendanceDAO.getAttendanceByTrain(id);
+	}
 
 }

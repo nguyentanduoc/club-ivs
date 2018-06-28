@@ -5,13 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.vn.ivs.ctu.dao.impl.RoleDAOImpl;
-import com.vn.ivs.ctu.dao.impl.TrainDAOImpl;
-import com.vn.ivs.ctu.entity.Role;
+import com.vn.ivs.ctu.dao.TrainDAO;
 import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.TrainService;
 
@@ -19,27 +15,32 @@ import com.vn.ivs.ctu.service.TrainService;
 @Scope(proxyMode=ScopedProxyMode.TARGET_CLASS)
 public class TrainServiceImpl implements TrainService {
 	
-	@Autowired
-	TrainDAOImpl trainDAOImpl;
+	@Autowired TrainDAO trainDAO;
+	
 	public long create(Train train) {
-		return trainDAOImpl.create(train);		
+		return trainDAO.create(train);		
 	}
 
 	public List<Train> getAllTrainAuto() {
-		return trainDAOImpl.getAllTrainAuto();
+		return trainDAO.getAllTrainAuto();
 	}
 	public boolean deleteTrain(int id) {
-		return trainDAOImpl.deleteTrain(id);
+		return trainDAO.deleteTrain(id);
 	}
 
 	@Override
 	public List<Train> getAllTrain() {
-		return trainDAOImpl.getAllTrain();
+		return trainDAO.getAllTrain();
 	}
 
 	@Override
 	public List<Train> getListAllTrainOnWeek() {
-		return trainDAOImpl.getAllTrainOnWeek();
+		return trainDAO.getAllTrainOnWeek();
+	}
+
+	@Override
+	public List<Train> getListAllTrainOnWeek(int idClub) {
+		return trainDAO.getListAllTrainOnWeek(idClub);
 	}
 
 	

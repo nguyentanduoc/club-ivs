@@ -4,8 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -48,8 +46,12 @@ public class HomeController {
 	public String member() {
 		return "member/index";
 	}
-	@RequestMapping(path="/403")
+	@RequestMapping(path="403")
 	public String accessDinied() {		
 		return "redirect:/login?accessDinied";
+	}
+	@RequestMapping(path="404")
+	public String notFount() {		
+		return "404";
 	}
 }

@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
 @Entity(name="join_club")
 @Table(name = "join_club")
 public class JoinClub {	

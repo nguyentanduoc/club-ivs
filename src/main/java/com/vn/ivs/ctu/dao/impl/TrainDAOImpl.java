@@ -74,4 +74,18 @@ public class TrainDAOImpl implements TrainDAO{
 		}
 }
 
+
+	@Override
+	public List<Train> getListAllTrainOnWeek(int idClub) {
+		Calendar cal = Calendar.getInstance();
+		int week = cal.get(Calendar.WEEK_OF_YEAR);
+		try {
+			return currentSession().createQuery("from train t where t.weekend=? and t.schedule.club.idClub = ?",Train.class)
+					.setParameter(0, week).setParameter(1, idClub).list();
+		}catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+
 }

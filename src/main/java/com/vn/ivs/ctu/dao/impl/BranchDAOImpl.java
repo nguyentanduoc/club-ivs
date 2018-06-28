@@ -59,4 +59,9 @@ public class BranchDAOImpl  implements BranchDAO{
 			return null;
 		}
 	}
+
+	@Override
+	public Branch getBranchById(int id) {
+		return currentSession().load(Branch.class,id);
+	}
 }

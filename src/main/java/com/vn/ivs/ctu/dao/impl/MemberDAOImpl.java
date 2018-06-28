@@ -69,7 +69,7 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			List<Member> members = currentSession().
 					createQuery("SELECT m FROM member m JOIN m.roles r  WHERE r.codeRole = ?",Member.class).
-					setParameter(0, "OTC").list();
+					setParameter(0, "LEADER").list();
 			if (members != null) {
 				return members;
 			}
@@ -115,5 +115,12 @@ public class MemberDAOImpl implements MemberDAO {
 	public 	Member getMemberById(int idMember) {
 		return currentSession().find(Member.class, idMember);
 	}
-
+	
+	public List<Member> getAllLeaderClub(){
+		try {
+			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole = ?",Member.class).setParameter(0, "LEADER_CLUB").list();
+		}catch(Exception e) {
+			return null;
+		}
+	}
 }
