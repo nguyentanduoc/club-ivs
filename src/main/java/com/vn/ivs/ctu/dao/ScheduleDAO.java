@@ -9,5 +9,4 @@ public interface ScheduleDAO {
 	public List<Schedule> getAllAuto();
 	public boolean deleteSchedule(int id);
 	public List<Schedule> getListScheduleAuto();
-	
 }

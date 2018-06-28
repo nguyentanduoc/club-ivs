@@ -3,9 +3,6 @@ package com.vn.ivs.ctu.component;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-
 public class CronSchedule {
 	    
 	 public static void showCalendar() {

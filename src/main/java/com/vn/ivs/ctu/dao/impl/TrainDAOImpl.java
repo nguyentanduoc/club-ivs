@@ -1,6 +1,5 @@
 package com.vn.ivs.ctu.dao.impl;
 
-import java.time.Year;
 import java.util.Calendar;
 import java.util.List;
 
@@ -14,8 +13,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.TrainDAO;
-import com.vn.ivs.ctu.entity.Role;
-import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.entity.Train;
 
 @Repository("trainDAOImpl")
@@ -28,10 +25,9 @@ public class TrainDAOImpl implements TrainDAO{
 
 	protected Session currentSession() {
 		return sessionFactory.getCurrentSession();
-	}
-	
+	}	
 
-	public long create(Train train) {
+	public int create(Train train) {
 		currentSession().saveOrUpdate(train);
 		return train.getIdTrain();
 	}
@@ -72,8 +68,7 @@ public class TrainDAOImpl implements TrainDAO{
 		}catch (Exception e) {
 			return null;
 		}
-}
-
+	}
 
 	@Override
 	public List<Train> getListAllTrainOnWeek(int idClub) {
@@ -84,6 +79,31 @@ public class TrainDAOImpl implements TrainDAO{
 					.setParameter(0, week).setParameter(1, idClub).list();
 		}catch (Exception e) {
 			System.out.println(e.toString());
+			return null;
+		}
+	}
+
+	@Override
+	public int totalTrainInMonth(int month, int curentYear, int idClub) {
+
+		try {
+			return ((Number)currentSession().createQuery("select count(t) from train t where t.schedule.club.idClub = ? and year(t.dateTrain) =?  and month(t.dateTrain) = ?")
+					.setParameter(0, idClub).setParameter(1, curentYear).setParameter(2, month)    
+					.getSingleResult()
+					).intValue();
+		}catch(Exception ex) {
+			System.out.println(ex.toString());
+			return 0;
+		}
+	}
+
+	@Override
+	public List<Train> getAllTrainByClub(int month, int year, int idClub) {
+		try {
+			return currentSession().createQuery("select t from train t where t.schedule.club.idClub = ? and year(t.dateTrain) =?  and month(t.dateTrain) = ?",Train.class)
+					.setParameter(0, idClub).setParameter(1, year).setParameter(2, month).list();
+		}catch(Exception ex) {
+			System.out.println(ex.toString());
 			return null;
 		}
 	}

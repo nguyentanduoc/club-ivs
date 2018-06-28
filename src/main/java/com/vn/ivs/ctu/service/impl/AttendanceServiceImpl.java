@@ -25,5 +25,14 @@ public class AttendanceServiceImpl implements AttendanceService{
 	public List<Attendance> getAttendanceByTrain(int id) {
 		return attendanceDAO.getAttendanceByTrain(id);
 	}
-
+	
+	@Override
+	public List<Attendance> getAttendanceByClub(int curentMonth,int idClub) {
+		return attendanceDAO.getAttendanceByClub(curentMonth,idClub);
+	}
+	
+	@Override
+	public Attendance getAttendByIdMember(int idMember, int idTrain) {
+		return attendanceDAO.getAttendByIdMember(idMember, idTrain);
+	}
 }

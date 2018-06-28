@@ -43,7 +43,13 @@ public class TrainServiceImpl implements TrainService {
 		return trainDAO.getListAllTrainOnWeek(idClub);
 	}
 
-	
+	@Override
+	public int totalTrainInMonth(int month,int curentYear, int idClub) {
+		return trainDAO.totalTrainInMonth(month,curentYear,idClub);
+	}
 
-	
+	@Override
+	public List<Train> getAllTrainByClub(int month, int year, int idClub) {
+		return trainDAO.getAllTrainByClub(month, year, idClub);
+	}	
 }

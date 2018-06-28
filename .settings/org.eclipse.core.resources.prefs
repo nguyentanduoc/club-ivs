@@ -1,9 +1,10 @@
+=\=\=\=\=\=\=
+<<<<<<<=Upstream, based on branch 'master' of https\://github.com/nguyentanduoc/club-ivs
+>>>>>>>=f87948b join club
 eclipse.preferences.version=1
-<<<<<<< Upstream, based on branch 'master' of https://github.com/nguyentanduoc/club-ivs
-encoding//src/main/java/com/vn/ivs/ctu/controller/TrainController.java=UTF-8
-=======
 encoding//src/main/java/com/vn/ivs/ctu/controller/BranchController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/ClubController.java=UTF-8
+encoding//src/main/java/com/vn/ivs/ctu/controller/HomeController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/MemberController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/RoleController.java=UTF-8
->>>>>>> f87948b join club
+encoding//src/main/java/com/vn/ivs/ctu/controller/TrainController.java=UTF-8

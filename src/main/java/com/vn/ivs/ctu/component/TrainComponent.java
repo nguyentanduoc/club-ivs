@@ -11,14 +11,13 @@ import org.springframework.stereotype.Component;
 import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.AttendanceID;
 import com.vn.ivs.ctu.entity.JoinClub;
-import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.entity.Train;
+import com.vn.ivs.ctu.service.AttendanceService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
-import com.vn.ivs.ctu.service.AttendanceService;
 
 @Component
 public class TrainComponent {
@@ -27,8 +26,8 @@ public class TrainComponent {
 	@Autowired MemberService memberService;
 	@Autowired JoinClubService joinClubService;
 	@Autowired AttendanceService attendanceService;
-	
-	@Scheduled(cron = "0 36 8 * * THU")
+
+	@Scheduled(cron = "0 36 8 * * THU",zone="Asia/Saigon")
 	public void showCalendar() {
 		List<Schedule> schedules = scheduleService.getListScheduleAuto();
 		for (Schedule schedule: schedules) {

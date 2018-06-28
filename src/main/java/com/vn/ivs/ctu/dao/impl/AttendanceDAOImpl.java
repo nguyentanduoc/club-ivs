@@ -49,4 +49,28 @@ public class AttendanceDAOImpl implements AttendanceDAO{
 			return null;
 		}
 	}
+
+	public List<Attendance> getAttendanceByClub(int curentMonth,int idClub) {
+		try {
+			//currentSession().createQuery("from attendance a where  a.train")
+			return null;
+			
+		}catch(Exception ex) {
+			System.out.println(ex.toString());
+			return null;
+		}
+	}
+
+	@Override
+	public Attendance getAttendByIdMember(int idMember, int idTrain) {
+		try {
+			return currentSession().createQuery("select a from attendance a where a.attendanceID.idMember =? and a.attendanceID.idTrain=?",Attendance.class)
+					.setParameter(0, idMember).setParameter(1, idTrain).getSingleResult();
+			
+		}catch(Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+
 }

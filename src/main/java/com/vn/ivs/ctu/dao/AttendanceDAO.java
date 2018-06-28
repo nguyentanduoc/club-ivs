@@ -8,4 +8,6 @@ public interface AttendanceDAO {
 	
 	public boolean createOrUpdate(Attendance attendance);
 	public List<Attendance> getAttendanceByTrain(int id);
+	public List<Attendance> getAttendanceByClub(int curentMonth, int idClub);
+	public Attendance getAttendByIdMember(int idMember, int idTrain);
 }

@@ -12,4 +12,6 @@ public interface TrainService {
 	public List<Train> getAllTrain();
 	public List<Train> getListAllTrainOnWeek();
 	public List<Train> getListAllTrainOnWeek(int idClub);
+	public int totalTrainInMonth(int month, int curentYear,int idClub);
+	public List<Train> getAllTrainByClub(int month, int year, int idClub);
 }
