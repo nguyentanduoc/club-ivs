@@ -9,9 +9,10 @@ import com.vn.ivs.ctu.entity.Train;
 public interface TrainDAO {
 	
 	public long create(Train train);
-	public List<Train> getAllTrain();
-	public boolean deleteTrain(int id);
-	public List<Train> getAllTrainAuto();
-	public List<Train> getAllTrainOnWeek();
+	public List<Train> getAll();
+	public boolean deleteTrain(int idTrain);
+	public List<Train> getAllTrainAuto(int idClub);
+	public List<Train> getAllTrainManual(int idClub);
 	public List<Train> getListAllTrainOnWeek(int idClub);
+	public List<Train> getListTrainByIdSchedule(int idSchedule);
 }

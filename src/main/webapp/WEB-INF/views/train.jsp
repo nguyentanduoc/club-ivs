@@ -19,7 +19,7 @@
 	      <div class="container-fluid">
 	        <div class="row mb-2">
 	          <div class="col-sm-6">
-	            <h1 class="m-0 text-dark">Create a manual calendar</h1>
+	            
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
@@ -45,21 +45,6 @@
 	              <!-- form start -->
 	              <form method="POST" action="${pageContext.request.contextPath}/train/create">	          
 	                <div class="card-body">
-	                <c:choose>
-	                	<c:when test="${status==200}">
-	                		<div class="alert alert-success">
-			                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			                  <h5><i class="icon fa fa-check"></i> ${message}</h5>
-			                </div>
-	                	</c:when>
-	                	<c:when test="${status==400}">
-	                		<div class="alert alert-danger">
-			                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			                  <i class="icon fa fa-check"></i> ${message}
-			                </div>
-	                	</c:when>
-	                </c:choose>
-		                
 		                  <div class="form-group">
 		                    <label for="nameSchedule">Tên Event</label>
 		                  	<input type="text" name="nameSchedule" class="form-control" id="nameSchedule" placeholder="Nhập Tên Event"/>
@@ -110,25 +95,26 @@
 		    	</div>
 		    	
 		    	<div class="col-md-8">
-		            <div class="card">
+		            <div class="card-primary">
 		              <div class="card-header">
 		                <h3 class="card-title">Sự kiện được tạo thủ công</h3>
 		                
 		              </div>
 		              <!-- /.card-header -->
 		              <div class="card-body p-0">
-		                <table class="table">
+		                <table class="table table-hover table-sm">
 		                  <tr>		                   
 		                    
 		                    <th>Tên Sự kiện</th>
 		                    <th>Ngày</th>
 		                    <th>Thời gian</th>      
 		                    <th>Địa điểm</th>
+		                    <th>CLB</th>
 		                    <th>Sắp lịch</th>
 		                                 
 		                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
 		                  </tr>
-	                      	   <c:forEach var="train" items="${listAllTrainOnWeek}">
+	                      	   <c:forEach var="train" items="${listTrainManual}">
 				                       <tr>
 				                  	
 				                    <td>${train.getSchedule().getNameSchedule()}</td>
@@ -137,7 +123,8 @@
 				                    </td>	 
 				                      
 				                    <td>${train.getSchedule().getTimeSchedule()}</td>
-				                    <td>${train.getWeekend()}</td>	                    
+				                    <td>${train.getSchedule().getLocationSchedule()}</td>
+				                    <td>${train.getSchedule().getClub().getNameClub()}</td>	                    
 				                    <td>
 				                    <c:choose>
 					                    <c:when test ="${train.getSchedule().getAutoSchedule()==true}">
@@ -151,7 +138,7 @@
 				                    </td>
 				                    <td>
 				                    	<span class="deleteTrain" data-id = "${train.getIdTrain()}"><i class="fa fa-times delete"></i></span>		                    	
-				                    	<span class="editSchedule" data-id = "${train.getSchedule().getIdSchedule()}"> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal" data-target="#editSchedule"></i></span>
+				                    	<span class="editTrain" data-id = "${train.getIdTrain()}"> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal" data-target="#editTrain"></i></span>
 				                    </td>                          
 			                  </tr>	
 	                  	 </c:forEach>                  

@@ -27,7 +27,6 @@ public class DowController {
 		DateOfWeek dow = new DateOfWeek();
 		modelMap.put("dow",dow);
 		modelMap.put("listDow",dowServiceImpl.getAll());
-		
 		return "dow";
 	}
 	@PostMapping("/create")

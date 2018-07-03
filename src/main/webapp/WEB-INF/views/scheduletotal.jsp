@@ -15,18 +15,15 @@
     	
     	<div class="content-wrapper">
 	    <!-- Content Header (Page header) -->
-	    
 	    <div class="content-header">
 	      <div class="container-fluid">
-	      
 	        <div class="row mb-2">
-	        
 	          <div class="col-sm-6">
 	            
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Lịch tạo tự động</a></li>
+	              <li class="breadcrumb-item"><a href="#">Tất cả lịch</a></li>
 	              <li class="breadcrumb-item active">Index</li>
 	            </ol>
 	          </div><!-- /.col -->
@@ -43,8 +40,7 @@
 		    	<div class="col-md-12">
 		            <div class="card-primary">
 		              <div class="card-header">
-		              
-		                <h3 class="card-title">Lịch tự động tạo</h3>
+		                <h3 class="card-title">Tất cả các lịch</h3>
 		                
 		              </div>
 		              <!-- /.card-header -->
@@ -53,46 +49,38 @@
 		                  <tr>		                   
 		                    
 		                    <th>Tên Sự kiện</th>
-		                    <th>Ngày</th>
+		                    <th>Thứ</th>
 		                    <th>Thời gian</th>
-		                    <th>Tuần</th>     
 		                    <th>Địa điểm</th>
 		                    <th>CLB</th>
 		                    <th>Sắp lịch</th>
 		                                 
 		                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
 		                  </tr>
-	                      	   <c:forEach var="train" items="${listTrainAuto}">
-				                       <tr>
-				                  	
-				                    <td>${train.getSchedule().getNameSchedule()}</td>
-				                    <td>
-				                    <fmt:formatDate value="${train.getDateTrain()}" pattern="dd-MM-yyyy"/>
-				                    </td>	 
-				                      
-				                    <td>${train.getSchedule().getTimeSchedule()}</td>
-				                    <td>${train.getWeekend()}</td>
-				                    <td>${train.getSchedule().getLocationSchedule()}</td>
-				                    <td>${train.getSchedule().getClub().getNameClub()}</td>	                    
-				                    <td>
-				                    <c:choose>
-					                    <c:when test ="${train.getSchedule().getAutoSchedule()==true}">
+	                      	   <c:forEach var="schedule" items="${listSchedule}">
+											<tr>
+												<td>${schedule.getNameSchedule()}</td>
+												<td>${schedule.getDateOfWeek().getNameDow()}</td>
+												<td>${schedule.getTimeSchedule()}</td>
+												<td>${schedule.getLocationSchedule()}</td>
+												<td>${schedule.getClub().getNameClub()}</td>
+												<td><c:choose>
+														<c:when test="${schedule.getAutoSchedule()==true}">
 								            tự động
 								         </c:when>
-								         
-								         <c:when test ="${train.getSchedule().getAutoSchedule()==false}">
+														<c:when test="${schedule.getAutoSchedule()==false}">
 								            thủ công
 								         </c:when>
-							         </c:choose>
-				                    </td>
-				                    <td>
-				                    	<span class="deleteTrain" data-id = "${train.getIdTrain()}"><i class="fa fa-times delete"></i></span>		                    	
-				                    	<span class="editTrain" data-id = "${train.getIdTrain()}"> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal" data-target="#editTrain"></i></span>
-				                    </td>                          
-			                  </tr>	
-	                  	 </c:forEach>                  
+													</c:choose></td>
+												<td><span class="deleteSchedule"
+													data-id="${schedule.getIdSchedule()}"><i
+														class="fa fa-times delete"></i></span> <span class="editSchedule"
+													data-id="${schedule.getIdSchedule()}"> <i
+														class="fa fa-pencil edit" aria-hidden="true"
+														data-toggle="modal" data-target="#editSchedule"></i></span></td>
+											</tr>
+										</c:forEach>                  
 		                </table>
-		                
 		              </div>
 		              <!-- /.card-body -->
 		            </div>

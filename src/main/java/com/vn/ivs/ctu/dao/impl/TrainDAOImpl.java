@@ -4,6 +4,7 @@ import java.time.Year;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.TrainDAO;
+import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.Role;
 import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.entity.Train;
@@ -35,19 +37,10 @@ public class TrainDAOImpl implements TrainDAO{
 		currentSession().saveOrUpdate(train);
 		return train.getIdTrain();
 	}
-
-	public List<Train> getAllTrainAuto() {	
-			try {
-			return currentSession().createQuery("from train t where t.schedule.autoSchedule=?",Train.class).setParameter(0, false).list();
-			}catch (Exception e) {
-				System.out.println(e.toString());
-				return null;
-			}
-	}
-
-	public boolean deleteTrain(int id) {
+	
+	public boolean deleteTrain(int idTrain) {		
 		try {
-			Train loadTrain = currentSession().load(Train.class,id) ;
+			Train loadTrain = currentSession().load(Train.class,idTrain);
 			currentSession().delete(loadTrain);
 			return true;
 		}	catch(Exception ex) {
@@ -56,24 +49,32 @@ public class TrainDAOImpl implements TrainDAO{
 		}	
 	}
 
-
-	public List<Train> getAllTrain() {
-		try {
-			return currentSession().createQuery("from train t where t.schedule.autoSchedule=?",Train.class).setParameter(0, true).list();
+	public List<Train> getAllTrainAuto(int idClub) {	
+			try {
+			return currentSession().createQuery("from train t where t.schedule.autoSchedule=? and t.schedule.club.idClub=?",Train.class)
+					.setParameter(0, true).setParameter(1, idClub).list();
 			}catch (Exception e) {
+				System.out.println(e.toString());
 				return null;
 			}
 	}
-	public List<Train> getAllTrainOnWeek() {
-		Calendar cal = Calendar.getInstance();
-		int week = cal.get(Calendar.WEEK_OF_YEAR);
+	public List<Train> getAllTrainManual(int idClub) {	
 		try {
-		return currentSession().createQuery("from train t where t.weekend=?",Train.class).setParameter(0, week).list();
+		return currentSession().createQuery("from train t where t.schedule.autoSchedule=? and t.schedule.club.idClub=?",Train.class)
+				.setParameter(0, false).setParameter(1, idClub).list();
 		}catch (Exception e) {
+			System.out.println(e.toString());
 			return null;
 		}
 }
 
+	public List<Train> getAll() {
+		try {
+			return currentSession().createQuery("from train",Train.class).list();
+			}catch (Exception e) {
+				return null;
+			}
+	}
 
 	@Override
 	public List<Train> getListAllTrainOnWeek(int idClub) {
@@ -86,6 +87,17 @@ public class TrainDAOImpl implements TrainDAO{
 			System.out.println(e.toString());
 			return null;
 		}
+	}
+
+	@Override
+	public List<Train> getListTrainByIdSchedule(int idSchedule) {
+		
+		try {
+			return currentSession().createQuery("from train t where t.schedule.idSchedule=?",Train.class).setParameter(0, idSchedule).list();
+			}catch (Exception e) {
+				System.out.println(e.toString());
+				return null;
+			}
 	}
 
 }

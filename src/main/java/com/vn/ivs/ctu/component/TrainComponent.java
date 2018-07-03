@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.AttendanceID;
+import com.vn.ivs.ctu.entity.Club;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.Schedule;
@@ -18,7 +19,9 @@ import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
+import com.vn.ivs.ctu.utils.SecurityUtils;
 import com.vn.ivs.ctu.service.AttendanceService;
+import com.vn.ivs.ctu.service.ClubService;
 
 @Component
 public class TrainComponent {
@@ -27,10 +30,14 @@ public class TrainComponent {
 	@Autowired MemberService memberService;
 	@Autowired JoinClubService joinClubService;
 	@Autowired AttendanceService attendanceService;
+	@Autowired ClubService clubService;
 	
-	@Scheduled(cron = "0 36 8 * * THU")
+	
+	@Scheduled(cron = "0 17 10 * * TUE")
 	public void showCalendar() {
-		List<Schedule> schedules = scheduleService.getListScheduleAuto();
+		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		Club club  = clubService.getLeaderClub(idMember);
+		List<Schedule> schedules = scheduleService.getListScheduleAuto(club.getIdClub());
 		for (Schedule schedule: schedules) {
 			Date myDate = new Date();
 			Calendar cal = Calendar.getInstance();

@@ -40,12 +40,12 @@ public class DowDAOImpl implements DowDAO {
 	}
 
 	@Transactional
-	public boolean deleteDow(int id) {
+	public boolean delete(int id) {
 		try {
 			DateOfWeek loadDow = currentSession().load(DateOfWeek.class,id) ;
 			currentSession().delete(loadDow);
 			return true;
-		}	catch(Exception ex) {
+		}catch(Exception ex) {
 			System.out.println("deleteDow-"+ ex.toString());
 			return false;
 		}	

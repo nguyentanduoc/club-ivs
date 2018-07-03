@@ -1,6 +1,7 @@
 package com.vn.ivs.ctu.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -21,10 +22,13 @@ public class Train {
 	@Column(name = "WEEKEND")
 	private int weekend;
 		
-	@OneToOne(cascade  = CascadeType.PERSIST,fetch=FetchType.EAGER)
+	@OneToOne(cascade  = {CascadeType.PERSIST,CascadeType.REMOVE},fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_SCHEDULE")
 	private Schedule schedule;
-
+	
+	@OneToMany(mappedBy="train", cascade = CascadeType.REMOVE)
+	private Set<Attendance> attendances;
+	
 	public int getIdTrain() {
 		return idTrain;
 	}
@@ -55,6 +59,14 @@ public class Train {
 
 	public void setWeekend(int weekend) {
 		this.weekend = weekend;
+	}
+	
+	public Set<Attendance> getAttendances() {
+		return attendances;
+	}
+
+	public void setAttendances(Set<Attendance> attendances) {
+		this.attendances = attendances;
 	}
 
 	@Override

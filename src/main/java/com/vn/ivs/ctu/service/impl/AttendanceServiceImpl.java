@@ -25,5 +25,9 @@ public class AttendanceServiceImpl implements AttendanceService{
 	public List<Attendance> getAttendanceByTrain(int id) {
 		return attendanceDAO.getAttendanceByTrain(id);
 	}
+	@Override
+	public boolean deleteAttendanceByTrain (int idTrain) {
+		return attendanceDAO.deleteAttendanceByTrain(idTrain);
+	}
 
 }

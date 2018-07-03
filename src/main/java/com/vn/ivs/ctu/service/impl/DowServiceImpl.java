@@ -26,8 +26,7 @@ public class DowServiceImpl implements DowService{
 	public List<DateOfWeek> getAll() {
 		return dowDAOImpl.getAll();
 	}
-	public boolean deleteDow(int id) {
-		return dowDAOImpl.deleteDow(id);
+	public boolean delete(int id) {
+		return dowDAOImpl.delete(id);
 	}
-
 }

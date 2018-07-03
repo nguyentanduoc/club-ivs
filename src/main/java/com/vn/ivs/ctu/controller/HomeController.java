@@ -31,20 +31,20 @@ public class HomeController {
 	
 	@RequestMapping(path= {"admin"})
 	public String admin() {
-		return "admin/index";
+		return "index";
 	}
 	
-	@RequestMapping(path= {"otc"})
+	@RequestMapping(path= {"leader"})
 	public String otc() {
-		return "otc/index";
+		return "index";
 	}
-	@RequestMapping(path= {"otcclub"})
+	@RequestMapping(path= {"leaderclub"})
 	public String otcclub() {
-		return "otcclub/index";
+		return "index";
 	}
 	@RequestMapping(path= {"member"})
 	public String member() {
-		return "member/index";
+		return "index";
 	}
 	@RequestMapping(path="403")
 	public String accessDinied() {		

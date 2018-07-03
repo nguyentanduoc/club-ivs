@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.ScheduleDAO;
 import com.vn.ivs.ctu.entity.Schedule;
+import com.vn.ivs.ctu.entity.Train;
 
 
 
@@ -34,21 +35,6 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		return schedule.getIdSchedule();
 	}
 
-	public List<Schedule> getAllAuto() {	
-		try {
-			return currentSession().createQuery("from schedule where autoSchedule=?",Schedule.class).setParameter(0, true).list();
-		}catch (Exception e) {
-			return null;
-		}
-	}
-	
-	@Transactional
-	public List<Schedule> getAll() {	
-		
-		return currentSession().createQuery("from schedule",Schedule.class).list();
-
-	}
-
 	public boolean deleteSchedule(int id) {
 		try {
 			Schedule loadSchedule = currentSession().load(Schedule.class,id);
@@ -59,13 +45,26 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			return false;
 		}	
 	}
-
+	
+	@Transactional
+	public List<Schedule> getAll(int idClub) {
+		return currentSession().createQuery("from schedule s where s.club.idClub=?",Schedule.class).setParameter(0, idClub).list();
+	}
 	@Override
-	public List<Schedule> getListScheduleAuto() {
+	public List<Schedule> getListScheduleAuto(int idClub) {
 		try {
-			return currentSession().createQuery("from schedule where autoSchedule=?",Schedule.class).setParameter(0, true).list();
+			return currentSession().createQuery("from schedule where autoSchedule=? and schedule.club.idClub=?",Schedule.class).setParameter(0, true).setParameter(1, idClub).list();
 		} catch (Exception e) {
 			return null;
 		}
 	}
+	public List<Schedule> getAllScheduleTotal() {
+//		Calendar cal = Calendar.getInstance();
+//		int week = cal.get(Calendar.WEEK_OF_YEAR);
+		try {
+		return currentSession().createQuery("from schedule", Schedule.class).list();
+		}catch (Exception e) {
+			return null;
+		}
+}
 }

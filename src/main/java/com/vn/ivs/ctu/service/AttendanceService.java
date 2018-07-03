@@ -8,5 +8,5 @@ public interface AttendanceService {
 	
 	public boolean createOrUpdate(Attendance attendance);
 	public List<Attendance> getAttendanceByTrain(int id);
-	
+	public boolean deleteAttendanceByTrain (int idTrain);
 }

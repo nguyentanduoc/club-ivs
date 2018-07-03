@@ -20,7 +20,7 @@ public class Attendance {
 	@Column(name="IS_ATTENDANCE")
 	private boolean attendance;
 
-	@OneToOne(cascade  = CascadeType.PERSIST,fetch=FetchType.EAGER)
+	@OneToOne(cascade  = {CascadeType.PERSIST,CascadeType.REMOVE},fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_TRAIN", insertable=false, updatable=false)
 	private Train train;
 	

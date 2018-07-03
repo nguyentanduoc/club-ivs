@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.vn.ivs.ctu.entity.Club;
 import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.service.ClubService;
+import com.vn.ivs.ctu.service.ScheduleService;
+import com.vn.ivs.ctu.service.TrainService;
 import com.vn.ivs.ctu.service.impl.DowServiceImpl;
 import com.vn.ivs.ctu.service.impl.ScheduleServiceImpl;
 import com.vn.ivs.ctu.utils.SecurityUtils;
@@ -21,9 +23,10 @@ import com.vn.ivs.ctu.utils.SecurityUtils;
 @RequestMapping("schedule")
 public class ScheduleController {
 	
-	@Autowired ScheduleServiceImpl scheduleServiceImpl;
+	@Autowired ScheduleService scheduleService;
 	@Autowired DowServiceImpl dowServiceImpl;
 	@Autowired ClubService clubService;
+	@Autowired TrainService trainService;
 	
 	
 	@GetMapping ("/index")
@@ -33,10 +36,16 @@ public class ScheduleController {
 		modelMap.put("title","Schedule");	
 		Schedule schedule = new Schedule();
 		schedule.setAutoSchedule(true);
+		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		Club club  = clubService.getLeaderClub(idMember);
+		if(club!=null) {
 		modelMap.put("schedule", schedule);
 		modelMap.put("listDow",dowServiceImpl.getAll());
-		modelMap.put("listSchedule",scheduleServiceImpl.getAll());
-		
+		modelMap.put("listTrainAuto", trainService.getAllTrainAuto(club.getIdClub()));
+		} else {
+			modelMap.put("status", 403);
+			modelMap.put("message", "bạn không có quyền truy cập");
+		}
 		return "schedule";
 	}
 	@PostMapping ("/create")
@@ -44,11 +53,28 @@ public class ScheduleController {
 		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idLeader);
 		schedule.setClub(club);
-		if (scheduleServiceImpl.create(schedule)>0) {
+		if (scheduleService.create(schedule)>0) {
 			modelMap.put("status", "add complete");
 		}else {
 			modelMap.put("status", "add fail");
 		}
 		return "redirect:/schedule/index";
+	}
+	
+	@GetMapping(path = "/scheduletotal")
+	public String trainTotal(ModelMap modelMap) {
+		modelMap.put("action1", "train");
+		modelMap.put("action2", "traintotal");
+		modelMap.put("title", "Train");
+		
+		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		Club club  = clubService.getLeaderClub(idMember);
+		if(club!=null) {
+		modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));
+		}else {
+			modelMap.put("status", 403);
+			modelMap.put("message", "bạn không có quyền truy cập");
+		}
+		return "scheduletotal";
 	}
 }

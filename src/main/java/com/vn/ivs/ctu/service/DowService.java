@@ -8,6 +8,5 @@ import com.vn.ivs.ctu.entity.DateOfWeek;
 public interface DowService {
 	public long create(DateOfWeek dow);
 	public List<DateOfWeek> getAll();
-	public boolean deleteDow(int id);
-
+	public boolean delete(int id);
 }

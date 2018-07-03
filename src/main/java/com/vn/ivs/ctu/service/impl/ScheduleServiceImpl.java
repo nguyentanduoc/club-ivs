@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.vn.ivs.ctu.dao.ScheduleDAO;
 import com.vn.ivs.ctu.entity.Schedule;
+import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.ScheduleService;
+import com.vn.ivs.ctu.service.TrainService;
 
 @Service
 @Scope(proxyMode=ScopedProxyMode.TARGET_CLASS)
@@ -17,21 +19,33 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Autowired
 	ScheduleDAO scheduleDAO;
+	@Autowired
+	TrainService trainservice;
+	@Autowired
+	ScheduleService scheduleService;
+	
 	public long create(Schedule schedule) {
 		return scheduleDAO.create(schedule);		
 	}
 	
 	public boolean deleteSchedule(int id) {
-		return scheduleDAO.deleteSchedule(id);
+		if(trainservice.deleteTrainByIdSchedule(id)) {
+			return scheduleDAO.deleteSchedule(id);
+		}
+		return false;
 	}
-	public List<Schedule> getAll() {
-		return scheduleDAO.getAllAuto();
+	public List<Schedule> getAll(int idClub) {
+		return scheduleDAO.getAll(idClub);
 	}
 
 	@Override
-	public List<Schedule> getListScheduleAuto() {
+	public List<Schedule> getListScheduleAuto(int idClub) {
 		
-		return scheduleDAO.getListScheduleAuto();
+		return scheduleDAO.getListScheduleAuto(idClub);
+	}
+	@Override
+	public List<Schedule> getAllScheduleTotal() {
+		return scheduleService.getAllScheduleTotal();
 	}
 	
 	

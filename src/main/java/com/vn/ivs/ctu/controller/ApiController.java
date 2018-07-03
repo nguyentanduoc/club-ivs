@@ -95,11 +95,10 @@ public class ApiController {
 		return map;
 	}//end role
 	//dow
-
 	@GetMapping("deleteDow")
 	@ResponseBody
 	public String deleteDow(@RequestParam int id) {		
-		boolean rs = dowService.deleteDow(id);
+		boolean rs = dowService.delete(id);
 		if(rs) {
 			return "true";
 		}else {
@@ -118,7 +117,6 @@ public class ApiController {
 			return "false";
 		}
 	}
-	
 	@PostMapping("getBranchById")
 	@ResponseBody
 	public Map<String,Object> getBranchById(@RequestParam int id) {		
@@ -245,9 +243,9 @@ public class ApiController {
 	
 	@GetMapping("deleteTrain")
 	@ResponseBody
-	public String deleteTrain(@RequestParam int id)
+	public String deleteTrain(@RequestParam int idTrain)
 	{
-		boolean rs = trainservice.deleteTrain(id);
+		boolean rs = trainservice.deleteTrain(idTrain);
 		if(rs) {
 			return "true";
 		}else {

@@ -12,7 +12,10 @@
 	<http auto-config="false" use-expressions="true">
 				
 		<intercept-url pattern="/admin" access="hasAuthority('ADMIN')" />	
-		<intercept-url pattern="/admin/branch" access="hasAuthority('ADMIN')" />	
+		<intercept-url pattern="/admin/branch" access="hasAuthority('ADMIN')" />
+		<!-- <intercept-url pattern="/schedule/index" access="hasAuthority('LEADER')" />
+		<intercept-url pattern="/train/index" access="hasAuthority('LEADER')" /> -->
+		<intercept-url pattern="/404" access="permitAll"/>
 		<intercept-url pattern="/**" access="permitAll"/>
 		
 		<!-- access denied page -->

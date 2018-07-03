@@ -18,11 +18,11 @@
 	      <div class="container-fluid">
 	        <div class="row mb-2">
 	          <div class="col-sm-6">
-	            <h1 class="m-0 text-dark">Schedule Booking</h1>
+	            <h1 class="m-0 text-dark">Thứ trong tuần</h1>
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Schedule</a></li>
+	              <li class="breadcrumb-item"><a href="#">Date of week</a></li>
 	              <li class="breadcrumb-item active">Index</li>
 	            </ol>
 	          </div><!-- /.col -->
@@ -38,7 +38,7 @@
 	            <!-- general form elements -->
 	            <div class="card card-primary">
 	              <div class="card-header">
-	                <h3 class="card-title">Thêm Lịch</h3>
+	                <h3 class="card-title">Thêm ngày</h3>
 	              </div>
 	              <!-- /.card-header -->
 	              <!-- form start -->
@@ -64,7 +64,7 @@
 		    	<div class="col-md-6">
 		            <div class="card">
 		              <div class="card-header">
-		                <h3 class="card-title">Danh Sách lịch</h3>	
+		                <h3 class="card-title">Danh sách ngày trong tuần</h3>	
 		                
 		              </div>
 		              <!-- /.card-header -->

@@ -18,7 +18,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0 text-dark">Tạo lịch tự động</h1>
+							
 						</div>
 						<!-- /.col -->
 						<div class="col-sm-6">
@@ -49,11 +49,6 @@
 								<!-- form start -->
 								<form:form method="POST" path="schedule" modelAttribute="schedule" action="${pageContext.request.contextPath}/schedule/create">
 									<div class="card-body">
-										<c:if test="${status}">
-											<div class="alert alert-danger">
-												<c:out value="${status}"></c:out>
-											</div>
-										</c:if>
 										<div class="form-group">
 											<label for="nameSchedule">Tên Event</label>
 
@@ -113,35 +108,37 @@
 						</div>
 
 						<div class="col-md-8">
-							<div class="card">
+							<div class="card-primary">
 								<div class="card-header">
 									<h3 class="card-title">Sự kiện được tạo tự động</h3>
 
 								</div>
 								<!-- /.card-header -->
 								<div class="card-body p-0">
-									<table class="table">
+									<table class="table table-hover table-sm">
 										<tr>
 											<th>Tên Sự kiện</th>
-											<th>Ngày</th>
+											<th>Thứ</th>
 											<th>Thời gian</th>
 											<th>Địa điểm</th>
+											<th>CLB</th>
 											<th>Sắp lịch</th>
 
 											<th style="width: 150px">Tuỳ Chỉnh</th>
 										</tr>
-										<c:forEach var="schedule" items="${listSchedule}">
+										<c:forEach var="train" items="${listTrainAuto}">
 											<tr>
-												<td>${schedule.getNameSchedule()}</td>
-												<td>${schedule.getDateOfWeek().getNameDow()}</td>
-												<td>${schedule.getTimeSchedule()}</td>
-												<td>${schedule.getLocationSchedule()}</td>
+												<td>${train.getSchedule().getNameSchedule()}</td>
+												<td>${train.getSchedule().getDateOfWeek().getNameDow()}</td>
+												<td>${train.getSchedule().getTimeSchedule()}</td>
+												<td>${train.getSchedule().getLocationSchedule()}</td>
+												<td>${train.getSchedule().getClub().getNameClub()}</td>
 												<td><c:choose>
-														<c:when test="${schedule.getAutoSchedule()==true}">
+														<c:when test="${train.getSchedule().getAutoSchedule()==true}">
 								            tự động
 								         </c:when>
 
-														<c:when test="${schedule.getAutoSchedule()==false}">
+														<c:when test="${train.getSchedule().getAutoSchedule()==false}">
 								            thủ công
 								         </c:when>
 													</c:choose></td>

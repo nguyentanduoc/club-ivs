@@ -34,7 +34,7 @@ $(document).ready(function(){
 			var id = $(this).attr('data-id');
 			$.ajax({
 				url:"/Club-IVS/api/deleteRole",
-				type:"POST",
+				type:"GET",
 				data:{
 					id:id
 				},
@@ -68,6 +68,7 @@ $(document).ready(function(){
 			}
 		})	
 	});//end modal edit role
+	
 	//start change role
 	$("#saveChangeRole").click(function(){
 		var id  = $("#idEditRole").val();
@@ -91,6 +92,7 @@ $(document).ready(function(){
 			}
 		})	
 	})//end change role
+	
 	//delete Branch
 	$(".deleteBranch").click(function(){
 		var r = confirm("Bạn thật sự muốn xoá?");
@@ -99,7 +101,7 @@ $(document).ready(function(){
 			var id = $(this).attr('data-id');
 			$.ajax({
 				url:"/Club-IVS/api/deleteBranch",
-				type:"POST",
+				type:"GET",
 				data:{
 					id:id
 				},
@@ -110,7 +112,8 @@ $(document).ready(function(){
 				}
 			})	
 		}	
-	})
+	})// end delete Branh
+	
 	$(".editBranch").click(function(){
 		$("#memberEditBranch").empty();
 		var id = $(this).attr('data-id');
@@ -165,7 +168,27 @@ $(document).ready(function(){
 			}
 		});
 	});
-//script schedule
+	//delete Dow
+	$(".deleteDow").click(function(){
+		var r = confirm("Bạn thật sự muốn xoá?");
+		if(r){
+			var self = $(this);
+			var id = $(this).attr('data-id');
+			$.ajax({
+				url:"/Club-IVS/api/deleteDow",
+				type:"GET",
+				data:{
+					id:id
+				},
+				success:function(data){
+					if(data="true"){
+						self.closest("tr").remove();
+					}
+				}
+			})	
+		}	
+	})// end delete Dow
+	//script schedule
 	$(".deleteSchedule").click(function(){
 		var r = confirm("Bạn thật sự muốn xoá?");
 		if(r){
@@ -198,7 +221,7 @@ $(document).ready(function(){
 				url:"/Club-IVS/api/deleteTrain",
 				type:"GET",
 				data:{
-					id:id
+					idTrain:id
 				},
 				success:function(data){
 					if(data="true"){

@@ -49,4 +49,19 @@ public class AttendanceDAOImpl implements AttendanceDAO{
 			return null;
 		}
 	}
+
+	@Override
+	public boolean deleteAttendanceByTrain(int idTrain) {
+		try {
+			List<Attendance> ats = getAttendanceByTrain(idTrain);
+			for (Attendance a : ats) {
+				currentSession().delete(a);
+				
+			}
+			return true;
+		} catch (Exception ex) {
+			System.out.println(ex.toString());
+			return false;
+		}
+	}
 }

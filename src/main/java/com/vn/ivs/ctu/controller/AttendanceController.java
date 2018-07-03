@@ -35,6 +35,8 @@ public class AttendanceController {
 		if(club!=null) {
 			modelMap.put("listAllTrainOnWeek", trainService.getListAllTrainOnWeek(club.getIdClub()));			
 		}else {
+			modelMap.put("status", 403);
+			modelMap.put("message", "bạn không có quyền truy cập!");
 		}	
 		return "attendance";
 	}

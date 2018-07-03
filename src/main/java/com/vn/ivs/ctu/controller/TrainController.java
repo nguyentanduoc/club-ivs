@@ -47,9 +47,16 @@ public class TrainController {
 		modelMap.put("action1", "train");
 		modelMap.put("action2", "index");
 		modelMap.put("title", "Train");
-		modelMap.put("listSchedule",scheduleService.getAll());
-		modelMap.put("listTrain", trainService.getAllTrainAuto());
-		modelMap.put("listAllTrainOnWeek", trainService.getListAllTrainOnWeek());
+		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		Club club  = clubService.getLeaderClub(idMember);
+		if(club!=null) {
+		modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));
+		modelMap.put("listTrainManual",trainService.getAllTrainManual(club.getIdClub()));
+		modelMap.put("listTrainOnWeek", trainService.getListAllTrainOnWeek(club.getIdClub()));
+		}else {
+			modelMap.put("status", 403);
+			modelMap.put("message", "bạn không có quyền truy cập!");
+		}
 		return "train";
 	}
 
@@ -63,7 +70,6 @@ public class TrainController {
 		schedule.setTimeSchedule(timeSchedule);
 		schedule.setLocationSchedule(locationSchedule);
 		schedule.setAutoSchedule(false);
-		
 		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idLeader);
 		schedule.setClub(club);
@@ -112,7 +118,14 @@ public class TrainController {
 		modelMap.put("action1", "train");
 		modelMap.put("action2", "trainauto");
 		modelMap.put("title", "Train");
-		modelMap.put("listTrain", trainService.getAllTrain());
+		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		Club club  = clubService.getLeaderClub(idMember);
+		if(club!=null) {
+		modelMap.put("listTrainAuto", trainService.getAllTrainAuto(club.getIdClub()));
+		} else {
+			modelMap.put("status", 403);
+			modelMap.put("message", "bạn không có quyền truy cập!");
+		}
 		return "trainauto";
 	}
 	
