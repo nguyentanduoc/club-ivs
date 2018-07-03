@@ -12,7 +12,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +21,6 @@ import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
-import com.vn.ivs.ctu.entity.Status;
 import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
@@ -40,6 +38,9 @@ public class ClubController {
 	
 	@GetMapping(path="/index")
 	public String index(@RequestParam(name="message",required=false) String message, ModelMap modelMap){
+		modelMap.put("action1", "club");
+		modelMap.put("action2", "create");
+		modelMap.put("title", "CLB");		
 		Club club = new Club();
 		modelMap.put("clubs", clubService.getAll());
 		List<Member> members = memberService.getAllLeaderClub();
@@ -115,11 +116,9 @@ public class ClubController {
 				club.setIdClub(Integer.parseInt(s));
 				JoinClub joinClub = new JoinClub();
 				joinClub.setDateJoin(new Date());
-				Status status =new Status();
 				club.setIdClub(Integer.parseInt(s));
-				joinClub.setClub(club);			
-				status.setIdStatus(1);
-				joinClub.setStatus(status);
+				joinClub.setClub(club);	
+				joinClub.setStatus(true);
 				Member member = new Member();
 				member.setIdMember(idMember);
 				joinClub.setMember(member);
@@ -153,4 +152,40 @@ public class ClubController {
 		return map;
 	}
 	
+	@GetMapping(path="/listJoinClub")
+	public String listJoinClub(ModelMap modelMap) {
+		modelMap.put("action1", "club");
+		modelMap.put("action2", "listJoinClub");
+		modelMap.put("title", "CLB");	
+		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+		Branch branch = branchSevice.getBranchByMember(idLeader);
+		List<Club> clubs = clubService.getClubByBranch(branch.getIdBranch());
+		modelMap.put("clubs", clubs);
+		return "listJoinClub";
+	}
+	
+	@PostMapping("/active")
+	@ResponseBody
+	public Map<String,Object> offActive(int idJoinClub,boolean status){
+		Map<String,Object> map = new HashMap<>();
+		JoinClub joinClub = joinClubService.getJoinClub(idJoinClub);
+		joinClub.setIdJoinClub(idJoinClub);
+		joinClub.setStatus(status);
+		joinClub.setDateLeave(new Date());
+		if(joinClubService.createOrUpdate(joinClub)>0) {
+			map.put("status", 200);
+		}else {
+			map.put("status", 400);
+		}
+		return map;
+	}
+	
+	@PostMapping("/getMemberJoinClub")
+	@ResponseBody
+	public Map<String,Object> getMemberJoinClub(int idClub){
+		Map<String,Object> map = new HashMap<>();
+		map.put("member", joinClubService.getListMemberActive(idClub));
+		map.put("status", 200);
+		return map;
+	}
 }

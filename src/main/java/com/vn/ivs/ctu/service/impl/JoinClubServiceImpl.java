@@ -30,4 +30,14 @@ public class JoinClubServiceImpl implements JoinClubService{
 		return joinClubDAO.getJoinClubByIdMember(idMember);
 	}
 
+	@Override
+	public JoinClub getJoinClub(int idJoinClub) {
+		return joinClubDAO.getJoinClub(idJoinClub);
+	}
+
+	@Override
+	public List<JoinClub> getListMemberActive(int idClub) {
+		return joinClubDAO.getListMemberActive(idClub);
+	}
+
 }

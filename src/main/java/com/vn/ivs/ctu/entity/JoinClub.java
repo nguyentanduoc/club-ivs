@@ -15,6 +15,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 
 @Entity(name="join_club")
 @Table(name = "join_club")
@@ -32,16 +35,17 @@ public class JoinClub {
 	@Column(name="DATE_LEAVE")
 	private Date dateLeave;	
 	
+	@Column(name="STATUS_JOIN_CLUB")
+	private boolean status;
+	
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_MEMBER")
 	private Member member;
 	
-	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	@JoinColumn(name="ID_STATUS")
-	private Status status;
-	
+		
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_CLUB")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Club club;
 	
 	public Date getDateJoin() {
@@ -67,15 +71,7 @@ public class JoinClub {
 	public void setMember(Member member) {
 		this.member = member;
 	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
+	
 	public Club getClub() {
 		return club;
 	}
@@ -90,6 +86,14 @@ public class JoinClub {
 
 	public void setDateLeave(Date dateLeave) {
 		this.dateLeave = dateLeave;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}	
 	
 }

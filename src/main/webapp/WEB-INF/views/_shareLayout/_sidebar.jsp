@@ -58,8 +58,7 @@
 				</li><!-- ./admin menu branch -->
 				</sec:authorize>	
 				<!-- menu member -->
-				<li class="nav-item has-treeview ${action1 eq  'member' ? 'menu-open' : ''}">
-		            
+				<li class="nav-item has-treeview ${action1 eq  'member' ? 'menu-open' : ''}">		            
 		            <a href="#" class="nav-link ${action1 eq  'member' ? 'active' : ''}">
 		             <i class="fa fa-users" aria-hidden="true"></i>
 		              <p>
@@ -87,25 +86,32 @@
 		            </ul>            
 		          </li><!-- .// menu member -->
 				<sec:authorize access="hasAuthority('LEADER')">
-				<li class="nav-item has-treeview">
-					<a href="#" class="nav-link">
+				<li class="nav-item has-treeview ${action1 eq  'club' ? 'menu-open' : ''}">
+					<a href="#" class="nav-link ${action1 eq  'club' ? 'active' : ''}">
 					<i class="fa fa-star" aria-hidden="true"></i>
 						<!-- <i class="nav-icon fa fa-edit"></i> -->
-						<p>Club <i class="fa fa-angle-left right"></i></p>
+						<p>CLB<i class="fa fa-angle-left right"></i></p>
 					</a>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href='<c:url value="/club/index"/>'
-							class="nav-link ${action2 eq  'index' ? 'active' : ''}"> <i
+							class="nav-link ${action2 eq  'create' ? 'active' : ''}"> <i
 								class="fa fa-circle-o nav-icon"></i>
-								<p>Index</p>
+								<p>Danh sách CLB</p>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href='<c:url value="/club/joinClub"/>'
 							class="nav-link ${action2 eq  'joinClub' ? 'active' : ''}"> <i
 								class="fa fa-circle-o nav-icon"></i>
-								<p>Thành Viên Câu Lạc Bộ</p>
+								<p>Thêm thành viên</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href='<c:url value="/club/listJoinClub"/>'
+							class="nav-link ${action2 eq  'listJoinClub' ? 'active' : ''}"> <i
+								class="fa fa-circle-o nav-icon"></i>
+								<p>DS hoạt động</p>
 							</a>
 						</li>
 					</ul>
