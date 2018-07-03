@@ -22,8 +22,8 @@
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Chi Nhánh</a></li>
-	              <li class="breadcrumb-item active">Index</li>
+	              <li class="breadcrumb-item"><a href='<c:url value="/"/>'>Trang Chủ</a></li>
+	              <li class="breadcrumb-item active">Chi Nhánh</li>
 	            </ol>
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->
@@ -43,34 +43,25 @@
 	              <!-- form start -->
 	              <form:form method="POST" modelAttribute="branch" action="${pageContext.request.contextPath}/branch/insert">	          
 	                <div class="card-body">	              
-		                <c:choose>
-		                	<c:when test="${status==200}">
-		                		<div class="alert alert-success alert-dismissible">
-				                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				                  <h5><i class="icon fa fa-check"></i> Thành Công!</h5>					                 
-				                </div>
-		                	</c:when>
-		                	<c:when test="${status==400}">	                		
-				                <div class="alert alert-danger alert-dismissible">
-				                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				                  <h5><i class="icon fa fa-ban"></i> Thất Bại!</h5>					                 
-				                </div>
-		                	</c:when>
-		                </c:choose>
+		               <div class="m-3">
+		               		<c:if test="${status!=null}">
+		               			<c:choose>
+				                	<c:when test="${status==200}">
+						                 <h5 class="text-center text-success"><i class="icon fa fa-check"></i> Thành Công!</h5>
+				                	</c:when>
+				                	<c:when test="${status==400}">
+						                 <h5 class="text-center text-danger"><i class="icon fa fa-ban"></i> Thất Bại!</h5>
+				                	</c:when>
+				                </c:choose>
+		            		</c:if>	
+	               		</div> 
 		                  <div class="form-group">
 		                    <label for="nameBranch">Tên Chi Nhánh</label>		                   
-		                  	<form:input type="text" path="nameBranch" class="form-control" id="nameBranch" placeholder="Nhập Tên Chi Nhánh"/>
-		                  </div>
-		                   <div class="form-group">
-		                    <label for="member.idMember"">Nhân viên quản lý club tại chi nhánh</label>
-		      		            <form:select path="member.idMember" class="form-control">
- 		                    	<form:option value="0" label="--- Chọn nhân viên ---" />					  			 
-		                    	<form:options items="${listMember}" itemValue="idMember" itemLabel="nameMember" /> 
-		                    </form:select> 		                   
-		                  </div>
+		                  	<form:input type="text" path="nameBranch" class="form-control" id="nameBranch" placeholder="Nhập Tên Chi Nhánh" required="required"/>
+		                  </div>		                   
 		                  <div class="form-group">
 		                    <label for="addressBranch">Địa chỉ</label>
-		                    <form:textarea path="addressBranch" class="form-control"  id="addressBranch" placeholder="Nhập Địa chỉ chi nhánh" rows="3"/>
+		                    <form:textarea path="addressBranch" class="form-control"  id="addressBranch" placeholder="Nhập Địa chỉ chi nhánh" rows="3" required="required"/>
 		                  </div>
 		               </div>
 	                <!-- /.card-body -->	
@@ -89,15 +80,13 @@
 		              <!-- /.card-header -->
 		              <div class="card-body p-0">
 		                <table class="table">
-		                  <tr>		                   
-		                    <th style="width: 10px">#</th>
+		                  <tr>
 		                    <th style="width: 150px">Tên Chi Nhánh</th>		      
 		                     <th>Địa Chỉ</th>	            
 		                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
 		                  </tr>
 	                     <c:forEach var="branch" items="${listBranch}">
-			                  <tr>
-			                  	<td>${branch.getIdBranch()}</td>
+			                  <tr>			                  
 			                    <td>${branch.getNameBranch()}</td>		   
 			                    <td>${branch.getAddressBranch()}</td>                           
 			                    <td>
@@ -129,15 +118,17 @@
 		       	<div class="form-group">
                     <label for="nameEditBranch">Tên Chi Nhánh</label>		                   
                   	<input type="text" class="form-control" id="nameEditBranch" placeholder="Nhập Tên Chi Nhánh"/>
+                  	 <div  class="text-danger" id="errNameEditBranch"></div>    
                   </div>
                    <div class="form-group">
-                    <label for="memberEditBranch"">Nhân viên quản lý club tại chi nhánh</label>
-   		            <select id="memberEditBranch" name="memberEditBranch" class="form-control">	  			 
-                 	</select> 		                   
+                    <label for="memberEditBranch">Nhân viên quản lý club tại chi nhánh</label>
+   		            <select id="memberEditBranch" name="memberEditBranch" class="form-control"/></select> 		  
+   		            <div class="text-danger" id="message"></div>                 
                   </div>
                   <div class="form-group">
                     <label for="addressEditBranch">Địa chỉ</label>
                     <textarea class="form-control" id="addressEditBranch" placeholder="Nhập Địa chỉ chi nhánh" rows="3"></textarea>
+                  	<div class="text-danger" id="errAddressEditBranch"></div>    
                   </div>
 		      </div>
 		      <div class="modal-footer">
@@ -153,4 +144,25 @@
     </div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
 	</body>
+	<script>
+		$(document).ready(function(){
+			$("#memberEditBranch").change(function(){
+				var idMember = $("#memberEditBranch").val();
+				$("#message").empty();
+				$.ajax({
+					url:"/Club-IVS/branch/checkMember",
+					type:"POST",
+					data:{
+						idMember:idMember
+					},
+					success:function(data){
+						if(data.status==200){
+							$("#message").append("Thành viên này đã quản lý CLB nào đó!");
+							$("#message").addClass("text-danger text-center");
+						}								
+					}					
+				});
+			});
+		});
+	</script>
 </html>

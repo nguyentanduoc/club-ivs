@@ -27,8 +27,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 
 	protected Session currentSession() {
 		return sessionFactory.getCurrentSession();
-	}
-	
+	}	
 
 	public long create(Schedule schedule) {
 		currentSession().saveOrUpdate(schedule);
@@ -66,5 +65,6 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		}catch (Exception e) {
 			return null;
 		}
+	}
 }
-}
+

@@ -72,20 +72,13 @@
 											<label for="nameBranch">Tên Câu Lạc Bộ</label>
 											<form:input type="text" path="nameClub" class="form-control"
 												id="nameClub" placeholder="Nhập Tên Câu Lạc Bộ" />
-										</div>
-										<div class="form-group">
-											<label for="branch.idBranch">Thuộc chi nhánh</label>
-											<form:select id="branch" path="branch.idBranch" class="form-control">
-												<form:option value="0" label="--- Chọn Chi Nhánh ---" />
-												<form:options items="${branchs}" itemValue="idBranch"  itemLabel="nameBranch" />
-											</form:select>
-										</div>
+										</div>										
 										<div class="form-group">
 											<label for="member.idMember">Nhân viên quản lý câu lạc bộ</label>
-											<form:select id="idMember" path="member.idMember" class="form-control">
-												<form:option value="0" label="--- Chọn Nhân Viên ---" />
+											<form:select id="idMember" path="member.idMember" class="form-control">												
 												<form:options items="${members}" itemValue="idMember"  itemLabel="nameMember" />
 											</form:select>
+											<div id="messageMember"></div>
 										</div>
 									</div>
 									<!-- ./card-body -->
@@ -157,8 +150,9 @@
 							<div class="form-group">
 								<label for="memberEditClub">Nhân viên quản lý câu lạc bộ</label>
 								<select id="memberEditClub" name ="memberEditClub" class="form-control">																
-								</select>
+								</select>								
 							</div>
+							
 						</div>
 						<div class="modal-footer">
 							<button type="button" id="saveChangeClub" class="btn btn-primary">Lưu</button>
@@ -172,5 +166,40 @@
 		<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
 	</div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
+	<script>
+		$(document).ready(function(){
+			var idMember = $("#idMember").val();
+			$("#messageMember").empty();
+			$.ajax({
+				url:"/Club-IVS/club/checkMember",
+				type:"POST",
+				data:{
+					idMember:idMember
+				},
+				success:function(data){
+					if(data.status==200){
+						$("#messageMember").append("Thành viên này đã quản lý CLB nào đó!");
+						$("#messageMember").addClass("text-danger text-center");
+					}								
+				}					
+			});
+			$("#idMember").change(function(){
+				$("#messageMember").empty();
+				$.ajax({
+					url:"/Club-IVS/club/checkMember",
+					type:"POST",
+					data:{
+						idMember:idMember
+					},
+					success:function(data){
+						if(data.status==200){
+							$("#messageMember").append("Thành viên này đã quản lý CLB nào đó!");
+							$("#messageMember").addClass("text-danger text-center");
+						}								
+					}					
+				});
+			})
+		})
+	</script>
 </body>
 </html>

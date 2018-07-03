@@ -51,38 +51,47 @@ pageEncoding="UTF-8" session="false"%>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                </tr>
-                </thead>
-                <tbody>
-	                <tr>
-	                  <td>Trident</td>
-	                  <td>Internet
-	                    Explorer 4.0
-	                  </td>
-	                  <td>Win 95+</td>
-	                  <td> 4</td>
-	                  <td>X</td>
-	                </tr>
-                
-                </tbody>
-                <tfoot>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                </tr>
-                </tfoot>
-              </table>
+            <c:choose>
+               	<c:when test="${status!=null}">		                		
+               		<c:choose>
+	                	<c:when test="${status==200}">
+	                		<table id="example1" class="table table-bordered table-striped">
+				                <thead>
+				                <tr>
+				                  <th>Tên Thành Viên</th>
+				                  <th>Điểm Số</th>
+				                  <th>Yêu cầu thưởng</th>				                 
+				                </tr>
+				                </thead>
+				                <tbody>
+				                 <c:forEach var="score" items="${sums}">
+					                  <tr>
+					                  	<td>${score.getMember().getNameMember()}</td>
+					                    <td>${score.getScoreClub()}</td>
+					                    <td>
+					                    	<span class="edit" data-id = "${score.getIdSum()}"> <i class="fa fa-check-square-o" aria-hidden="true"></i></span>	
+					                    </td>	                               
+					                  </tr>	
+			                  	 </c:forEach>  
+				                </tbody>
+				                <tfoot>
+				                <!-- <tr>
+				                  <th>Tên Thành Viên</th>
+				                  <th>Điểm Số</th>
+				                  <th>Yêu cầu thưởng</th>
+				                </tr>
+				                </tfoot> -->
+				           	</table>
+	                	</c:when>
+	                	<c:when test="${status==403}">		                		
+			                <h5 class="text-danger text-center"><i class="icon fa fa-ban"></i>Bạn không có quyền truy cập!</h5>
+	                	</c:when>
+	                	<c:when test="${status==400}">		                		
+			                <h5 class="text-danger text-center"><i class="icon fa fa-ban"></i>Xảy ra lỗi!</h5>
+	                	</c:when>
+	                </c:choose>
+               	</c:when>
+              </c:choose>              
             </div>
             <!-- /.card-body -->
           </div>

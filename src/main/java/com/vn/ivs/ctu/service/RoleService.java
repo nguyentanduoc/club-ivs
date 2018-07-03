@@ -10,4 +10,5 @@ public interface RoleService {
 	public List<Role> getAll();
 	public boolean deleteRole(int id);
 	public Role getRoleById(int id);
+	public List<Role> getOfLeader();
 }

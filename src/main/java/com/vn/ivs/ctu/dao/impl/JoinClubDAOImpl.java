@@ -22,8 +22,7 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 	@Autowired
 	SessionFactory sessionFactory;
 
-	protected Session currentSession
-	() {
+	protected Session currentSession() {
 		return sessionFactory.getCurrentSession();
 	}
 	

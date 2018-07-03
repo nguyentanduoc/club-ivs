@@ -1,14 +1,18 @@
 package com.vn.ivs.ctu.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-@Entity(name="SUMMARIZATION")
+@Entity(name="sumarization")
+@Table(name="sumarization")
 public class Summarization {	
 	
 	@Id
@@ -17,28 +21,37 @@ public class Summarization {
 	private int idSum;
 	
 	@Column(name="MONTH_SUM")
-	private String monthSum;
+	private int monthSum;
+	
 	@Column(name="SCORE_CLUB")
 	private float scoreClub;
-	@Column(name="SCORE")
-	private float score;
+	
 	@Column(name="REQUIRE_DONATE")
 	private boolean requireDonate;
-	@Column(name="ACCESS_DONATE")
-	private boolean accessDonate;
-	@Column(name="CONTAIN_SUM")
-	private String containSum;
-	@Column(name="COMFIRM")
-	private boolean comfirm;
 	
-	@OneToOne
+	@Column(name="SEE_DONATE")
+	private boolean seeDonate;
+	
+	@Column(name="YEAR_SUM")
+	private int yearSum;
+	
+	@OneToOne(cascade  = CascadeType.PERSIST,fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_MEMBER")
 	private Member member;
 	
-	@OneToOne
+	@OneToOne(cascade  = CascadeType.PERSIST,fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_CLUB")
 	Club club;
 
+	@Column(name="PLUS_SCORE")
+	private float plusScore;
+	
+	@Column(name="MINUS_SCORE")
+	private float minusScore;
+	
+	@Column(name="NOTE")
+	private String note;
+	
 	public int getIdSum() {
 		return idSum;
 	}
@@ -47,11 +60,11 @@ public class Summarization {
 		this.idSum = idSum;
 	}
 
-	public String getMonthSum() {
+	public int getMonthSum() {
 		return monthSum;
 	}
 
-	public void setMonthSum(String monthSum) {
+	public void setMonthSum(int monthSum) {
 		this.monthSum = monthSum;
 	}
 
@@ -63,44 +76,12 @@ public class Summarization {
 		this.scoreClub = scoreClub;
 	}
 
-	public float getScore() {
-		return score;
-	}
-
-	public void setScore(float score) {
-		this.score = score;
-	}
-
 	public boolean isRequireDonate() {
 		return requireDonate;
 	}
 
 	public void setRequireDonate(boolean requireDonate) {
 		this.requireDonate = requireDonate;
-	}
-
-	public boolean isAccessDonate() {
-		return accessDonate;
-	}
-
-	public void setAccessDonate(boolean accessDonate) {
-		this.accessDonate = accessDonate;
-	}
-
-	public String getContainSum() {
-		return containSum;
-	}
-
-	public void setContainSum(String containSum) {
-		this.containSum = containSum;
-	}
-
-	public boolean isComfirm() {
-		return comfirm;
-	}
-
-	public void setComfirm(boolean comfirm) {
-		this.comfirm = comfirm;
 	}
 
 	public Member getMember() {
@@ -117,6 +98,50 @@ public class Summarization {
 
 	public void setClub(Club club) {
 		this.club = club;
+	}
+
+	public boolean isSeeDonate() {
+		return seeDonate;
+	}
+
+	public void setSeeDonate(boolean seeDonate) {
+		this.seeDonate = seeDonate;
+	}
+
+	public int isYearSum() {
+		return yearSum;
+	}
+
+	public void setYearSum(int yearSum) {
+		this.yearSum = yearSum;
+	}
+
+	public float getPlusScore() {
+		return plusScore;
+	}
+
+	public void setPlusScore(float plusScore) {
+		this.plusScore = plusScore;
+	}
+
+	public float getMinusScore() {
+		return minusScore;
+	}
+
+	public void setMinusScore(float minusScore) {
+		this.minusScore = minusScore;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public int getYearSum() {
+		return yearSum;
 	}
 	
 }

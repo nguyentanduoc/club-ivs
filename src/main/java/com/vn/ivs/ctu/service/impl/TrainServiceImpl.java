@@ -43,12 +43,11 @@ public class TrainServiceImpl implements TrainService {
 		return trainDAO.getAll();
 	}
 
-	
-
 	@Override
 	public List<Train> getListAllTrainOnWeek(int idClub) {
 		return trainDAO.getListAllTrainOnWeek(idClub);
 	}
+	
 	@Override
 	public List<Train> getListTrainByIdSchedule(int idSchedule){
 		return trainDAO.getListTrainByIdSchedule(idSchedule);
@@ -69,4 +68,14 @@ public class TrainServiceImpl implements TrainService {
 		}
 		return rs;
 	}
+
+	@Override
+	public int totalTrainInMonth(int month,int curentYear, int idClub) {
+		return trainDAO.totalTrainInMonth(month,curentYear,idClub);
+	}
+
+	@Override
+	public List<Train> getAllTrainByClub(int month, int year, int idClub) {
+		return trainDAO.getAllTrainByClub(month, year, idClub);
+	}	
 }

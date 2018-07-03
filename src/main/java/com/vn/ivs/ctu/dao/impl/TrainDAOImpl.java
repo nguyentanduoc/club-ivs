@@ -1,6 +1,5 @@
 package com.vn.ivs.ctu.dao.impl;
 
-import java.time.Year;
 import java.util.Calendar;
 import java.util.List;
 
@@ -30,8 +29,7 @@ public class TrainDAOImpl implements TrainDAO{
 
 	protected Session currentSession() {
 		return sessionFactory.getCurrentSession();
-	}
-	
+	}	
 
 	public long create(Train train) {
 		currentSession().saveOrUpdate(train);
@@ -98,6 +96,47 @@ public class TrainDAOImpl implements TrainDAO{
 				System.out.println(e.toString());
 				return null;
 			}
+	}
+	public int totalTrainInMonth(int month, int curentYear, int idClub) {
+
+		try {
+			return ((Number)currentSession().createQuery("select count(t) from train t where t.schedule.club.idClub = ? and year(t.dateTrain) =?  and month(t.dateTrain) = ?")
+					.setParameter(0, idClub).setParameter(1, curentYear).setParameter(2, month)    
+					.getSingleResult()
+					).intValue();
+		}catch(Exception ex) {
+			System.out.println(ex.toString());
+			return 0;
+		}
+	}
+
+	@Override
+	public List<Train> getAllTrainByClub(int month, int year, int idClub) {
+		try {
+			return currentSession().createQuery("select t from train t where t.schedule.club.idClub = ? and year(t.dateTrain) =?  and month(t.dateTrain) = ?",Train.class)
+					.setParameter(0, idClub).setParameter(1, year).setParameter(2, month).list();
+		}catch(Exception ex) {
+			System.out.println(ex.toString());
+			return null;
+		}
+	}
+
+	@Override
+	public List<Train> getAllTrain() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Train> getAllTrainAuto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Train> getAllTrainOnWeek() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.vn.ivs.ctu.dao.AttendanceDAO;
 import com.vn.ivs.ctu.entity.Attendance;
-import com.vn.ivs.ctu.entity.AttendanceID;
-import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.AttendanceService;
 
 @Service
@@ -25,9 +23,19 @@ public class AttendanceServiceImpl implements AttendanceService{
 	public List<Attendance> getAttendanceByTrain(int id) {
 		return attendanceDAO.getAttendanceByTrain(id);
 	}
+	
 	@Override
 	public boolean deleteAttendanceByTrain (int idTrain) {
 		return attendanceDAO.deleteAttendanceByTrain(idTrain);
 	}
-
+	
+	@Override
+	public List<Attendance> getAttendanceByClub(int curentMonth,int idClub) {
+		return attendanceDAO.getAttendanceByClub(curentMonth,idClub);
+	}
+	
+	@Override
+	public Attendance getAttendByIdMember(int idMember, int idTrain) {
+		return attendanceDAO.getAttendByIdMember(idMember, idTrain);
+	}
 }

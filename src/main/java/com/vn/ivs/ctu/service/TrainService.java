@@ -14,4 +14,6 @@ public interface TrainService {
 	public List<Train> getListAllTrainOnWeek(int idClub);
 	public boolean deleteTrainByIdSchedule(int idSchedule);
 	public List<Train> getListTrainByIdSchedule(int idTrain);
+	public int totalTrainInMonth(int month, int curentYear,int idClub);
+	public List<Train> getAllTrainByClub(int month, int year, int idClub);
 }

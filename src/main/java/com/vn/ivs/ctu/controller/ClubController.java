@@ -1,6 +1,10 @@
 package com.vn.ivs.ctu.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,9 +12,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
@@ -27,7 +33,7 @@ import com.vn.ivs.ctu.utils.SecurityUtils;
 @RequestMapping(path="/club")
 public class ClubController {
 	
-	@Autowired BranchService branchService;
+	@Autowired BranchService branchSevice;
 	@Autowired ClubService clubService;
 	@Autowired MemberService memberService;
 	@Autowired JoinClubService joinClubService;
@@ -35,9 +41,15 @@ public class ClubController {
 	@GetMapping(path="/index")
 	public String index(@RequestParam(name="message",required=false) String message, ModelMap modelMap){
 		Club club = new Club();
-		modelMap.put("branchs", branchService.getAll());
 		modelMap.put("clubs", clubService.getAll());
-		modelMap.put("members",memberService.getAllLeaderClub());
+		List<Member> members = memberService.getAllLeaderClub();
+		List<Member> notfount = new ArrayList<>();
+		for(Member m:members) {
+			if(clubService.getLeaderClub(m.getIdMember())==null) {
+				notfount.add(m);
+			}			
+		}
+ 		modelMap.put("members",notfount);
 		modelMap.put("club", club);
 		if(message!=null) {
 			if(message.equals("success")) {
@@ -54,8 +66,15 @@ public class ClubController {
 	@PostMapping(path="/create")
 	public String create(@ModelAttribute("club") Club club,BindingResult result, ModelMap modelMap ) {
 		
-		if(clubService.saveOrUpdate(club)>0) {
-			return "redirect:/club/index?message=success";
+		if(SecurityUtils.getMyUserDetail()!=null) {
+			int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+			Branch branch = branchSevice.getBranchByMember(idLeader);
+			club.setBranch(branch);
+			if(clubService.saveOrUpdate(club)>0) {
+				return "redirect:/club/index?message=success";
+			}else {
+				return "redirect:/club/index?message=error";
+				}
 		}else {
 			return "redirect:/club/index?message=error";
 		}
@@ -67,7 +86,7 @@ public class ClubController {
 		modelMap.put("action2", "joinClub");
 		modelMap.put("title", "Join Club");
 		int idOTC = SecurityUtils.getMyUserDetail().getIdMember();
-		Branch branch = branchService.getBranchByMember(idOTC);
+		Branch branch = branchSevice.getBranchByMember(idOTC);
 		if(branch!=null) {
 			modelMap.put("members", memberService.getAllByBranch(branch.getIdBranch()));
 			modelMap.put("clubs", clubService.getClubByBranch(branch.getIdBranch()));
@@ -121,4 +140,17 @@ public class ClubController {
 		}
 		
 	}
+	
+	@PostMapping(path="checkMember")
+	@ResponseBody
+	public Map<String,Object> checkMember(int idMember){
+		Map<String,Object> map =new HashMap<>();
+		if(clubService.getLeaderClub(idMember)!=null) {
+			map.put("status", 200);
+		}else {
+			map.put("status", 404);
+		}
+		return map;
+	}
+	
 }

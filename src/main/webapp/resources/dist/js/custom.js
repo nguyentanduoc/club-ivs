@@ -17,7 +17,19 @@ xoa_dau = function xoa_dau(str) {
     return str;
 }
 //xoa dau utf8-->
-
+date = function  date(input){
+	var date = new Date(parseInt(input));
+	var dd = date.getDate();
+	var mm = date.getMonth()+1;
+	var yyyy = date.getFullYear();
+	if(dd<10){
+	    dd='0'+dd;
+	} 
+	if(mm<10){
+	    mm='0'+mm;
+	} 
+	return dd+'/'+mm+'/'+yyyy;
+}
 $(document).ready(function(){
 	$(function () {
 		var token = $("meta[name='_csrf']").attr("content");
@@ -39,8 +51,7 @@ $(document).ready(function(){
 					id:id
 				},
 				success:function(data){
-					console.log(data);
-					if(data="true"){
+						if(data="true"){
 						self.closest("tr").remove();
 					}	
 				}
@@ -63,7 +74,7 @@ $(document).ready(function(){
 					$("#codeEditRole").val(data.role.codeRole);
 					$("#idEditRole").val(id);					
 				}else{
-					$("errorGetRole").append("Xẫy ra lỗi khi lấy dữ liệu!");
+					$("errorGetRole").append("Xảy ra lỗi khi lấy dữ liệu!");
 				}
 			}
 		})	
@@ -86,7 +97,7 @@ $(document).ready(function(){
 				if(data.status==200){					
 					location.reload();
 				}else{
-					$("errorGetRole").append("Xẫy ra lỗi khi lưu!");
+					$("errorGetRole").append("Xảy ra lỗi khi lưu!");
 				}
 				
 			}
@@ -128,45 +139,70 @@ $(document).ready(function(){
 					var view="";
 					$("#idEditBranch").val(data.branch.idBranch);
 					$("#nameEditBranch").val(data.branch.nameBranch);
-					$("#addressEditBranch").val(data.branch.addressBranch);
-					$.each(data.members, function (index, row) {
-						if(row.idMember==data.branch.member.idMember){
-							 view += "<option value='" + row.idMember + "' selected>" + row.nameMember + " - " + row.userNameMember + "</option>";
-						}else{
-							view += "<option value='" + row.idMember + "'>" + row.nameMember + "-" + row.userNameMember + "</option>";
-						}                        
-                    })
+					$("#addressEditBranch").val(data.branch.addressBranch);					
+					if(data.branch.member!=null){
+						$.each(data.members, function (index, row) {						
+							if(row.idMember==data.branch.member.idMember){
+								 view += "<option value='" + row.idMember + "' selected>" + row.nameMember + " - " + row.userNameMember + "</option>";
+							}else{
+								view += "<option value='" + row.idMember + "'>" + row.nameMember + "-" + row.userNameMember + "</option>";
+							}                       
+	                    })
+					}else{
+						view += "<option value='0'>---Chọn Nhân Viên---</option>";   
+						$.each(data.members, function (index, row) {
+							view += "<option value='" + row.idMember + "'>" + row.nameMember + "-" + row.userNameMember + "</option>";             
+	                    })
+					}					
                     $("#memberEditBranch").append(view);
 				}else{
-					$("errorGetRole").append("Xẫy ra lỗi khi lấy dữ liệu!");
+					$("errorGetRole").append("Xảy ra lỗi khi lấy dữ liệu!");
 				}
 			}
 		})	
 	})	
 	$("#saveChangeBranch").click(function(){		
+		var err=false;
 		var id = $("#idEditBranch").val();
 		var nameBranch =$("#nameEditBranch").val();
 		var addressBranch= $("#addressEditBranch").val();
 		var member= $("#memberEditBranch").val();
 		
-		$.ajax({
-			url:"/Club-IVS/api/saveChangeBranch",
-			type:"POST",
-			data:{
-				"idBranch":id,
-				"nameBranch":nameBranch,
-				"addressBranch":addressBranch,
-				"member.IdMember":member
-			},
-			success:function(data){
-				if(data.status==200){					
-					location.reload();
-				}else{
-					$("errorGetRole").append("Xẫy ra lỗi khi lưu!");
+		$("#errMemberEditBranch").empty();
+		$("#errNameEditBranch").empty();
+		$("#errAddressEditBranch").empty();
+		if(member==0){			
+			err = true;
+			$("#errMemberEditBranch").append("Chọn nhân viên!");
+		}
+		if(nameBranch==""){			
+			err = true;
+			$("#errNameEditBranch").append("Nhập tên chi nhánh");
+		}
+		if(addressBranch==""){
+			err = true;
+			$("#errAddressEditBranch").append("Nhập tên chi nhánh");
+		}	
+		console.log(addressBranch);
+		if(err==false){
+			$.ajax({
+				url:"/Club-IVS/api/saveChangeBranch",
+				type:"POST",
+				data:{
+					"idBranch":id,
+					"nameBranch":nameBranch,
+					"addressBranch":addressBranch,
+					"member.IdMember":member
+				},
+				success:function(data){
+					if(data.status==200){					
+						location.reload();
+					}else{
+						$("errorGetRole").append("Xảy ra lỗi khi lưu!");
+					}					
 				}
-				
-			}
-		});
+			});
+		}
 	});
 	//delete Dow
 	$(".deleteDow").click(function(){
@@ -368,57 +404,7 @@ $(document).ready(function(){
 			});		
 		}		
 	})//end club
-	//start join club
-	$("#tableJoinClub").hide();
-	$("#idMember").change(function(){
-		
-		$("#messageJoinClub").empty();
-		$("#listJoinClub").empty();
-		var idMember = $("#idMember").val();
-		$.ajax({
-			url:"/Club-IVS/api/getJoinClub",
-			type:"POST",
-			data:{
-				"idMember":idMember,				
-			},
-			success:function(data){
-				if(data.status==200){	
-					$("#tableJoinClub").show();	
-					var view;
-					$.each(data.joinClubs, function (index, row) {
-						var date = new Date(parseInt(row.dateJoin));
-						var dd = date.getDate();
-						var mm = date.getMonth()+1;
-						var yyyy = date.getFullYear();
-						if(dd<10){
-						    dd='0'+dd;
-						} 
-						if(mm<10){
-						    mm='0'+mm;
-						} 
-						var dateJoin = dd+'/'+mm+'/'+yyyy;
-						view +=  "<tr>" 
-								+"<td>"+row.club.nameClub+"</td>"
-								+"<td>"+dateJoin+"</td>"
-								+"<td>"+row.status.nameStatus+"</td>"
-								+"</tr>"; 
-						 /*$("#clubs").each(function(index1,element){
-						        console.log(element);
-						    });*/
-                    })
-					$("#listJoinClub").append(view);
-				}else{
-					if(data.status==404){
-						$("#messageJoinClub").append("Thành viên này chưa tham gia câu lạc bộ nào!");
-					}else{
-						$("#messageJoinClub").append("Đã xảy ra lỗi!");
-					}
-				}
-				
-			}
-		});	
-	});
-	//end join club
+	
 	//attendence
 	$(".diemdanh").click(function(){
 		$("#ListAttendace").empty();

@@ -12,28 +12,32 @@ import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.AttendanceID;
 import com.vn.ivs.ctu.entity.Club;
 import com.vn.ivs.ctu.entity.JoinClub;
-import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.entity.Train;
+import com.vn.ivs.ctu.service.AttendanceService;
+import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.ScheduleService;
+import com.vn.ivs.ctu.service.SumarizationService;
 import com.vn.ivs.ctu.service.TrainService;
+
 import com.vn.ivs.ctu.utils.SecurityUtils;
 import com.vn.ivs.ctu.service.AttendanceService;
 import com.vn.ivs.ctu.service.ClubService;
 
+
 @Component
 public class TrainComponent {
+	
 	@Autowired ScheduleService scheduleService;
 	@Autowired TrainService trainService;
 	@Autowired MemberService memberService;
 	@Autowired JoinClubService joinClubService;
 	@Autowired AttendanceService attendanceService;
 	@Autowired ClubService clubService;
-	
-	
-	@Scheduled(cron = "0 17 10 * * TUE")
+
+	@Scheduled(cron = "0 36 8 * * THU",zone="Asia/Saigon")
 	public void showCalendar() {
 		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club  = clubService.getLeaderClub(idMember);
@@ -63,4 +67,5 @@ public class TrainComponent {
 	        }
 		}
 	}
+	
 }

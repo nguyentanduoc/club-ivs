@@ -48,7 +48,15 @@ public class RoleDAOImpl implements RoleDAO {
 
 	public Role getRoleById(int id) {		
 		Role role = currentSession().load(Role.class,id);
-		return role;
-		
+		return role;		
 	}
+	
+	public List<Role> getOfLeader(){
+		try {
+			return currentSession().createQuery("select r from role r where r.codeRole not in('ADMIN','LEADER')",Role.class).list();
+		}catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	} 
 }

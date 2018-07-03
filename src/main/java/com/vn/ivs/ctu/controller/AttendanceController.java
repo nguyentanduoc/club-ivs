@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vn.ivs.ctu.entity.Club;
-import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.service.AttendanceService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
-import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
 import com.vn.ivs.ctu.utils.SecurityUtils;
 

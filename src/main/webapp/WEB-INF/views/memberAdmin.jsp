@@ -35,12 +35,7 @@
 			<!-- /.content-header -->
 			<!-- Main content -->
 			<section class="content">
-			<c:choose>
-				<c:when test="${status==403}">
-					  <h5 class="text-success text-danger"><i class="icon fa fa-ban"></i><c:out value="${message}"/></h5>	
-				</c:when>
-				<c:otherwise>
-					<div class="container-fluid">
+				<div class="container-fluid">
 					<div class="row">
 						<!-- left column -->
 						<div class="col-md-5">
@@ -51,16 +46,17 @@
 								</div>
 								<!-- /.card-header -->
 								<!-- form start -->
-								<form:form method="POST" modelAttribute="member" action="${pageContext.request.contextPath}/member/create">
-									<div class="card-body">		
+								<form:form method="POST" modelAttribute="member" action="${pageContext.request.contextPath}/member/admin">
+									<div class="card-body">	
+									<div id="message"></div>	
 									<c:choose>
 					                	<c:when test="${status!=null}">		                		
 					                		<c:choose>
 							                	<c:when test="${status==200}">							                		
-									                  <h5 class="text-success text-center"><i class="icon fa fa-check"></i> <c:out value="${message}"/></h5>
+									                  <h5 class="text-success text-center"><i class="icon fa fa-check"></i> Thành Công!</h5>	
 							                	</c:when>
-							                	<c:when test="${status==400}">
-									                  <h5 class="text-success text-danger"><i class="icon fa fa-ban"></i> <c:out value="${message}"/></h5>	
+							                	<c:when test="${status==400}">	
+									                  <h5 class="text-danger text-center"><i class="icon fa fa-ban"></i> Thất Bại!</h5>
 							                	</c:when>
 							                </c:choose>
 					                	</c:when>
@@ -94,6 +90,17 @@
 											class="form-control" id="passWordMember" readonly="true"/>
 										</div>											
 									</div>
+									
+									<div class="form-group row">
+										<label class="col-sm-4 col-form-label" for="branch">Chi Nhánh:</label>
+										<div class="col-sm-8">
+											<form:select path="branch.idBranch" class="form-control">												
+												<form:options items="${listBranch}" itemValue="idBranch"
+													itemLabel="nameBranch" />
+											</form:select>
+										</div>											
+									</div>
+									
 									<div class="form-group row">										
 										<label   class="col-sm-4 col-form-label" for="roles" >Chức Vụ: </label>
 										<div class="col-sm-8">
@@ -101,7 +108,8 @@
 												itemLabel="nameRole" />
 										</div>
 									</div>																	
-								</div><!-- /.card-body -->								
+								</div><!-- /.card-body -->
+									
 								<div class="card-footer">
 									<input type="submit" class="btn btn-primary float-right" value="Thêm" />
 								</div>
@@ -114,30 +122,32 @@
 									<h3 class="card-title">Danh Sách Thành viên</h3>
 									<div class="card-tools">
 					                  <div class="input-group input-group-sm" style="width: 150px;">
-					                    <input type="text" id="txtSearch" name="txtSearch" class="form-control float-right" placeholder="Search">
+					                    <input type="text" id="searchMember" name="table_search" class="form-control float-right" placeholder="Search">
 					                    <div class="input-group-append">
-					                      <button type="button"  id="searchMember" class="btn btn-default"><i class="fa fa-search"></i></button>
+					                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
 					                    </div>
 					                  </div>
 					                </div>
 								</div><!-- /.card-header -->
 								<div class="card-body p-0">
 									<table class="table">
-										<tr>											
+										<tr>
+											<th style="width: 10px">#</th>
 											<th>Tên Chức Vụ</th>
 											<th>Chức vụ</th>
 											<th style="width: 150px">Tuỳ Chỉnh</th>
 										</tr>
 										<tbody id="listMember">
 											<c:forEach var="member" items="${listMember}">
-												<tr>													
+												<tr>
+													<td>${member.getIdMember()}</td>
 													<td>${member.getNameMember()}</td>
 													<td><c:forEach var="role" items="${member.getRoles()}">
 															<c:out value="${role.getNameRole()}"></c:out><br/>
 														</c:forEach></td>
-													<td>
-														<a href="${pageContext.request.contextPath}/member/editMember/${member.getIdMember()}"> <i class="fa fa-pencil edit"></i></a>														 
-													</td>
+													<td><span class="deleteMember" onclick="deleteMember(${member.getIdMember()})"><i class="fa fa-times delete"></i></span> 
+														<span class="" data-id=""> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal"
+															data-target="#editRole"></i></span></td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -145,7 +155,7 @@
 								</div>
 								<c:set value="1" var="curentPage"/>
 								<div class="card-footer clearfix" >
-					                <ul class="pagination pagination-sm m-0 float-right" id="paginate">		
+					                <ul class="pagination pagination-sm m-0 float-right" id="paginate">
 					                </ul>
 				              	</div>
 								<!-- /.card-body -->
@@ -153,8 +163,6 @@
 						</div>
 					</div>
 				</div>
-				</c:otherwise>
-			</c:choose>				
 			</section>
 			<!-- /.content -->			
 		</div>
@@ -167,17 +175,14 @@
 			$("#paginate").empty();
 			var viewPage="";		
 			var totalPage = ${totalPage};
-			var idBranch= ${idBranch};
 			viewPage=" <li class='page-item' id='first'><a class='page-link pageClick' data-click='1' href='#'>&laquo;</a></li>";
-			if(totalPage>1){
-				for(var i=1;i<=totalPage;i++){				
-					if(currentPage==i){
-						viewPage += "<li class='page-item active'><a class='page-link pageClick' data-click='"+i+"' href='#'>"+i+"</a></li>";
-					}else{
-						viewPage += "<li class='page-item'><a class='page-link pageClick' data-click='"+i+"' href='#'>"+i+"</a></li>";
-					}				
-				}
-			}			
+			for(var i=1;i<=totalPage;i++){				
+				if(currentPage==i){
+					viewPage += "<li class='page-item active'><a class='page-link pageClick' data-click='"+i+"' href='#'>"+i+"</a></li>";
+				}else{
+					viewPage += "<li class='page-item'><a class='page-link pageClick' data-click='"+i+"' href='#'>"+i+"</a></li>";
+				}				
+			}
 			viewPage+=" <li class='page-item'><a class='page-link pageClick' data-click='"+totalPage+"' href='#'>&raquo;</a></li>";
 			$("#paginate").append(viewPage);
 			
@@ -186,57 +191,63 @@
 				var page = $(this).attr('data-click');
 				$("#listMember").empty();
 				$(".page-item").each(function( index, element ) {
-					if ( $( this ).hasClass('active')) {
-						$( this ).removeClass('active');
+					if ( $(this).hasClass('active')) {
+						$(this).removeClass('active');
 					}
-				})
-				$(this.parentNode).addClass("active");
-				
+				})			
+				$(this.parentNode).addClass("active");				
 				$.ajax({
-					url:"/Club-IVS/member/loadMemberBranch",
+					url:"/Club-IVS/member/loadMember",
 					type:"POST",
 					data:{
-						page:page,
-						idBranch:idBranch
+						page:page
 					},
 					success:function(data){				
 						if(data.status==200){
 							$.each(data.listMember,function(index,row){
-								view +="<tr>";								
+								view +="<tr>";
+								view +="<td>"+row.idMember+"</td>";
 								view +="<td>"+row.nameMember+"</td><td>";
 								if(row.roles!=null){
-									$.each(row.roles,function(index1,row1){
-										view+=row1.nameRole+"<br/>";
+									$.each(row.roles,function(index1,row1){									
+										view += row1.nameRole +"<br/>";										
 									})
 								}								
-								
 								view+="</td>";
-								view +="<td><a href='${pageContext.request.contextPath}/member/editMember/"+row.idMember+"'> <i class='fa fa-pencil edit'></i></a>";
-								view+="</td></tr>";
-								
+								view+="<td><span class='deleteMember' onclick ='deleteMember("+row.idMember+")'><i class='fa fa-times delete'></i></span>";
+								view +="<span class='' data-id=''> <i class='fa fa-pencil edit' aria-hidden='true' data-toggle='modal' data-target='#editRole'></i></span></td></tr>";
 							});
-							$("#listMember").append(view);															
+							$("#listMember").append(view);
+							console.log(data)										
 						}else{
 							
 						}
 					}
 				})
-			})		
-			$("#searchMember").click(function(){
-				var txtSearch = $("#txtSearch").val();
-
-				$.ajax({
-					url:"/Club-IVS/member/searchMember",
-					type:"POST",
-					data:{						
-						txtSearch:txtSearch
-					},
-					success:function(data){	
-							console.log(data);
-					}
-				})
-			});
+			})
+			
 		})
+		function deleteMember(idMember){
+			$("#message").empty();
+			var view="";
+			$.ajax({
+				url:"/Club-IVS/member/deleteMember",
+				type:"POST",
+				data:{
+					idMember:idMember
+				},
+				success:function(data){		
+					if(data.status==200){
+						view+="<h5 class='text-success text-center'><i class='icon fa fa-check'></i> Xóa Thành Công!</h5>";
+						location.reload();
+					}else{
+						view+="<h5 class='text-danger text-center'><i class='icon fa fa-ban'></i>Xóa Thất Bại!</h5>";
+					}
+					$("#message").append(view);
+					view="";
+				}
+			})
+		}
 	</script>
 </body>
 </html>

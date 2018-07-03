@@ -1,13 +1,10 @@
 package com.vn.ivs.ctu.controller;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +25,7 @@ import com.vn.ivs.ctu.service.DowService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
+import com.vn.ivs.ctu.utils.DateUtils;
 import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Component
@@ -65,7 +63,8 @@ public class TrainController {
 		Schedule schedule = new Schedule();
 		Train train = new Train();
 		train.setDateTrain(dateTrain);
-		
+		int dow = DateUtils.getDateOfWeek(dateTrain);
+		System.out.println(dow);
 		schedule.setNameSchedule(nameSchedule);
 		schedule.setTimeSchedule(timeSchedule);
 		schedule.setLocationSchedule(locationSchedule);

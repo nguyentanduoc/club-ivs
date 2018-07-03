@@ -13,8 +13,10 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.MemberDAO;
+import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
+import com.vn.ivs.ctu.utils.Pagination;
 
 @Repository()
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -23,6 +25,7 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	@Autowired
 	SessionFactory sessionFactory;
+	
 
 	protected Session currentSession() {
 		return sessionFactory.getCurrentSession();
@@ -59,9 +62,15 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 	}
 
-	public List<Member> findAll() {
-		List<Member>  list = (List<Member>)currentSession().createQuery("from member", Member.class).list();		
-		return list;
+	public List<Member> findAll(int startPosition) {
+		try {
+			List<Member>  list = (List<Member>)currentSession().createQuery("from member", Member.class).setFirstResult(startPosition).setMaxResults(Pagination.MAX_SIZE_MEMBER).list();		
+			return list;
+		}catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+		
 	}
 
 	@Override
@@ -78,7 +87,6 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return null;
 	}
-
 	public List<Member> getAllByBranch(int idBranch) {
 		try {
 			List<Member> members = currentSession().
@@ -87,6 +95,20 @@ public class MemberDAOImpl implements MemberDAO {
 			if (members != null) {
 				return members;
 			}
+		}
+		catch (Exception e) {
+			return null;
+		}
+		return null;
+	}
+	public List<Member> getAllByBranch(int idBranch,int startPosition) {
+		try {
+			List<Member> members = currentSession().
+					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch = ?",Member.class).setFirstResult(startPosition).setMaxResults(Pagination.MAX_SIZE_MEMBER).
+					setParameter(0, idBranch).list();			
+			if (members != null) {
+				return members;
+			}			
 		}
 		catch (Exception e) {
 			return null;
@@ -122,5 +144,28 @@ public class MemberDAOImpl implements MemberDAO {
 		}catch(Exception e) {
 			return null;
 		}
+	}
+
+	@Override
+	public long count() {
+		try {
+			return (long)currentSession().createQuery("from member", Member.class).list().size();
+			
+		}	catch (Exception e) {
+			System.out.println(e.toString());
+			return 0;
+		}	
+	}
+
+	@Override
+	public boolean delete(int idMember) {
+		try {
+			Member member = getMemberById(idMember);
+			currentSession().delete(member);
+			return true;
+		}	catch(Exception ex) {
+			System.out.println("deleteMember-"+ ex.toString());
+			return false;
+		}	
 	}
 }

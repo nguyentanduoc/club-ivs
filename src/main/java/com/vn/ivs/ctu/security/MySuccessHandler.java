@@ -12,6 +12,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.vn.ivs.ctu.utils.RoleUtils;
 import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Component
@@ -32,13 +33,13 @@ public class MySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	public String determineTargetUrl(Authentication authentication) {
 		String url = "";
 		List<String> roles = SecurityUtils.getAuthorities();
-		if (isAdmin(roles)) {
+		if (RoleUtils.isAdmin(roles)) {
 			url = "/admin";
-		} else if (isOtc(roles)) {
+		} else if (RoleUtils.isLeader(roles)) {
 			url = "/leader";
-		} else if (isOtcLub(roles)) {
+		} else if (RoleUtils.isLeaderClub(roles)) {
 			url = "/leaderclub";
-		} else if (isMember(roles)) {
+		} else if (RoleUtils.isMember(roles)) {
 			url = "/member";
 		}
 		return url;
@@ -52,30 +53,4 @@ public class MySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 		return redirectStrategy;
 	}
 
-	private boolean isMember(List<String> roles) {
-		if (roles.contains("MEMBER")) {
-			return true;
-		}
-		return false;
-	}
-
-	private boolean isAdmin(List<String> roles) {
-		if (roles.contains("ADMIN")) {
-			return true;
-		}
-		return false;
-	}
-
-	private boolean isOtc(List<String> roles) {
-		if (roles.contains("LEADER")) {
-			return true;
-		}
-		return false;
-	}
-	private boolean isOtcLub(List<String> roles) {
-		if (roles.contains("LEADER_CLUB")) {
-			return true;
-		}
-		return false;
-	}
 }

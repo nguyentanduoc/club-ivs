@@ -1,5 +1,8 @@
 package com.vn.ivs.ctu.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.service.impl.BranchServiceImpl;
@@ -51,5 +55,17 @@ public class BranchController {
 		}else {
 			return "redirect:/branch/index?message=errors";	
 		}		
+	}
+	
+	@PostMapping(path="/checkMember")
+	@ResponseBody
+	public Map<String,Object> checkMemberBranch(int idMember){
+		Map<String,Object> map = new HashMap<>();
+		if(branchServiceImpl.getBranchByMember(idMember)==null) {
+			map.put("status", 404);
+		}else {
+			map.put("status",200);
+		}
+		return map;
 	}
 }

@@ -1,6 +1,5 @@
 package com.vn.ivs.ctu.controller;
 
-import java.util.List;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,26 +11,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.AttendanceID;
-import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
+import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.Role;
-import com.vn.ivs.ctu.entity.Schedule;
-import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.AttendanceService;
-import com.vn.ivs.ctu.service.TrainService;
-import com.vn.ivs.ctu.service.impl.DowServiceImpl;
-import com.vn.ivs.ctu.service.impl.RoleServiceImpl;
-import com.vn.ivs.ctu.service.impl.ScheduleServiceImpl;
-import com.vn.ivs.ctu.utils.SecurityUtils;
 import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.DowService;
@@ -39,6 +30,7 @@ import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.RoleService;
 import com.vn.ivs.ctu.service.ScheduleService;
+import com.vn.ivs.ctu.service.TrainService;
 
 @Controller
 @RequestMapping("api/")
@@ -70,7 +62,6 @@ public class ApiController {
 	@ResponseBody
 	public Map<String,Object> getRoleById(@RequestParam int id) {		
 		Map<String,Object> map = new HashMap<String, Object>();
-		System.out.println(id);
 		Role rs = roleService.getRoleById(id);
 		if(rs!=null) {
 			map.put("status", "200");
@@ -86,7 +77,6 @@ public class ApiController {
 	public Map<String , Object> saveChangeRole(@ModelAttribute("role") Role role){
 		
 		Map<String,Object> map = new HashMap<String, Object>();
-				
 		if(roleService.createOrUpdate(role)>0) {			
 			map.put("status", "200");			
 		}else {
@@ -135,7 +125,6 @@ public class ApiController {
 	public Map<String , Object> saveChangeBranch(@ModelAttribute("branch") Branch branch){
 				
 		Map<String,Object> map = new HashMap<String, Object>();
-				
 		if(branchService.saveOrUpdate(branch)>0) {			
 			map.put("status", "200");			
 		}else {

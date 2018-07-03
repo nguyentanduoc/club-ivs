@@ -29,6 +29,9 @@ public class JoinClub {
 	@Column(name="DATE_JOIN")
 	private Date dateJoin;
 	
+	@Column(name="DATE_LEAVE")
+	private Date dateLeave;	
+	
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_MEMBER")
 	private Member member;
@@ -79,6 +82,14 @@ public class JoinClub {
 
 	public void setClub(Club club) {
 		this.club = club;
+	}
+
+	public Date getDateLeave() {
+		return dateLeave;
+	}
+
+	public void setDateLeave(Date dateLeave) {
+		this.dateLeave = dateLeave;
 	}	
 	
 }
