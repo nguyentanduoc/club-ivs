@@ -22,8 +22,8 @@
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Chức Vụ</a></li>
-	              <li class="breadcrumb-item active">Index</li>
+	              <li class="breadcrumb-item"><a href='<c:url value="/"/>'>Trang Chủ</a></li>
+	              <li class="breadcrumb-item active">Chức Vụ</li>
 	            </ol>
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->
@@ -44,42 +44,34 @@
 	              <!-- form start -->
 	              <form:form role="form" modelAttribute="role" method="post" action="${pageContext.request.contextPath}/role/insert">	                                	
                		<div class="m-3">
-               			<c:choose>
-		                	<c:when test="${status!=null}">		                		
-		                		<c:choose>
-				                	<c:when test="${status==200}">
-				                		<div class="alert alert-success alert-dismissible">
-						                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-						                  <h5><i class="icon fa fa-check"></i> Thành Công!</h5>					                 
-						                </div>
-				                	</c:when>
-				                	<c:when test="${status==400}">		                		
-						                <div class="alert alert-danger alert-dismissible">
-						                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-						                  <h5><i class="icon fa fa-ban"></i> Thất Bại!</h5>					                 
-						                </div>
-				                	</c:when>
-				                </c:choose>
-		                	</c:when>
-	                	</c:choose>	
+	               		<c:if test="${status!=null}">
+	               			<c:choose>
+			                	<c:when test="${status==200}">
+					                 <h5 class="text-center text-success"><i class="icon fa fa-check"></i> Thành Công!</h5>
+			                	</c:when>
+			                	<c:when test="${status==400}">
+					                 <h5 class="text-center text-danger"><i class="icon fa fa-ban"></i> Thất Bại!</h5>
+			                	</c:when>
+			                </c:choose>
+	               		</c:if>	
                		</div>               		                	                	                
 	                <div class="card-body">
 		                <div class="form-group row">
 						    <label for="nameRole" class="col-sm-4 col-form-label">Tên Chức Vụ:</label>
 						    <div class="col-sm-8">
-						    	<form:input path="nameRole" type="text" name="nameRole" class="form-control" id="nameRole" placeholder="Nhập Tên Chức Vụ"/>
+						    	<form:input path="nameRole" type="text" name="nameRole" class="form-control" id="nameRole" placeholder="Nhập Tên Chức Vụ" required="required"/>
 						    </div>
 						  </div>		                      
 		                  <div class="form-group row">
 		                    <label  class="col-sm-4 col-form-label" for="codeRole">Code Chức Vụ:</label>
 		                    <div class="col-sm-8">
-		                    	<form:input path="codeRole" type="text" name="codeRole" class="form-control" id="codeRole" placeholder="Nhập Code Chức Vụ"/>
+		                    	<form:input path="codeRole" type="text" name="codeRole" class="form-control" id="codeRole" placeholder="Nhập Code Chức Vụ" required="required"/>
 		                  	</div>
 		                  </div>
-	                  </div><!-- /.card-body -->	
-						<div class="card-footer ">
-						  <input type="submit" class="btn btn-primary float-right" value="Thêm"/>
-						</div>
+	                </div><!-- /.card-body -->	
+					<div class="card-footer ">
+						<input type="submit" class="btn btn-primary float-right" value="Thêm"/>
+					</div>
 	              </form:form>
 	            </div><!-- /.card -->
 		    	</div>

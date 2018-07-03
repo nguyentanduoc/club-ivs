@@ -34,8 +34,8 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.findByUseName(name);
 	}
 	@Override
-	public List<Member> findAll() {
-		return memberDAO.findAll();
+	public List<Member> findAll(int startPosition) {
+		return memberDAO.findAll(startPosition);
 	}
 	@Override
 	public List<Member> getAllRoleOTC(){
@@ -44,6 +44,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<Member> getAllByBranch(int idBranch){
 		return memberDAO.getAllByBranch(idBranch);
+	}
+	@Override
+	public List<Member> getAllByBranch(int idBranch,int startPosition){
+		return memberDAO.getAllByBranch(idBranch,startPosition);
 	}
 	@Override
 	public List<Member> getMemberNoClub() {
@@ -59,5 +63,13 @@ public class MemberServiceImpl implements MemberService{
 	}
 	public List<Member> getAllLeaderClub(){
 		return  memberDAO.getAllLeaderClub();		
+	}
+	@Override
+	public long count() {
+		return memberDAO.count();
+	}
+	@Override
+	public boolean delete(int idMember) {
+		return memberDAO.delete(idMember);
 	}
 }

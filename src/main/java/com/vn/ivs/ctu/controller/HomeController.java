@@ -15,18 +15,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vn.ivs.ctu.entity.Attendance;
+import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.Summarization;
 import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.AttendanceService;
+import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.SumarizationService;
 import com.vn.ivs.ctu.service.TrainService;
 import com.vn.ivs.ctu.utils.DateUtils;
+import com.vn.ivs.ctu.utils.RoleUtils;
+import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Controller
 @RequestMapping(value= {"/"})
@@ -37,8 +41,28 @@ public class HomeController {
 	@Autowired AttendanceService attendanceService;
 	@Autowired ClubService clubService;
 	@Autowired MemberService memberService;
-	@Autowired JoinClubService joinClubSerive;
+	@Autowired JoinClubService joinClubService;
 	@Autowired SumarizationService sumarizationService;
+	@Autowired BranchService branchService;
+	
+	@GetMapping(path="")
+	public String Index() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		List<String> roles = SecurityUtils.getAuthorities();
+		String url = "login";
+		if(auth!=null) {
+			if (RoleUtils.isAdmin(roles)) {
+				url = "/admin";
+			} else if (RoleUtils.isLeader(roles)) {
+				url = "/leader";
+			} else if (RoleUtils.isLeaderClub(roles)) {
+				url = "/leaderclub";
+			} else if (RoleUtils.isMember(roles)) {
+				url = "/member";
+			}
+		}
+		return "redirect:"+url;
+	}
 	
 	@GetMapping(value="logout")
     public String logoutPage (HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -48,28 +72,29 @@ public class HomeController {
         }
         return "redirect:/login";
     }
-		
-	@RequestMapping(path= {"","login"})
+	
+	@RequestMapping(path= {"login"})
 	public String login(){
 		return "login";
 	}
 	
 	@RequestMapping(path= {"admin"})
 	public String admin() {
-		return "admin/index";
+		return "index";
 	}
 	
-	@RequestMapping(path= {"otc"})
-	public String otc() {
-		return "otc/index";
+	@RequestMapping(path= {"leader"})
+	public String leader() {
+		return "index";
 	}
-	@RequestMapping(path= {"otcclub"})
-	public String otcclub() {
-		return "otcclub/index";
+	
+	@RequestMapping(path= {"leaderclub"})
+	public String leaderClub() {
+		return "index";
 	}
 	@RequestMapping(path= {"member"})
 	public String member() {
-		return "member/index";
+		return "index";
 	}
 	@RequestMapping(path="403")
 	public String accessDinied() {		
@@ -80,14 +105,13 @@ public class HomeController {
 		return "404";
 	}
 	
-	@GetMapping("test")
-	public String test() {	
-		
+	@GetMapping("test1")
+	public String test1() {
 		List<Club> clubs = clubService.getAll();
 		for(Club c:clubs) {			
 			List<Train> trains = trainService.getAllTrainByClub(DateUtils.getCurentMonth(), DateUtils.getCurentYear(), c.getIdClub());
 			int sobuoi = trains.size();
-			List<JoinClub> joinClubs = joinClubSerive.getJoinClubByClub(c.getIdClub());
+			List<JoinClub> joinClubs = joinClubService.getJoinClubByClub(c.getIdClub());
 			for(JoinClub j: joinClubs) {
 				int sbdd = 0;
 				float scoreClub = 0;
@@ -113,18 +137,38 @@ public class HomeController {
 				sum.setScoreClub(scoreClub);
 				sum.setRequireDonate(false);
 				sum.setSeeDonate(false);
+				sum.setMinusScore(0);
+				sum.setPlusScore(0);
 				sum.setMonthSum(DateUtils.getCurentMonth());
 				sum.setYearSum(DateUtils.getCurentYear());
-				if(sumarizationService.createOrUpdate(sum)>0) {
-					System.out.println("----------------------------------------- Thanh CONG");
-				}else {
-					System.out.println("----------------------------------------- That Bai");
-				}
+				sumarizationService.createOrUpdate(sum);				
 			}
-//			adhgaskduyhgalsdglaoisugdolasuigdlkuasgdlsagl
-			/**/
-			//List<Attendance>  attendances = attendanceService.getAttendanceByClub(DateUtils.getCurentMonth(),c.getIdClub());
-			
+		}
+		return "404";
+	}
+	
+	@GetMapping("test")
+	public String test() {	
+		List<Branch> branchs = branchService.getAll();
+		for(Branch b:branchs) {
+			List<Member> members = memberService.getAllByBranch(b.getIdBranch());
+			for(Member member:members) {
+				//thong ke xem  no co con hoat dong trong nhom khong
+				//select trong joinclub tra ve so club tham gia
+				float score=0,total = 0;
+				float c = 0;
+				List<Summarization> sums = sumarizationService.getSumByMemberPreMonth(member.getIdMember(), DateUtils.getCurentMonth(), DateUtils.getCurentYear());
+				for(Summarization sum:sums) {
+					c+=1;
+					score += sum.getScoreClub() + sum.getPlusScore() - sum.getMinusScore();
+				}
+				total = (score + (c-1)*10);
+				if(total > 0) {
+					System.out.println("Chi Nhanh " +b.getNameBranch()+", thanh vien "  + member.getNameMember() +" co diem " + total*Float.parseFloat("0.8"));
+				}
+				//System.out.println("thanh vien "  + member.getNameMember() + ":" +score +" c " +(score + (c-1)*10));
+				
+			}
 		}
 		
 		return "404";

@@ -41,7 +41,9 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<!-- .//Dispartcher -->
-
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
 	<filter>
         <filter-name>encoding-filter</filter-name>
         <filter-class>

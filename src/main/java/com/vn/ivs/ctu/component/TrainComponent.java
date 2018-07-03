@@ -14,18 +14,24 @@ import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.AttendanceService;
+import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.ScheduleService;
+import com.vn.ivs.ctu.service.SumarizationService;
 import com.vn.ivs.ctu.service.TrainService;
 
 @Component
 public class TrainComponent {
+	
 	@Autowired ScheduleService scheduleService;
 	@Autowired TrainService trainService;
 	@Autowired MemberService memberService;
 	@Autowired JoinClubService joinClubService;
 	@Autowired AttendanceService attendanceService;
+	@Autowired ClubService clubService;
+	@Autowired SumarizationService sumarizationService;
+
 
 	@Scheduled(cron = "0 36 8 * * THU",zone="Asia/Saigon")
 	public void showCalendar() {
@@ -55,4 +61,5 @@ public class TrainComponent {
 	        }
 		}
 	}
+	
 }

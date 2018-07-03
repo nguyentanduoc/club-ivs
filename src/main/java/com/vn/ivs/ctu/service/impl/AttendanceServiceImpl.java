@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.vn.ivs.ctu.dao.AttendanceDAO;
 import com.vn.ivs.ctu.entity.Attendance;
-import com.vn.ivs.ctu.entity.AttendanceID;
-import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.AttendanceService;
 
 @Service

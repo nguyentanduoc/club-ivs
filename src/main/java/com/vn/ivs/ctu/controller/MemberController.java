@@ -1,5 +1,9 @@
 package com.vn.ivs.ctu.controller;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +14,22 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.dao.RoleDAO;
+import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Member;
+import com.vn.ivs.ctu.entity.Role;
 import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.RoleService;
 import com.vn.ivs.ctu.utils.CustomFormBinder;
+import com.vn.ivs.ctu.utils.Pagination;
 import com.vn.ivs.ctu.utils.PasswordEncoder;
 import com.vn.ivs.ctu.utils.SecurityUtils;
 
@@ -40,16 +49,65 @@ public class MemberController {
 		binder.registerCustomEditor(Set.class, "roles", new CustomFormBinder<RoleService>(roleService, Set.class));
 	}
 
-	@GetMapping(path = "/create")
+	@GetMapping(path = "/admin")
 	public String Index(@RequestParam(name="status",required=false) String status,ModelMap modelMap) {
 		modelMap.put("action1", "member");
-		modelMap.put("action2", "indexmember");
+		modelMap.put("action2", "adminMember");
 		modelMap.put("title", "Member");
 		Member member = new Member();
 		modelMap.put("member", member);
 		modelMap.put("listRole", roleService.getAll());
-		modelMap.put("listMember", memberService.findAll());
-		modelMap.put("listBranch", branchSevice.getAll());
+		modelMap.put("listMember", memberService.findAll(0));
+		modelMap.put("listBranch", branchSevice.getAll());		
+		modelMap.put("totalPage", Pagination.totalPage(memberService.count(), Pagination.MAX_SIZE_MEMBER));
+		if(status!=null) {
+			if(status.equals("200")) {
+				modelMap.put("status", 200);
+				modelMap.put("message", "Thành Công!");
+			}else {
+				modelMap.put("status", 400);
+				modelMap.put("message", "Thất Bại!");
+			}
+		}
+		
+		return "memberAdmin";
+	}
+
+	@PostMapping(path = "/admin")
+	public String add(@ModelAttribute("member") Member member, BindingResult result, ModelMap modelMap) {
+
+		member.setPassWordMember(PasswordEncoder.BCryptPassdEncoder(member.getPassWordMember()));
+		if (memberService.saveOrUpdate(member) > 0) {
+			return "redirect:/member/admin?status=200";
+		} else {
+			return "redirect:/member/admin?status=400";
+		}
+	}
+	
+	@GetMapping(path = "/create")
+	public String create(@RequestParam(name="status",required=false) String status,ModelMap modelMap) {
+		modelMap.put("action1", "member");
+		modelMap.put("action2", "indexMember");
+		modelMap.put("title", "Member");
+		
+		if(SecurityUtils.getMyUserDetail()!=null) {
+			int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+			Branch branch = branchSevice.getBranchByMember(idLeader);
+			if(branch!=null) {								
+				List<Member> members = memberService.getAllByBranch(branch.getIdBranch());
+				Member member = new Member();				
+				modelMap.put("member", member);
+				modelMap.put("listRole", roleService.getOfLeader());
+				modelMap.put("listMember", memberService.getAllByBranch(branch.getIdBranch(), 0));
+				modelMap.put("totalPage", Pagination.totalPage(members.size(), Pagination.MAX_SIZE_MEMBER));
+				modelMap.put("idBranch",branch.getIdBranch());
+			}else {
+				modelMap.put("status", 403);
+				modelMap.put("message", "Bạn chưa quản lý chi nhánh nào!");
+			}	
+		}else {
+			return "redirect:/";
+		}
 		if(status!=null) {
 			if(status.equals("200")) {
 				modelMap.put("status", 200);
@@ -64,22 +122,123 @@ public class MemberController {
 	}
 
 	@PostMapping(path = "/create")
-	public String add(@ModelAttribute("member") Member member, BindingResult result, ModelMap modelMap) {
-
-		member.setPassWordMember(PasswordEncoder.BCryptPassdEncoder(member.getPassWordMember()));
-		if (memberService.saveOrUpdate(member) > 0) {
-			return "redirect:/member/create?status=200";
-		} else {
+	public String create(@ModelAttribute("member") Member member, BindingResult result, ModelMap modelMap) {
+		try {
+			int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+			Branch branch = branchSevice.getBranchByMember(idLeader);
+			member.setBranch(branch);
+			member.setPassWordMember(PasswordEncoder.BCryptPassdEncoder(member.getPassWordMember()));
+			if (memberService.saveOrUpdate(member) > 0) {
+				return "redirect:/member/create?status=200";
+			} else {
+				return "redirect:/member/create?status=400";
+			}
+		}catch (Exception e) {
 			return "redirect:/member/create?status=400";
 		}
+		
 	}
-
 	
 	@GetMapping(path="profile")
 	public String profileMember(ModelMap modelMap) {
-		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
-		
+		int idMember = SecurityUtils.getMyUserDetail().getIdMember();		
 		modelMap.put("member",memberService.getMemberById(idMember));
 		return "profile";		
 	}
+	
+	@PostMapping(path="loadMember")
+	@ResponseBody
+	public Map<String,Object> loadMember(@RequestParam("page") int page){
+		Map<String, Object> map = new HashMap<>();
+		map.put("status","200");
+		map.put("listMember", memberService.findAll(Pagination.MAX_SIZE_MEMBER*(page-1)));
+		return map;
+	}
+	
+	@PostMapping(path="loadMemberBranch")
+	@ResponseBody
+	public Map<String,Object> loadMemberBranch(@RequestParam("page") int page,@RequestParam("idBranch") int idBranch){
+		Map<String, Object> map = new HashMap<>();
+		map.put("status","200");
+		map.put("listMember", memberService.getAllByBranch(idBranch,Pagination.MAX_SIZE_MEMBER*(page-1)));
+		return map;
+	}
+	
+	@GetMapping(path="editMember/{idMember}")
+	public String editMember(@PathVariable(name="idMember",required=false)String idMember,ModelMap modelMap) {
+
+		if(idMember!=null) {
+			try {
+				modelMap.put("action1", "member");
+				modelMap.put("title", "Member");
+				int IntidMember = Integer.parseInt(idMember);
+				Member member = memberService.getMemberById(IntidMember);
+				modelMap.put("member", member);
+				modelMap.put("listRole", roleService.getOfLeader());
+				return "editMember";
+			}
+			catch(Exception e) {
+				return "redirect:/404";
+			}
+		}		
+		else {
+			return "redirect:/404";
+		}
+	}	
+
+	@PostMapping(path="/update")
+	public String updateMember(@RequestParam("idMember")int idMember, @RequestParam("roles") String[] roles) {
+	
+		Member member = memberService.getMemberById(idMember);
+		Set<Role>  rolesMember = new HashSet<>();
+		for(String s:roles) {
+			Role r = new Role();
+			r.setIdRole(Integer.parseInt(s));
+			rolesMember.add(r);			
+		}
+		member.setRoles(rolesMember);
+		if(memberService.saveOrUpdate(member)>0) {
+			return "redirect:/member/editMember/"+idMember;
+		}
+		else {
+			return "redirect:/member/editMember/"+idMember;
+		}
+	}
+	
+	@PostMapping(path="resetPassWord")
+	@ResponseBody
+	public Map<String, Object> restPassWord(int idMember){
+		Map<String, Object> map =new HashMap<>();
+		Member member = memberService.getMemberById(idMember);
+		member.setPassWordMember(PasswordEncoder.defaultPassWord());
+		if(memberService.saveOrUpdate(member)>0) {
+			map.put("status", 200);
+			map.put("message", "Cập nhật thành công!");
+		}else {
+			map.put("status", 400);
+			map.put("message", "Xảy ra lỗi!");
+		}
+		return map;
+	}
+	
+	@PostMapping("deleteMember")
+	@ResponseBody
+	public Map<String,Object> deleteMember(int idMember){
+		Map<String,Object> map = new HashMap<>();
+		if(memberService.delete(idMember)) {
+			map.put("status", 200);
+		}
+		else {
+			map.put("status", 400);
+		}
+		return map;
+	}
+	/*@PostMapping(path="searchMember")
+	@ResponseBody			
+	public Map<String,Object> searchMember(String txtSearch){
+		Map<String,Object> map = new HashMap<>();
+		String[]  arraySearch =  txtSearch.split(" ");
+		
+		return map;
+	}*/
 }

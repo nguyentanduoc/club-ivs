@@ -47,5 +47,15 @@ public class SumarizationDAOImpl implements SumarizationDAO{
 			return null;
 		}
 	}
-
+	@Override
+	public List<Summarization> getSumByMemberPreMonth(int idMember, int month,int year){
+		try {
+			return currentSession().createQuery("from sumarization s where s.monthSum = ? and s.member.idMember =? and s.yearSum=?",Summarization.class).setParameter(0, month).setParameter(1, idMember).setParameter(2, year).list();
+		}catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+	
+	
 }

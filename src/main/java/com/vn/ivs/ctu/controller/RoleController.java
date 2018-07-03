@@ -19,14 +19,14 @@ public class RoleController {
 	@Autowired	RoleServiceImpl roleServiceImpl;
 
 	@GetMapping(path="index")
-	public String Index(@RequestParam(name="message",required=false)String message ,ModelMap modelMap) {
+	public String Index(@RequestParam(name="status",required=false)String status ,ModelMap modelMap) {
 		modelMap.put("action1","role");
 		modelMap.put("action2","index");
 		modelMap.put("title","Role");				
 		modelMap.put("role", new Role());
 		modelMap.put("listRole",roleServiceImpl.getAll());		
-		if(message!=null) {			
-			if(message.equals("200")) {
+		if(status!=null) {			
+			if(status.equals("200")) {
 				modelMap.put("status", 200);
 				modelMap.put("message", "Thành Công!");
 			}			
@@ -42,9 +42,9 @@ public class RoleController {
 	public String insertRole(@ModelAttribute("role") Role role) {		
 				
 		if(roleServiceImpl.createOrUpdate(role) > 0 ) {
-			return "redirect:/role/index?message=200";
+			return "redirect:/role/index?status=200";
 		}else {
-			return "redirect:/role/index?message=400";
+			return "redirect:/role/index?status=400";
 		}
 	}	
 

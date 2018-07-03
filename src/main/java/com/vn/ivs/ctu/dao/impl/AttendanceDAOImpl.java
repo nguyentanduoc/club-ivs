@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.AttendanceDAO;
 import com.vn.ivs.ctu.entity.Attendance;
-import com.vn.ivs.ctu.entity.Train;
 
 @Repository()
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)

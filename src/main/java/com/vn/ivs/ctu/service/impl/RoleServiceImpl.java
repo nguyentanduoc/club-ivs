@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
+import com.vn.ivs.ctu.dao.RoleDAO;
 import com.vn.ivs.ctu.dao.impl.RoleDAOImpl;
 import com.vn.ivs.ctu.entity.Role;
 import com.vn.ivs.ctu.service.RoleService;
@@ -16,20 +17,26 @@ import com.vn.ivs.ctu.service.RoleService;
 public class RoleServiceImpl implements RoleService{
 
 	@Autowired
-	RoleDAOImpl roleDAOImpl;
+	RoleDAO roleDAO;
+	
 	public long createOrUpdate(Role role) {
-		return roleDAOImpl.createOrUpdate(role);		
+		return roleDAO.createOrUpdate(role);		
 	}
 
 	public List<Role> getAll() {
-		return roleDAOImpl.getAll();
+		return roleDAO.getAll();
 	}
 	public boolean deleteRole(int id) {
-		return roleDAOImpl.deleteRole(id);
+		return roleDAO.deleteRole(id);
 	}
 
 	public Role getRoleById(int id) {
-		return roleDAOImpl.getRoleById(id);
+		return roleDAO.getRoleById(id);
+	}
+
+	@Override
+	public List<Role> getOfLeader() {
+		return roleDAO.getOfLeader();
 	}
 	
 }

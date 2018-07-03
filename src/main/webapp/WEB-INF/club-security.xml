@@ -12,8 +12,13 @@
 	<http auto-config="false" use-expressions="true">
 				
 		<intercept-url pattern="/admin" access="hasAuthority('ADMIN')" />	
-		<intercept-url pattern="/admin/branch" access="hasAuthority('ADMIN')" />	
-		<intercept-url pattern="/**" access="permitAll"/>
+		<intercept-url pattern="/branch" access="hasAuthority('ADMIN')" />	
+		<intercept-url pattern="/member/admin" access="hasAuthority('ADMIN')" />	
+		<intercept-url pattern="/member/create" access="hasAuthority('LEADER')" />	
+		<intercept-url pattern="/club/index" access="hasAuthority('LEADER')" />	
+		<intercept-url pattern="/club/joinClub" access="hasAuthority('LEADER')" />	
+	
+		<intercept-url pattern="/role/index" access="permitAll"/>
 		
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />
@@ -22,10 +27,10 @@
 			username-parameter="j_username" password-parameter="j_password"
 			login-processing-url="/j_spring_security_check"
 			authentication-success-handler-ref="mySuccessHandler" />
-		<logout 
-			delete-cookies="JSESSIONID" />
-		<!-- enable csrf protection -->
+		<session-management invalid-session-url="/login"/>
+		<logout delete-cookies="JSESSIONID" />
 		<csrf/>
+		<remember-me key="rememberMe"/>
 	</http>
 	<!-- <user-service> <user name="user" password="$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG" 
 		authorities="OTC" /> </user-service> -->

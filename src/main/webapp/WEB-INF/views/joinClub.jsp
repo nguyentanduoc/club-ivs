@@ -104,7 +104,8 @@
 							<table class="table" id="tableJoinClub">
 			                  <tr>		                   
 			                    <th>Tên câu Lạc bộ</th>
-			                    <th>Thời gian tham gia</th>		      
+			                    <th>Thời gian tham gia</th>
+			                    <th>Thời gian ngưng hoạt động</th>		      
 			                    <th>Tình hiện tại</th>	            
 			                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
 			                  </tr>
@@ -124,5 +125,54 @@
     	<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
     </div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
+	<script>
+	$(document).ready(function(){
+		$("#tableJoinClub").hide();
+		$("#idMember").change(function(){
+			
+			$("#messageJoinClub").empty();
+			$("#listJoinClub").empty();
+			var idMember = $("#idMember").val();
+			$.ajax({
+				url:"/Club-IVS/api/getJoinClub",
+				type:"POST",
+				data:{
+					"idMember":idMember,				
+				},
+				success:function(data){
+					if(data.status==200){	
+						$("#tableJoinClub").show();	
+						var view;
+						$.each(data.joinClubs, function (index, row) {
+							var dateLeave  ="";
+							if(row.dateLeave!=null){
+								dateLeave  = date(row.dateLeave);
+							}
+							var dateJoin =  date(row.dateJoin);
+							view +=  "<tr>" ;
+							view += "<td>"+row.club.nameClub+"</td>";
+							view += "<td>"+dateJoin+"</td>";
+							view += "<td>"+dateLeave+"</td>";
+							view += "<td>"+row.status.nameStatus+"</td>";
+							view += "<td><a href='${pageContext.request.contextPath}/club/joinClub/"+row.idJoinClub+"'> <i class='fa fa-pencil edit'></i></a>";
+							view += "</tr>"; 
+							 /*$("#clubs").each(function(index1,element){
+							        console.log(element);
+							    });*/
+	                    })
+						$("#listJoinClub").append(view);
+					}else{
+						if(data.status==404){
+							$("#messageJoinClub").append("Thành viên này chưa tham gia câu lạc bộ nào!");
+						}else{
+							$("#messageJoinClub").append("Đã xảy ra lỗi!");
+						}
+					}
+					
+				}
+			});	
+		});
+	})
+	</script>
 	</body>
 </html>

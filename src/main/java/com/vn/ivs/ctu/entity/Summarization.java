@@ -11,9 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.engine.spi.CascadeStyle;
-import org.hibernate.engine.spi.CascadeStyles;
-
 @Entity(name="sumarization")
 @Table(name="sumarization")
 public class Summarization {	
@@ -46,6 +43,15 @@ public class Summarization {
 	@JoinColumn(name="ID_CLUB")
 	Club club;
 
+	@Column(name="PLUS_SCORE")
+	private float plusScore;
+	
+	@Column(name="MINUS_SCORE")
+	private float minusScore;
+	
+	@Column(name="NOTE")
+	private String note;
+	
 	public int getIdSum() {
 		return idSum;
 	}
@@ -108,6 +114,34 @@ public class Summarization {
 
 	public void setYearSum(int yearSum) {
 		this.yearSum = yearSum;
+	}
+
+	public float getPlusScore() {
+		return plusScore;
+	}
+
+	public void setPlusScore(float plusScore) {
+		this.plusScore = plusScore;
+	}
+
+	public float getMinusScore() {
+		return minusScore;
+	}
+
+	public void setMinusScore(float minusScore) {
+		this.minusScore = minusScore;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public int getYearSum() {
+		return yearSum;
 	}
 	
 }
