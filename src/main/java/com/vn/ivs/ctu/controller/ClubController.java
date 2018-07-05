@@ -41,9 +41,11 @@ public class ClubController {
 		modelMap.put("action1", "club");
 		modelMap.put("action2", "create");
 		modelMap.put("title", "CLB");		
+		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+		Branch branch = branchSevice.getBranchByMember(idLeader);		
 		Club club = new Club();
 		modelMap.put("clubs", clubService.getAll());
-		List<Member> members = memberService.getAllLeaderClub();
+		List<Member> members = memberService.getAllLeaderClubByBranch(branch.getIdBranch());
 		List<Member> notfount = new ArrayList<>();
 		for(Member m:members) {
 			if(clubService.getLeaderClub(m.getIdMember())==null) {

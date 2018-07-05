@@ -31,6 +31,16 @@ public class SumarizationServiceImpl implements SumarizationService{
 	public List<Summarization> getSumByMemberPreMonth(int idMember, int month, int year) {
 		return sumarizationDAO.getSumByMemberPreMonth(idMember, month, year);
 	}
+
+	@Override
+	public Summarization getSumById(int id) {
+		return sumarizationDAO.getSumById(id);
+	}
+
+	@Override
+	public List<Summarization> getSumByMember(int idMember, int month, int year) {
+		return sumarizationDAO.getSumByMember(idMember, month, year);
+	}
 	
 	
 }

@@ -67,8 +67,7 @@ public class ToGradeComponent {
 				sum.setScoreClub(scoreClub);
 				sum.setRequireDonate(false);
 				sum.setSeeDonate(false);
-				sum.setMinusScore(0);
-				sum.setPlusScore(0);
+				sum.setToAriseScore(0);
 				sum.setMonthSum(DateUtils.getCurentMonth());
 				sum.setYearSum(DateUtils.getCurentYear());
 				sumarizationService.createOrUpdate(sum);				

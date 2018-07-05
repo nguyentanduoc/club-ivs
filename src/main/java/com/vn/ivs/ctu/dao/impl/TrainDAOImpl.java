@@ -113,7 +113,7 @@ public class TrainDAOImpl implements TrainDAO{
 	@Override
 	public List<Train> getAllTrainByClub(int month, int year, int idClub) {
 		try {
-			return currentSession().createQuery("select t from train t where t.schedule.club.idClub = ? and year(t.dateTrain) =?  and month(t.dateTrain) = ?",Train.class)
+			return currentSession().createQuery("select t from train t where t.schedule.club.idClub = ? and year(t.dateTrain) = ?  and month(t.dateTrain) = ?",Train.class)
 					.setParameter(0, idClub).setParameter(1, year).setParameter(2, month).list();
 		}catch(Exception ex) {
 			System.out.println(ex.toString());

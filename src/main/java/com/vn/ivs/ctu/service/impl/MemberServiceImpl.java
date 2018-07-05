@@ -72,4 +72,8 @@ public class MemberServiceImpl implements MemberService{
 	public boolean delete(int idMember) {
 		return memberDAO.delete(idMember);
 	}
+	@Override
+	public List<Member> getAllLeaderClubByBranch(int idBranch) {
+		return memberDAO.getAllLeaderClubByBranch(idBranch);
+	}
 }

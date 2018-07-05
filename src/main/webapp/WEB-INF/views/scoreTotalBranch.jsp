@@ -60,34 +60,30 @@ pageEncoding="UTF-8" session="false"%>
 				                <tr>
 				                  <th>Tên Thành Viên</th>
 				                  <th>Điểm Số</th>
-				                  <th>Điểm phát sinh</th>	
-				                  <th>Ghi chú</th>	
 				                  <th>Yêu cầu thưởng</th>	
 				                  <th>Hoàn tất</th>				                 
 				                </tr>
 				                </thead>
 				                <tbody>
-				                 <c:forEach var="score" items="${sums}">
-					                  <tr>
-					                  	<td>${score.getMember().getNameMember()}</td>
-					                    <td>${score.getScoreClub()}</td>
-					                    <td><input class="form-control" type="number" min="-100" max="100" id="num-${score.getIdSum()}" value="${score.getToAriseScore()}"/></td>
-					                    <td><input class="form-control" type="text" id="txt-${score.getIdSum()}" value="${score.getNote()}"/></td>
-					                    <td >
-					                   		<div class="btn-group btn-group-toggle" data-toggle="buttons">
-						                    	<label class="btn btn-outline-primary ${score.isRequireDonate()==false ?'active':''} btn-sm offRequire" data-id="${score.getIdSum()}">
-													<input type="radio" name="options" id="option1" autocomplete="off" checked>Không
-												</label>
-												<label class="btn btn-outline-primary btn-sm onRequire ${score.isRequireDonate()==true?'active':''}" data-id="${score.getIdSum()}" >
-													<input type="radio" name="options" id="option3" autocomplete="off">Có
-												</label>
-											</div>
-					                    </td>	
-					                    <td>
-					                    	<input type="button" class="btn btn-info btn-sm update" value="Cập Nhật" data-id="${score.getIdSum()}">
-					                    </td>	                               
-					                  </tr>	
-			                  	 </c:forEach>  
+			                          <c:forEach var="sum" items="${sums}">
+						                  <tr>
+						                  	<td>${sum.getMember().getNameMember()}</td>
+						                    <td>${sum.getScoreBranch()}</td>						                    
+						                    <td >
+						                   		<div class="btn-group btn-group-toggle" data-toggle="buttons">
+							                    	<label class="btn btn-outline-primary ${sum.isDonate()==false ?'active':''} btn-sm offRequire" data-id="${sum.getIdSumBranch()}">
+														<input type="radio" name="options" id="option1" autocomplete="off" checked>Không
+													</label>
+													<label class="btn btn-outline-primary btn-sm onRequire ${sum.isDonate()==true?'active':''}" data-id="${sum.getIdSumBranch()}" >
+														<input type="radio" name="options" id="option3" autocomplete="off">Có
+													</label>
+												</div>
+						                    </td>	
+						                    <td>
+						                    	<input type="button" class="btn btn-info btn-sm update" value="Cập Nhật" data-id="${sum.getIdSumBranch()}">
+						                    </td>	                               
+						                  </tr>	
+				                  	 </c:forEach>  	     
 				                </tbody>
 				                <tfoot>
 				                <!-- <tr>
@@ -113,14 +109,14 @@ pageEncoding="UTF-8" session="false"%>
           <!-- /.card -->
 	    <!-- /.content -->
   	</div>    	
-    
+    	
     </div>
 	</section>
    	 </div>
-   	 	<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
+   	 <jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
     </div>
     <jsp:include page="_shareLayout/footer.jsp"></jsp:include>
-    <script>
+    <!-- <script>
     	$(document).ready(function(){
     		var check;
     		var status=false;
@@ -159,6 +155,6 @@ pageEncoding="UTF-8" session="false"%>
     			})
     		});
     	});
-    </script>
+    </script> -->
 </body>
 </html>

@@ -21,4 +21,5 @@ public interface MemberDAO {
 	public 	List<Member>	getAllLeaderClub();
 	public long count();
 	public boolean delete(int idMember);
+	public List<Member> getAllLeaderClubByBranch(int idBranch);
 }

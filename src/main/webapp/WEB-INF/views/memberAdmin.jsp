@@ -145,9 +145,10 @@
 													<td><c:forEach var="role" items="${member.getRoles()}">
 															<c:out value="${role.getNameRole()}"></c:out><br/>
 														</c:forEach></td>
-													<td><span class="deleteMember" onclick="deleteMember(${member.getIdMember()})"><i class="fa fa-times delete"></i></span> 
-														<span class="" data-id=""> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal"
-															data-target="#editRole"></i></span></td>
+													<td>
+														<a href="${pageContext.request.contextPath}/member/editAdminMember/${member.getIdMember()}"> <i class="fa fa-pencil edit"></i></a>
+														<span class="deleteMember" onclick="deleteMember(${member.getIdMember()})"><i class="fa fa-times delete"></i></span> 
+														</td>	
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -214,8 +215,9 @@
 									})
 								}								
 								view+="</td>";
-								view+="<td><span class='deleteMember' onclick ='deleteMember("+row.idMember+")'><i class='fa fa-times delete'></i></span>";
-								view +="<span class='' data-id=''> <i class='fa fa-pencil edit' aria-hidden='true' data-toggle='modal' data-target='#editRole'></i></span></td></tr>";
+								view +="<td><a href='${pageContext.request.contextPath}/member/editAdminMember/"+row.idMember+"'> <i class='fa fa-pencil edit'></i></a>";
+								view+="<span class='deleteMember' onclick ='deleteMember("+row.idMember+")'><i class='fa fa-times delete'></i></span></td></tr>";
+								
 							});
 							$("#listMember").append(view);
 							console.log(data)										

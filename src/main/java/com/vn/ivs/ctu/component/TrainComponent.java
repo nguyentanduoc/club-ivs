@@ -37,7 +37,7 @@ public class TrainComponent {
 	@Autowired AttendanceService attendanceService;
 	@Autowired ClubService clubService;
 
-	@Scheduled(cron = "0 19 11 * * THU", zone="Asia/Saigon")
+	@Scheduled(cron = "0 32 14 * * THU", zone="Asia/Saigon")
 	public void showCalendar() {
 		System.out.println("gcvhkmv");
 		List<Schedule> schedules = scheduleService.getListScheduleAuto();

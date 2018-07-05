@@ -88,4 +88,5 @@ public class TrainServiceImpl implements TrainService {
 	public List<Train> getTrainBySchedule(int idSchedule) {
 		return trainDAO.getTrainBySchedule(idSchedule);
 	}
+
 }

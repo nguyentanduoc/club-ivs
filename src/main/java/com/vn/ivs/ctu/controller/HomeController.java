@@ -19,6 +19,8 @@ import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
+import com.vn.ivs.ctu.entity.Schedule;
+import com.vn.ivs.ctu.entity.SumarizationBranch;
 import com.vn.ivs.ctu.entity.Summarization;
 import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.AttendanceService;
@@ -26,6 +28,8 @@ import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
+import com.vn.ivs.ctu.service.ScheduleService;
+import com.vn.ivs.ctu.service.SumarizationBranchService;
 import com.vn.ivs.ctu.service.SumarizationService;
 import com.vn.ivs.ctu.service.TrainService;
 import com.vn.ivs.ctu.utils.DateUtils;
@@ -44,6 +48,8 @@ public class HomeController {
 	@Autowired JoinClubService joinClubService;
 	@Autowired SumarizationService sumarizationService;
 	@Autowired BranchService branchService;
+	@Autowired ScheduleService scheduleService;
+	@Autowired SumarizationBranchService sumarizationBranchService;
 	
 	@GetMapping(path="")
 	public String Index() {
@@ -121,8 +127,7 @@ public class HomeController {
 						if(ats.isAttendance()) {
 							sbdd +=1;
 						}
-					}	
-					System.out.println(ats);
+					}										
 				}	
 				if(sobuoi-sbdd==0) {					
 					scoreClub = 100;
@@ -132,43 +137,57 @@ public class HomeController {
 					else 
 						scoreClub = 80 - (sobuoi-sbdd) * 20;
 				}
-				/*Summarization sum = new Summarization();
+				Summarization sum = new Summarization();
 				sum.setMember(j.getMember());
 				sum.setClub(j.getClub());
 				sum.setScoreClub(scoreClub);
 				sum.setRequireDonate(false);
 				sum.setSeeDonate(false);
-				sum.setMinusScore(0);
-				sum.setPlusScore(0);
-				sum.setMonthSum(DateUtils.getCurentMonth());
+				sum.setToAriseScore(0);
+				sum.setMonthSum(DateUtils.getCurentMonth()-1);
 				sum.setYearSum(DateUtils.getCurentYear());
-				sumarizationService.createOrUpdate(sum);			*/	
+				sumarizationService.createOrUpdate(sum);				
 			}
-		}
+		}			
 		return "404";
 	}
 	
 	@GetMapping("test")
 	public String test() {	
 		List<Branch> branchs = branchService.getAll();
+		int month = DateUtils.getCurentMonth()-1;
+		int year = DateUtils.getCurentYear();
+		
 		for(Branch b:branchs) {
 			List<Member> members = memberService.getAllByBranch(b.getIdBranch());
 			for(Member member:members) {
-				//thong ke xem  no co con hoat dong trong nhom khong
-				//select trong joinclub tra ve so club tham gia
 				float score=0,total = 0;
-				float c = 0;
-				List<Summarization> sums = sumarizationService.getSumByMemberPreMonth(member.getIdMember(), DateUtils.getCurentMonth(), DateUtils.getCurentYear());
-				for(Summarization sum:sums) {
-					c+=1;
-					score += sum.getScoreClub() + sum.getPlusScore() - sum.getMinusScore();
+				float c = 0;		
+				boolean requireDonate = false;
+				List<Summarization> sums = sumarizationService.getSumByMemberPreMonth(member.getIdMember(), month, year);
+				try {
+					if(sums.size()>0 && sums!=null) {
+						for(Summarization sum:sums) {
+							c+=1;
+							score += sum.getScoreClub() + sum.getToAriseScore();
+							if(sum.isRequireDonate()) {
+								requireDonate=true;
+							}
+						}
+						total = (score + (c-1)*10);
+						SumarizationBranch sum =  new SumarizationBranch();
+						sum.setScoreBranch(total*Float.parseFloat("0.8"));
+						sum.setMember(member);
+						sum.setBranch(b);
+						sum.setDonate(requireDonate);
+						sum.setConfirm(false);
+						sum.setMonth(month);
+						sum.setYear(year);
+						sum.setConfirmDonate(false);						
+					}
+				}catch (Exception e) {
+					System.out.println(e.toString());
 				}
-				total = (score + (c-1)*10);
-				if(total > 0) {
-					System.out.println("Chi Nhanh " +b.getNameBranch()+", thanh vien "  + member.getNameMember() +" co diem " + total*Float.parseFloat("0.8"));
-				}
-				//System.out.println("thanh vien "  + member.getNameMember() + ":" +score +" c " +(score + (c-1)*10));
-				
 			}
 		}
 		
