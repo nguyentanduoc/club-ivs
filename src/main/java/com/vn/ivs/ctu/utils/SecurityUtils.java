@@ -18,6 +18,7 @@ public class SecurityUtils {
         for (GrantedAuthority authority : authorities) {
             results.add(authority.getAuthority());
         }
+        //hia
         return results;
     }
 }
