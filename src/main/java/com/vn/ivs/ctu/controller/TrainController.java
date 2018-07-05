@@ -76,13 +76,11 @@ public class TrainController {
 		Date myDate = dateTrain;
 		Calendar cal = Calendar.getInstance();
         cal.setTime(myDate);
-        
 		int week = cal.get(Calendar.WEEK_OF_YEAR);
-        
+        System.out.println(DateUtils.getDateOfWeek(dateTrain));
 		if(scheduleService.create(schedule)>0) {
 			train.setSchedule(schedule);
 			train.setWeekend(week);
-			
 			if(trainService.create(train)>0)
 			{
 				List<JoinClub> joinClubs = joinClubService.getJoinClubByClub(schedule.getClub().getIdClub());
@@ -98,7 +96,6 @@ public class TrainController {
 		        		System.out.println(attendanceService.createOrUpdate(attendance));
 		        	}
 		        }
-				
 				modelMap.put("status", 200);
 				modelMap.put("message", "Thành công!");
 			}
@@ -128,6 +125,4 @@ public class TrainController {
 		}
 		return "trainauto";
 	}
-	
-
 }

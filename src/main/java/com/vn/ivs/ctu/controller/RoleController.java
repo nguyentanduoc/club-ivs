@@ -22,7 +22,7 @@ public class RoleController {
 	public String Index(@RequestParam(name="status",required=false)String status ,ModelMap modelMap) {
 		modelMap.put("action1","role");
 		modelMap.put("action2","index");
-		modelMap.put("title","Role");				
+		modelMap.put("title","Chức vụ");				
 		modelMap.put("role", new Role());
 		modelMap.put("listRole",roleServiceImpl.getAll());		
 		if(status!=null) {			

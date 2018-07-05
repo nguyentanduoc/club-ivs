@@ -22,8 +22,8 @@
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Thêm thành viên</a></li>
-	              <li class="breadcrumb-item active">Thành Viên</li>
+	              <li class="breadcrumb-item"><a href="#">Danh sách hoạt động</a></li>
+	              <li class="breadcrumb-item active">Câu lạc bộ</li>
 	            </ol>
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->
@@ -54,10 +54,12 @@
 	              <div class="card-body">
 	              	<div id="message"></div>
 	                <table class="table table-bordered">
+	                <thead align="center">
 	                  <tr>	                    
 	                    <th>Tên nhân viên</th>
 	                    <th>Ngày tham gia</th>	                    
 	                  </tr>
+	                  </thead>
 	                  <tbody id="member">
 	                  </tbody>      
 	                </table>
@@ -96,7 +98,7 @@
 					success:function(data){
 						if(data.status==200){
 							$.each(data.member,function (index, row){
-								view +="<tr><td>"+row.member.nameMember+"</td><td>"+date(row.dateJoin)+"</td></tr>";
+								view +="<tr><td>"+row.member.nameMember+"</td><td align='center'>"+date(row.dateJoin)+"</td></tr>";
 								total+=1;
 							});
 							$("#total").append(total);

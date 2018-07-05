@@ -22,8 +22,8 @@
 						<!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Thành Viên</a></li>
-								<li class="breadcrumb-item active">Index</li>
+								<li class="breadcrumb-item"><a href="#">Thêm thành Viên</a></li>
+								<li class="breadcrumb-item active">Thành viên</li>
 							</ol>
 						</div>
 						<!-- /.col -->
@@ -123,19 +123,23 @@
 								</div><!-- /.card-header -->
 								<div class="card-body p-0">
 									<table class="table">
+									<thead align="center">
 										<tr>											
 											<th>Tên Chức Vụ</th>
 											<th>Chức vụ</th>
 											<th style="width: 150px">Tuỳ Chỉnh</th>
 										</tr>
+										</thead>
 										<tbody id="listMember">
 											<c:forEach var="member" items="${listMember}">
 												<tr>													
 													<td>${member.getNameMember()}</td>
-													<td><c:forEach var="role" items="${member.getRoles()}">
+													<td align="center">
+														<c:forEach var="role" items="${member.getRoles()}">
 															<c:out value="${role.getNameRole()}"></c:out><br/>
-														</c:forEach></td>
-													<td>
+														</c:forEach>
+													</td>
+													<td align="center">
 														<a href="${pageContext.request.contextPath}/member/editMember/${member.getIdMember()}"> <i class="fa fa-pencil edit"></i></a>														 
 													</td>
 												</tr>

@@ -40,7 +40,7 @@ public class ClubController {
 	public String index(@RequestParam(name="message",required=false) String message, ModelMap modelMap){
 		modelMap.put("action1", "club");
 		modelMap.put("action2", "create");
-		modelMap.put("title", "CLB");		
+		modelMap.put("title", "Câu Lạc Bộ");		
 		Club club = new Club();
 		modelMap.put("clubs", clubService.getAll());
 		List<Member> members = memberService.getAllLeaderClub();
@@ -85,7 +85,7 @@ public class ClubController {
 	public String joinClub(@RequestParam(name="message",required=false)String message,ModelMap modelMap) {
 		modelMap.put("action1", "club");
 		modelMap.put("action2", "joinClub");
-		modelMap.put("title", "Join Club");
+		modelMap.put("title", "Thêm thành viên vào Club");
 		int idOTC = SecurityUtils.getMyUserDetail().getIdMember();
 		Branch branch = branchSevice.getBranchByMember(idOTC);
 		if(branch!=null) {
@@ -156,7 +156,7 @@ public class ClubController {
 	public String listJoinClub(ModelMap modelMap) {
 		modelMap.put("action1", "club");
 		modelMap.put("action2", "listJoinClub");
-		modelMap.put("title", "CLB");	
+		modelMap.put("title", "Danh sách hoạt động");	
 		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 		Branch branch = branchSevice.getBranchByMember(idLeader);
 		List<Club> clubs = clubService.getClubByBranch(branch.getIdBranch());

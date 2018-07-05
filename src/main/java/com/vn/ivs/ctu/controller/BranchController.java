@@ -30,7 +30,7 @@ public class BranchController {
 				
 		modelMap.put("action1","branch");
 		modelMap.put("action2","indexbranch");
-		modelMap.put("title","Branch");		
+		modelMap.put("title","Chi Nhánh");		
 		Branch branch  = new Branch();
 		modelMap.put("branch",branch);
 		modelMap.put("listMember", memberServiceImpl.getAllRoleOTC());

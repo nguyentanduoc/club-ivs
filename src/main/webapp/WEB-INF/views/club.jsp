@@ -23,8 +23,8 @@
 						<!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Câu Lạc Bộ</a></li>
-								<li class="breadcrumb-item active">Index</li>
+								<li class="breadcrumb-item"><a href="#">Danh sách Câu lạc bộ</a></li>
+								<li class="breadcrumb-item active">Câu lạc bộ</li>
 							</ol>
 						</div>
 						<!-- /.col -->

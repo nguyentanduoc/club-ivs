@@ -21,6 +21,7 @@ import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.AttendanceService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
+import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
 import com.vn.ivs.ctu.utils.SecurityUtils;
 
@@ -32,6 +33,7 @@ public class AttendanceController {
 	@Autowired TrainService trainService;
 	@Autowired JoinClubService joinclubService;
 	@Autowired ClubService clubService;
+	@Autowired ScheduleService scheduleService;
 	
 	@GetMapping ("/index")
 	public String Index(ModelMap modelMap) {
@@ -42,6 +44,7 @@ public class AttendanceController {
 		int idLeader =  SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idLeader);
 		if(club!=null) {
+			modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));
 			modelMap.put("listAllTrainOnWeek", trainService.getListAllTrainOnWeek(club.getIdClub()));			
 		}else {
 			modelMap.put("status", 403);
@@ -59,6 +62,7 @@ public class AttendanceController {
 		Club club = clubService.getLeaderClub(idLeader);
 		if(club!=null) {
 			modelMap.put("listAttendance", attendanceService.getAttendanceByTrain(id));
+			modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));
 		}else {
 			modelMap.put("status", 403);
 			modelMap.put("message", "bạn không có quyền truy cập!");

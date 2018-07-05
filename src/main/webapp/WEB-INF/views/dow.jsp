@@ -18,12 +18,12 @@
 	      <div class="container-fluid">
 	        <div class="row mb-2">
 	          <div class="col-sm-6">
-	            <h1 class="m-0 text-dark">Thứ trong tuần</h1>
+	            <h1 class="m-0 text-dark">Các ngày trong tuần</h1>
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Date of week</a></li>
-	              <li class="breadcrumb-item active">Index</li>
+	              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+	              <li class="breadcrumb-item active">Ngày trong tuần</li>
 	            </ol>
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->
@@ -70,22 +70,25 @@
 		              <!-- /.card-header -->
 		              <div class="card-body p-0">
 		                <table class="table table-hover table-sm table-info">
+		                <thead align="center">
 		                  <tr>		                   
 		                    <th style="width: 10px">#</th>
-		                    <th>Thứ</th>
+		                    <th style="width:100px">Thứ</th>
 		                    <th>Giá trị</th>	                  
-		                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
+		                    <th>Tuỳ Chỉnh</th>	                 	 
 		                  </tr>
-		                     <c:forEach var="dow" items="${listDow}">
-				                  <tr>
-				                  	<td>${dow.getIdDow()}</td>
-				                    <td>${dow.getNameDow()}</td>
-				                    <td>${dow.getVariableDow()}</td>		                    
-				                    <td>
-				                    	<span class="deleteDow" data-id = "${dow.getIdDow()}"><i class="fa fa-times delete"></i></span>		                    	
-				                    	<span class="editDow" data-id = "${dow.getIdDow()}"> <i class="fa fa-pencil edit" aria-hidden="true"></i></span>
-				                    </td>	                               
-				                  </tr>	
+		                 </thead>
+		                 <c:forEach var="dow" items="${listDow}">
+		                 <tbody>
+					          <tr>
+						          <td>${dow.getIdDow()}</td>
+						          <td align="center">${dow.getNameDow()}</td>
+						          <td align="center">${dow.getVariableDow()}</td>		                    
+						          <td align="center">
+						          	<span class="deleteDow" data-id = "${dow.getIdDow()}"><i class="fa fa-times delete"></i></span>
+						          </td>	                               
+					          </tr>
+				          </tbody>
 		                  	 </c:forEach>    	                  
 		                </table>
 		              </div>

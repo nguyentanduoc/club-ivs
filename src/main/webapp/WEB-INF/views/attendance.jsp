@@ -32,6 +32,14 @@
 	    </div><!-- /.content-header -->
 	   <!-- Small Box (Stat card) -->
         
+            <div class="card card-default">
+              <div class="card-header">
+                <h3 class="card-title">
+                  
+                  Tất cả sự kiện
+                </h3>
+              </div>
+              <div class="card-body">
         <div class="row p-2">
          <c:forEach var="train" items="${listAllTrainOnWeek}">
           <div class="col-lg-3 col-6">
@@ -51,7 +59,7 @@
             </div>
           </div>
           </c:forEach>
-          
+          </div></div>
          
         </div>
         <!-- /.row -->

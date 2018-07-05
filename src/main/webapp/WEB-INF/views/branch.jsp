@@ -121,7 +121,7 @@
                   	 <div  class="text-danger" id="errNameEditBranch"></div>    
                   </div>
                    <div class="form-group">
-                    <label for="memberEditBranch">Nhân viên quản lý club tại chi nhánh</label>
+                    <label for="memberEditBranch">Nhân viên quản lý Club tại Chi nhánh</label>
    		            <select id="memberEditBranch" name="memberEditBranch" class="form-control"/></select> 		  
    		            <div class="text-danger" id="message"></div>                 
                   </div>

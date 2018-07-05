@@ -53,7 +53,7 @@ public class MemberController {
 	public String Index(@RequestParam(name="status",required=false) String status,ModelMap modelMap) {
 		modelMap.put("action1", "member");
 		modelMap.put("action2", "adminMember");
-		modelMap.put("title", "Member");
+		modelMap.put("title", "Thêm thành viên và gán quyền");
 		Member member = new Member();
 		modelMap.put("member", member);
 		modelMap.put("listRole", roleService.getAll());
@@ -88,7 +88,7 @@ public class MemberController {
 	public String create(@RequestParam(name="status",required=false) String status,ModelMap modelMap) {
 		modelMap.put("action1", "member");
 		modelMap.put("action2", "indexMember");
-		modelMap.put("title", "Member");
+		modelMap.put("title", "Thêm thành viên");
 		
 		if(SecurityUtils.getMyUserDetail()!=null) {
 			int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
@@ -141,7 +141,8 @@ public class MemberController {
 	
 	@GetMapping(path="profile")
 	public String profileMember(ModelMap modelMap) {
-		int idMember = SecurityUtils.getMyUserDetail().getIdMember();		
+		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		modelMap.put("title", "Trang cá nhân");
 		modelMap.put("member",memberService.getMemberById(idMember));
 		return "profile";		
 	}
@@ -170,7 +171,7 @@ public class MemberController {
 		if(idMember!=null) {
 			try {
 				modelMap.put("action1", "member");
-				modelMap.put("title", "Member");
+				modelMap.put("title", "Sửa thông tin");
 				int IntidMember = Integer.parseInt(idMember);
 				Member member = memberService.getMemberById(IntidMember);
 				modelMap.put("member", member);

@@ -116,7 +116,7 @@
 	   			 <!-- Modal content-->
 			    <div class="modal-content">
 			      <div class="modal-header">
-			      <h4 class="modal-title">Chỉnh Chức Vụ</h4>
+			      <h4 class="modal-title">Chỉnh sửa Chức Vụ</h4>
 			        <button type="button" class="close" data-dismiss="modal">&times;</button>		        
 			      </div>
 			      <div class="modal-body">
@@ -128,7 +128,7 @@
 					    </div>
 					  </div>
 					  <div class="form-group row">
-					    <label for="codeEditRole" class="col-sm-3 col-form-label">Tên Chức Vụ</label>
+					    <label for="codeEditRole" class="col-sm-3 col-form-label">Quyền</label>
 					    <div class="col-sm-9">
 					     	<input type="text" readonly="readonly" name="codeEditRole" class="form-control" id="codeEditRole">
 					    </div>

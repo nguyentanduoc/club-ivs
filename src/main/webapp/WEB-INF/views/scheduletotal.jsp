@@ -24,7 +24,7 @@
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
 	              <li class="breadcrumb-item"><a href="#">Tất cả lịch</a></li>
-	              <li class="breadcrumb-item active">Index</li>
+	              <li class="breadcrumb-item active">Lên lịch</li>
 	            </ol>
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->

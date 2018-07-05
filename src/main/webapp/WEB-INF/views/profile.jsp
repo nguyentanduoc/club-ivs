@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>		
@@ -17,12 +18,12 @@
 	      <div class="container-fluid">
 	        <div class="row mb-2">
 	          <div class="col-sm-6">
-	            <h1 class="m-0 text-dark">Profile</h1>
+	            <h1 class="m-0 text-dark">Trang cá nhân</h1>
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Profile</a></li>
-	              <li class="breadcrumb-item active">Index</li>
+	              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+	              <li class="breadcrumb-item active">Trang cá nhân</li>
 	            </ol>
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->
@@ -65,7 +66,7 @@
             <!-- About Me Box -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">About Me</h3>
+                <h3 class="card-title">Thông tin</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -73,7 +74,7 @@
                 <p class="text-muted">
                  <c:choose>
 						<c:when test="${member.getBirthDayMember()!=null}">
-							<c:out value="${member.getBirthDayMember()}"/>
+							<fmt:formatDate value="${member.getBirthDayMember()}" pattern="dd-MM-yyyy"/>
 						</c:when>
 						<c:otherwise>
 							<i>Đang cập nhật</i>
@@ -116,7 +117,7 @@
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
                   
-                  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Cập nhật thông tin</a></li>
+                  <li class="nav-item"><a class="active nav-link" href="#settings" data-toggle="tab">Cập nhật thông tin</a></li>
                   <li class="nav-item"><a class="nav-link" href="#updateAvatar" data-toggle="tab">Cập nhật ảnh</a></li>
                   <li class="nav-item"><a class="nav-link" href="#chagePassWord" data-toggle="tab">Thay đổi mật khẩu</a></li>
                 </ul>

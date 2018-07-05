@@ -22,8 +22,8 @@
 						<!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Thành Viên</a></li>
-								<li class="breadcrumb-item active">Index</li>
+								<li class="breadcrumb-item"><a href="#">Admin</a></li>
+								<li class="breadcrumb-item active">Thành viên</li>
 							</ol>
 						</div>
 						<!-- /.col -->
