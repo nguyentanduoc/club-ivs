@@ -9,4 +9,6 @@ public interface JoinClubService {
 	public List<JoinClub> getJoinClubByClub(int idClub);
 	public int createOrUpdate(JoinClub joinClub);
 	public List<JoinClub> getJoinClubByIdMember(int idMember);
+	public JoinClub getJoinClub(int idJoinClub);
+	public List<JoinClub> getListMemberActive(int idClub);
 }

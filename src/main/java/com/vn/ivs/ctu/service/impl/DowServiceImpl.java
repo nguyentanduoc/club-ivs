@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
+import com.vn.ivs.ctu.dao.DowDAO;
 import com.vn.ivs.ctu.dao.impl.DowDAOImpl;
 
 import com.vn.ivs.ctu.entity.DateOfWeek;
@@ -18,15 +19,18 @@ import com.vn.ivs.ctu.service.DowService;
 public class DowServiceImpl implements DowService{
 
 	@Autowired
-	DowDAOImpl dowDAOImpl;
+	DowDAO dowDAO;
 	public long create(DateOfWeek dow) {
-		return dowDAOImpl.create(dow);		
+		return dowDAO.create(dow);		
 	}
 
 	public List<DateOfWeek> getAll() {
-		return dowDAOImpl.getAll();
+		return dowDAO.getAll();
 	}
 	public boolean delete(int id) {
-		return dowDAOImpl.delete(id);
+		return dowDAO.delete(id);
+	}
+	public DateOfWeek getByVariable(int variableDow) {
+		return dowDAO.getByVariable(variableDow);
 	}
 }

@@ -115,40 +115,39 @@
 								</div>
 								<!-- /.card-header -->
 								<div class="card-body p-0">
-									<table class="table table-hover table-sm">
+									<table class="table table-hover table-sm table-info">
+									<thead align="center">
 										<tr>
 											<th>Tên Sự kiện</th>
-											<th>Thứ</th>
+											<th>Ngày</th>
 											<th>Thời gian</th>
 											<th>Địa điểm</th>
-											<th>CLB</th>
+											
 											<th>Sắp lịch</th>
 
-											<th style="width: 150px">Tuỳ Chỉnh</th>
+											<th>Tuỳ Chỉnh</th>
 										</tr>
-										<c:forEach var="train" items="${listTrainAuto}">
+										</thead>
+										<c:forEach var="schedule" items="${listScheduleAuto}">
+										<tbody>
 											<tr>
-												<td>${train.getSchedule().getNameSchedule()}</td>
-												<td>${train.getSchedule().getDateOfWeek().getNameDow()}</td>
-												<td>${train.getSchedule().getTimeSchedule()}</td>
-												<td>${train.getSchedule().getLocationSchedule()}</td>
-												<td>${train.getSchedule().getClub().getNameClub()}</td>
-												<td><c:choose>
-														<c:when test="${train.getSchedule().getAutoSchedule()==true}">
-								            tự động
-								         </c:when>
-
-														<c:when test="${train.getSchedule().getAutoSchedule()==false}">
-								            thủ công
-								         </c:when>
-													</c:choose></td>
-												<td><span class="deleteSchedule"
-													data-id="${schedule.getIdSchedule()}"><i
-														class="fa fa-times delete"></i></span> <span class="editSchedule"
-													data-id="${schedule.getIdSchedule()}"> <i
-														class="fa fa-pencil edit" aria-hidden="true"
-														data-toggle="modal" data-target="#editSchedule"></i></span></td>
+												<td>${schedule.getNameSchedule()}</td>
+												<td align="center">${schedule.getDateOfWeek().getNameDow()}</td>
+												<td align="center">${schedule.getTimeSchedule()}</td>
+												<td>${schedule.getLocationSchedule()}</td>
+												<td align="center">
+													<c:choose>
+														<c:when test="${schedule.getAutoSchedule()==true}">
+															tự động
+														</c:when>
+														<c:when test="${schedule.getAutoSchedule()==false}">
+															thủ công
+														</c:when>
+													</c:choose>
+												</td>
+												<td align="center"><span class="deleteSchedule"data-id="${schedule.getIdSchedule()}"><i class="fa fa-times delete"></i></span></td>
 											</tr>
+											</tbody>
 										</c:forEach>
 									</table>
 

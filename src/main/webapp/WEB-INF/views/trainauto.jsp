@@ -49,50 +49,43 @@
 		              </div>
 		              <!-- /.card-header -->
 		              <div class="card-body p-0">
-		                <table class="table table-hover table-sm">
-		                  <tr>		                   
-		                    
+		                <table class="table table-hover table-sm table-info">
+		                <thead align="center">
+		                  <tr>
 		                    <th>Tên Sự kiện</th>
 		                    <th>Ngày</th>
 		                    <th>Thời gian</th>
 		                    <th>Tuần</th>     
 		                    <th>Địa điểm</th>
-		                    <th>CLB</th>
-		                    <th>Sắp lịch</th>
-		                                 
-		                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
+		                    <th>Sắp lịch</th>          
+		                    <th>Tuỳ Chỉnh</th>	                 	 
 		                  </tr>
-	                      	   <c:forEach var="train" items="${listTrainAuto}">
-				                       <tr>
-				                  	
-				                    <td>${train.getSchedule().getNameSchedule()}</td>
-				                    <td>
-				                    <fmt:formatDate value="${train.getDateTrain()}" pattern="dd-MM-yyyy"/>
-				                    </td>	 
-				                      
-				                    <td>${train.getSchedule().getTimeSchedule()}</td>
-				                    <td>${train.getWeekend()}</td>
-				                    <td>${train.getSchedule().getLocationSchedule()}</td>
-				                    <td>${train.getSchedule().getClub().getNameClub()}</td>	                    
-				                    <td>
-				                    <c:choose>
-					                    <c:when test ="${train.getSchedule().getAutoSchedule()==true}">
-								            tự động
-								         </c:when>
-								         
-								         <c:when test ="${train.getSchedule().getAutoSchedule()==false}">
-								            thủ công
-								         </c:when>
-							         </c:choose>
-				                    </td>
-				                    <td>
-				                    	<span class="deleteTrain" data-id = "${train.getIdTrain()}"><i class="fa fa-times delete"></i></span>		                    	
-				                    	<span class="editTrain" data-id = "${train.getIdTrain()}"> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal" data-target="#editTrain"></i></span>
-				                    </td>                          
-			                  </tr>	
-	                  	 </c:forEach>                  
+		                 </thead>
+	                     <c:forEach var="train" items="${listTrainAuto}">
+	                     <tbody>
+				             <tr>
+				             	<td>${train.getSchedule().getNameSchedule()}</td>
+				                <td align="center"><fmt:formatDate value="${train.getDateTrain()}" pattern="dd-MM-yyyy"/></td>	 
+				                <td align="center">${train.getSchedule().getTimeSchedule()}</td>
+				                <td align="center">${train.getWeekend()}</td>
+				                <td>${train.getSchedule().getLocationSchedule()}</td>
+				                <td align="center">
+					                <c:choose>
+							            <c:when test ="${train.getSchedule().getAutoSchedule()==true}">
+											tự động
+										</c:when>    
+										<c:when test ="${train.getSchedule().getAutoSchedule()==false}">
+											thủ công
+										</c:when>
+								    </c:choose>
+				                </td>
+				                <td align="center">
+				                	<span class="deleteTrain" data-id = "${train.getIdTrain()}"><i class="fa fa-times delete"></i></span>
+				                </td>                          
+			                  </tr>
+			                  </tbody>
+	                  	 	</c:forEach>                  
 		                </table>
-		                
 		              </div>
 		              <!-- /.card-body -->
 		            </div>

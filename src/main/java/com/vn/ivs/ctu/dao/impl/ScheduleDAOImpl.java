@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.ScheduleDAO;
+import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.entity.Train;
 
@@ -34,9 +35,9 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		return schedule.getIdSchedule();
 	}
 
-	public boolean deleteSchedule(int id) {
+	public boolean deleteSchedule(int idSchedule) {
 		try {
-			Schedule loadSchedule = currentSession().load(Schedule.class,id);
+			Schedule loadSchedule = currentSession().load(Schedule.class,idSchedule);
 			currentSession().delete(loadSchedule);
 			return true;
 		}	catch(Exception ex) {
@@ -52,7 +53,15 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	@Override
 	public List<Schedule> getListScheduleAuto(int idClub) {
 		try {
-			return currentSession().createQuery("from schedule where autoSchedule=? and schedule.club.idClub=?",Schedule.class).setParameter(0, true).setParameter(1, idClub).list();
+			return currentSession().createQuery("from schedule s where s.autoSchedule=? and s.club.idClub=?",Schedule.class).setParameter(0, true).setParameter(1, idClub).list();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	@Override
+	public List<Schedule> getListScheduleAuto() {
+		try {
+			return currentSession().createQuery("from schedule s where s.autoSchedule=?",Schedule.class).setParameter(0, true).list();
 		} catch (Exception e) {
 			return null;
 		}
@@ -63,6 +72,13 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		try {
 		return currentSession().createQuery("from schedule", Schedule.class).list();
 		}catch (Exception e) {
+			return null;
+		}
+	}
+	public Schedule getScheduleById(int id) {
+		try {
+		return currentSession().load(Schedule.class,id);
+		}catch (Exception ex) {
 			return null;
 		}
 	}

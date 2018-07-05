@@ -31,8 +31,8 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 		try {
 
 			return currentSession().
-					createQuery("FROM join_club j WHERE j.club.idClub = ? and j.status.idStatus = ?",JoinClub.class).
-					setParameter(0, idClub).setParameter(1, 1).list();	
+					createQuery("FROM join_club j WHERE j.club.idClub = ? and j.status = ?",JoinClub.class).
+					setParameter(0, idClub).setParameter(1, true).list();	
 		}catch(Exception ex) {
 			System.out.println(ex.toString());
 			return null;
@@ -56,6 +56,28 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 			return currentSession().
 					createQuery("FROM join_club j WHERE j.member.idMember = ?",JoinClub.class).
 					setParameter(0, idMember).list();	
+		}catch(Exception e) {
+			System.out.println("Join Club DAO "+e.toString());
+			return null;
+		}
+	}
+
+	@Override
+	public JoinClub getJoinClub(int idJoinClub) {
+		try {
+			return currentSession().load(JoinClub.class, idJoinClub);
+		}catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+
+	@Override
+	public List<JoinClub> getListMemberActive(int idClub) {
+		try {
+			return currentSession().
+					createQuery("FROM join_club j WHERE j.club.idClub = ? and j.status=?",JoinClub.class).
+					setParameter(0, idClub).setParameter(1, true).list();	
 		}catch(Exception e) {
 			System.out.println("Join Club DAO "+e.toString());
 			return null;

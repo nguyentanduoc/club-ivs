@@ -54,16 +54,10 @@
 						                	<c:when test="${status!=null}">		                		
 						                		<c:choose>
 								                	<c:when test="${status==200}">
-								                		<div class="alert alert-success alert-dismissible">
-										                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-										                  <h5><i class="icon fa fa-check"></i> Thành Công!</h5>					                 
-										                </div>
+									                  <h5 class="text-center text-success"><i class="icon fa fa-check"></i> Thành Công!</h5>		
 								                	</c:when>
-								                	<c:when test="${status==400}">		                		
-										                <div class="alert alert-danger alert-dismissible">
-										                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-										                  <h5><i class="icon fa fa-ban"></i> Thất Bại!</h5>					                 
-										                </div>
+								                	<c:when test="${status==400}">		 
+									                  <h5 class="text-center text-danger"><i class="icon fa fa-ban"></i> Thất Bại!</h5>	
 								                	</c:when>
 								                </c:choose>
 						                	</c:when>
@@ -74,10 +68,17 @@
 												id="nameClub" placeholder="Nhập Tên Câu Lạc Bộ" />
 										</div>										
 										<div class="form-group">
-											<label for="member.idMember">Nhân viên quản lý câu lạc bộ</label>
+										<c:choose>
+											<c:when test="${members.size()==0}">
+												<div class="text-danger text-center">Bạn hãy tạo người quản lý câu lạc bộ</div>
+											</c:when>
+											<c:when test="${members.size()>0}">
+												<label for="member.idMember">Nhân viên quản lý câu lạc bộ</label>
 											<form:select id="idMember" path="member.idMember" class="form-control">												
 												<form:options items="${members}" itemValue="idMember"  itemLabel="nameMember" />
 											</form:select>
+											</c:when>
+										</c:choose>											
 											<div id="messageMember"></div>
 										</div>
 									</div>

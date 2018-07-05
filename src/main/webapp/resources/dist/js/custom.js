@@ -1,36 +1,32 @@
 //<--xoa dau utf8
-xoa_dau = function xoa_dau(str) {
-    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-    str = str.replace(/đ/g, "d");
-    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-    str = str.replace(/Đ/g, "D");
-    return str;
-}
-//xoa dau utf8-->
-date = function  date(input){
-	var date = new Date(parseInt(input));
-	var dd = date.getDate();
-	var mm = date.getMonth()+1;
-	var yyyy = date.getFullYear();
-	if(dd<10){
-	    dd='0'+dd;
-	} 
-	if(mm<10){
-	    mm='0'+mm;
-	} 
-	return dd+'/'+mm+'/'+yyyy;
-}
+
 $(document).ready(function(){
+	xoa_dau = function xoa_dau(str) {
+		str = str.toLowerCase();
+	    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/gi, "a")
+	    .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/gi, "e")
+	    .replace(/ì|í|ị|ỉ|ĩ/gi, "i")
+	    .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/gi, "o")
+	    .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/gi, "u")
+	    .replace(/ỳ|ý|ỵ|ỷ|ỹ/gi, "y")
+	    .replace(/đ/gi, "d")
+	    .replace(/^\-+|\-+$/gi, "");
+	    return str;
+	}
+	//xoa dau utf8-->
+	date = function  date(input){
+		var date = new Date(parseInt(input));
+		var dd = date.getDate();
+		var mm = date.getMonth()+1;
+		var yyyy = date.getFullYear();
+		if(dd<10){
+		    dd='0'+dd;
+		} 
+		if(mm<10){
+		    mm='0'+mm;
+		} 
+		return dd+'/'+mm+'/'+yyyy;
+	}
 	$(function () {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -183,7 +179,6 @@ $(document).ready(function(){
 			err = true;
 			$("#errAddressEditBranch").append("Nhập tên chi nhánh");
 		}	
-		console.log(addressBranch);
 		if(err==false){
 			$.ajax({
 				url:"/Club-IVS/api/saveChangeBranch",
@@ -234,7 +229,7 @@ $(document).ready(function(){
 				url:"/Club-IVS/api/deleteSchedule",
 				type:"GET",
 				data:{
-					id:id
+					idSchedule:id
 				},
 				success:function(data){
 					if(data="true"){
@@ -273,7 +268,7 @@ $(document).ready(function(){
 		$(".nameMemberErro").html("");
 		$.ajax({
 			type : "POST",
-			url : "/Club-IVS/member/check",
+			url : "/Club-IVS/api/checkMember",
 			data : {
 				name : strin,
 			},
@@ -291,32 +286,41 @@ $(document).ready(function(){
 	 }
 	$("#nameMember").blur(function(){
 		var name = $("#nameMember").val();		
-		var name =  name.trim().replace(/\s+/g, " ");
-		if(name!=""){
-			$("#nameMember").val(name);
-			var arr = name.split(" ");
-			var text = "";
-			var lenght = arr.length;
-			  for (var i = 0; i < lenght -1 ; i++) {
-			     text += arr[i].slice(0,1);
-			  }
-			 text += xoa_dau(arr[lenght-1]);
-			 text = text.toLowerCase();
-			 text +="@gmail.com";
-			 $("#userNameMember").val(text); 
+		if(name!=""){	
+			var out="";					
+			$.ajax({
+				type : "POST",
+				url : "/Club-IVS/api/VNI",
+				data : {
+					text : name,
+				},
+				success : function(data) {
+					out=data.text;
+					var arr = out.split(" ");	
+					var text = "";
+					var lenght = arr.length;
+					  for (var i = 0; i < lenght -1 ; i++) {
+					     text += arr[i].slice(0,1);
+					  }
+					 text += arr[lenght-1];
+					 text = text.toLowerCase();
+					 text +="@gmail.com";
+					 $("#userNameMember").val(text); 
 
-			 var pass = "abc123";
-			 /*var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-			 for (var i = 0; i < 8; i++)
-				  pass += possible.charAt(Math.floor(Math.random() * possible.length));*/
-			 $("#passWordMember").val(pass);		 
-			 			 
-			 docheck(text);	
-			 
-			 $("#userNameMember").blur(function(){
-				 var email = $("#userNameMember").val();
-				 docheck(email);
-			 })
+					 var pass = "abc123";
+					 /*var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+					 for (var i = 0; i < 8; i++)
+						  pass += possible.charAt(Math.floor(Math.random() * possible.length));*/
+					 $("#passWordMember").val(pass);		 
+					 			 
+					 docheck(text);	
+					 
+					 $("#userNameMember").blur(function(){
+						 var email = $("#userNameMember").val();
+						docheck(email);
+					 })
+				}
+			});
 		}
 		
 	});//end member
@@ -476,7 +480,6 @@ function myFunction(idMember, idTrain,attendance) {
 		success:function(data){
 			console.log(data);
 			if(data.status=="200"){	
-				alert("tao hk biet");
 				$( "#tick" ).removeAttr( "onclick" );
 				$( "#tick" ).attr( "onclick",  "myFunction("+idMember+","+idTrain+","+attendance+")");
 			}else{

@@ -121,7 +121,8 @@ public class HomeController {
 						if(ats.isAttendance()) {
 							sbdd +=1;
 						}
-					}										
+					}	
+					System.out.println(ats);
 				}	
 				if(sobuoi-sbdd==0) {					
 					scoreClub = 100;
@@ -131,7 +132,7 @@ public class HomeController {
 					else 
 						scoreClub = 80 - (sobuoi-sbdd) * 20;
 				}
-				Summarization sum = new Summarization();
+				/*Summarization sum = new Summarization();
 				sum.setMember(j.getMember());
 				sum.setClub(j.getClub());
 				sum.setScoreClub(scoreClub);
@@ -141,7 +142,7 @@ public class HomeController {
 				sum.setPlusScore(0);
 				sum.setMonthSum(DateUtils.getCurentMonth());
 				sum.setYearSum(DateUtils.getCurentYear());
-				sumarizationService.createOrUpdate(sum);				
+				sumarizationService.createOrUpdate(sum);			*/	
 			}
 		}
 		return "404";

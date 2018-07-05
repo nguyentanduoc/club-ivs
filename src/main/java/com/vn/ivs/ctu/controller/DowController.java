@@ -22,7 +22,7 @@ public class DowController {
 	public String Index(ModelMap modelMap) {
 		modelMap.put("action1","dow");
 		modelMap.put("action2","index");
-		modelMap.put("title","Date of week");		
+		modelMap.put("title","Ngày trong tuần");		
 		DateOfWeek dow = new DateOfWeek();
 		modelMap.put("dow",dow);
 		modelMap.put("listDow",dowServiceImpl.getAll());

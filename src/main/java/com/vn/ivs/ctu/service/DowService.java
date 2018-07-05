@@ -9,4 +9,5 @@ public interface DowService {
 	public long create(DateOfWeek dow);
 	public List<DateOfWeek> getAll();
 	public boolean delete(int id);
+	public DateOfWeek getByVariable(int variableDow);
 }

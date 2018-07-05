@@ -28,9 +28,14 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return scheduleDAO.create(schedule);		
 	}
 	
-	public boolean deleteSchedule(int id) {
-		if(trainservice.deleteTrainByIdSchedule(id)) {
-			return scheduleDAO.deleteSchedule(id);
+	public boolean deleteSchedule(int idSchedule) {
+		if(trainservice.getTrainBySchedule(idSchedule).size()>0) {
+			System.out.println(trainservice.getTrainBySchedule(idSchedule).size());
+			if(trainservice.deleteTrainByIdSchedule(idSchedule)) {
+				return scheduleDAO.deleteSchedule(idSchedule);
+			}			
+		}else {
+			return scheduleDAO.deleteSchedule(idSchedule);
 		}
 		return false;
 	}
@@ -40,13 +45,18 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Override
 	public List<Schedule> getListScheduleAuto(int idClub) {
-		
 		return scheduleDAO.getListScheduleAuto(idClub);
 	}
 	@Override
-	public List<Schedule> getAllScheduleTotal() {
-		return scheduleService.getAllScheduleTotal();
+	public List<Schedule> getListScheduleAuto() {
+		return scheduleDAO.getListScheduleAuto();
 	}
-	
-	
+	@Override
+	public List<Schedule> getAllScheduleTotal() {
+		return scheduleDAO.getAllScheduleTotal();
+	}
+	@Override
+	public Schedule getScheduleById(int id) {
+		return scheduleDAO.getScheduleById(id);
+	}
 }

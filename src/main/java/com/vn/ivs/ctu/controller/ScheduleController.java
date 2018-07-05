@@ -1,5 +1,8 @@
 package com.vn.ivs.ctu.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.entity.Club;
 import com.vn.ivs.ctu.entity.Schedule;
@@ -33,7 +37,7 @@ public class ScheduleController {
 	public String Index(ModelMap modelMap){
 		modelMap.put("action1","schedule");
 		modelMap.put("action2","index");
-		modelMap.put("title","Schedule");	
+		modelMap.put("title","Thêm lịch tự động");	
 		Schedule schedule = new Schedule();
 		schedule.setAutoSchedule(true);
 		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
@@ -41,7 +45,7 @@ public class ScheduleController {
 		if(club!=null) {
 		modelMap.put("schedule", schedule);
 		modelMap.put("listDow",dowServiceImpl.getAll());
-		modelMap.put("listTrainAuto", trainService.getAllTrainAuto(club.getIdClub()));
+		modelMap.put("listScheduleAuto", scheduleService.getListScheduleAuto(club.getIdClub()));
 		} else {
 			modelMap.put("status", 403);
 			modelMap.put("message", "bạn không có quyền truy cập");
@@ -65,7 +69,7 @@ public class ScheduleController {
 	public String trainTotal(ModelMap modelMap) {
 		modelMap.put("action1", "train");
 		modelMap.put("action2", "traintotal");
-		modelMap.put("title", "Train");
+		modelMap.put("title", "Tổng lịch");
 		
 		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club  = clubService.getLeaderClub(idMember);
@@ -76,5 +80,19 @@ public class ScheduleController {
 			modelMap.put("message", "bạn không có quyền truy cập");
 		}
 		return "scheduletotal";
+	}
+	
+	@PostMapping(path="/change")
+	@ResponseBody
+	public Map<String, Object> change(int idSchedule, boolean autoSchedule){
+		Map<String, Object> map = new HashMap<>();
+		Schedule schedule = scheduleService.getScheduleById(idSchedule);
+		schedule.setAutoSchedule(autoSchedule);
+		if(scheduleService.create(schedule)>0) {
+			map.put("status", 200);
+		}else {
+			map.put("status", 400);
+		}
+		return map;
 	}
 }

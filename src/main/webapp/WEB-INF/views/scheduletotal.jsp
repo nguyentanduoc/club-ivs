@@ -35,51 +35,55 @@
 	      <div class="container-fluid">
 	      	<div class="row">
 	          <!-- left column -->
-	          
-		    	
 		    	<div class="col-md-12">
 		            <div class="card-primary">
+		            <h5 class="text-danger text-center" id="changeerror"></h5>
 		              <div class="card-header">
 		                <h3 class="card-title">Tất cả các lịch</h3>
-		                
 		              </div>
 		              <!-- /.card-header -->
 		              <div class="card-body p-0">
-		                <table class="table table-hover table-sm">
-		                  <tr>		                   
-		                    
+		                <table class="table table-hover table-sm table-info">
+		                <thead align="center">
+		                  <tr>
 		                    <th>Tên Sự kiện</th>
 		                    <th>Thứ</th>
 		                    <th>Thời gian</th>
 		                    <th>Địa điểm</th>
-		                    <th>CLB</th>
-		                    <th>Sắp lịch</th>
-		                                 
-		                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
-		                  </tr>
-	                      	   <c:forEach var="schedule" items="${listSchedule}">
-											<tr>
-												<td>${schedule.getNameSchedule()}</td>
-												<td>${schedule.getDateOfWeek().getNameDow()}</td>
-												<td>${schedule.getTimeSchedule()}</td>
-												<td>${schedule.getLocationSchedule()}</td>
-												<td>${schedule.getClub().getNameClub()}</td>
-												<td><c:choose>
-														<c:when test="${schedule.getAutoSchedule()==true}">
-								            tự động
-								         </c:when>
-														<c:when test="${schedule.getAutoSchedule()==false}">
-								            thủ công
-								         </c:when>
-													</c:choose></td>
-												<td><span class="deleteSchedule"
-													data-id="${schedule.getIdSchedule()}"><i
-														class="fa fa-times delete"></i></span> <span class="editSchedule"
-													data-id="${schedule.getIdSchedule()}"> <i
-														class="fa fa-pencil edit" aria-hidden="true"
-														data-toggle="modal" data-target="#editSchedule"></i></span></td>
-											</tr>
-										</c:forEach>                  
+		                    <th>Sắp lịch</th>      
+		                    <th>Tuỳ Chỉnh</th>
+		                    </tr> 
+		                    </thead>
+	                      <c:forEach var="schedule" items="${listSchedule}">
+	                      	<tbody>
+								<tr>
+									<td>${schedule.getNameSchedule()}</td>
+									<td align="center">${schedule.getDateOfWeek().getNameDow()}</td>
+									<td align="center">${schedule.getTimeSchedule()}</td>
+									<td>${schedule.getLocationSchedule()}</td>
+									<td align="center"><div class="btn-group btn-group-toggle" data-toggle="buttons">
+										<c:choose>
+											<c:when test="${schedule.getAutoSchedule()==true}">
+												<label class="btn btn-outline-primary active btn-sm onSchedule" data-id="${schedule.getIdSchedule()}">
+													<input type="radio" name="options" id="option1" autocomplete="off" checked> Auto
+												</label>
+												<label class="btn btn-outline-primary btn-sm offSchedule" data-id="${schedule.getIdSchedule()}">
+													<input type="radio" name="options" id="option3" autocomplete="off"> Manual
+												</label>
+								         	</c:when>
+											<c:when test="${schedule.getAutoSchedule()==false}">
+												<label class="btn btn-outline-primary btn-sm onSchedule" data-id="${schedule.getIdSchedule()}">
+													<input type="radio" name="options" id="option1" autocomplete="off"> Auto
+												</label>
+												<label class="btn btn-outline-primary btn-sm offSchedule active" data-id="${schedule.getIdSchedule()}">
+													<input type="radio" name="options" id="option3" autocomplete="off" checked> Manual
+												</label>
+								         	</c:when>
+										</c:choose></div></td>
+									<td align="center"><span class="deleteSchedule" data-id="${schedule.getIdSchedule()}"><i class="fa fa-times delete"></i></span>
+									</tr>
+								</tbody>
+							</c:forEach>         
 		                </table>
 		              </div>
 		              <!-- /.card-body -->
@@ -89,10 +93,49 @@
 		   </div>
 	    </section>
 	    <!-- /.content -->
-	    
   	</div>    	
     	<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
     </div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
+	<script>
+	$(document).ready(function(){
+		$(".offSchedule").click(function(){
+			var id = $(this).attr('data-id');
+			$.ajax({
+				url:"/Club-IVS/schedule/change",
+				type:"POST",
+				data:{
+					idSchedule:id,
+					autoSchedule:false
+				},
+				success:function(data){
+					if(data.status==200){					
+						location.reload();
+					}else{
+						$("#changeerror").append("Xảy ra lỗi chuyển đổi!");
+					}
+					}	
+				})
+			})
+		$(".onSchedule").click(function(){
+			var id = $(this).attr('data-id');
+			$.ajax({
+				url:"/Club-IVS/schedule/change",
+				type:"POST",
+				data:{
+					idSchedule:id,
+					autoSchedule:true
+				},
+				success:function(data){
+					if(data.status==200){					
+						location.reload();
+					}else{
+						$("#changeerror").append("Xảy ra lỗi chuyển đổi!");
+					}
+				}	
+				})
+			})
+		});
+	</script>
 	</body>
 </html>

@@ -1,20 +1,15 @@
 =\=\=\=\=\=\=
-<<<<<<<=Upstream, based on branch 'master' of https\://github.com/nguyentanduoc/club-ivs
->>>>>>>=f87948b join club
+<<<<<<<=HEAD
+>>>>>>>=branch 'master' of https\://github.com/nguyentanduoc/club-ivs.git
 eclipse.preferences.version=1
-<<<<<<< HEAD
 encoding//src/main/java/com/vn/ivs/ctu/controller/AttendanceController.java=UTF-8
-=======
->>>>>>> branch 'master' of https://github.com/nguyentanduoc/club-ivs.git
 encoding//src/main/java/com/vn/ivs/ctu/controller/BranchController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/ClubController.java=UTF-8
+encoding//src/main/java/com/vn/ivs/ctu/controller/DowController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/HomeController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/MemberController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/RoleController.java=UTF-8
-<<<<<<< HEAD
 encoding//src/main/java/com/vn/ivs/ctu/controller/ScheduleController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/TrainController.java=UTF-8
-=======
-encoding//src/main/java/com/vn/ivs/ctu/controller/TrainController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/entity/Branch.java=UTF-8
->>>>>>> branch 'master' of https://github.com/nguyentanduoc/club-ivs.git
+encoding//src/main/java/com/vn/ivs/ctu/utils/VNCharacterUtils.java=UTF-8

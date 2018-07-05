@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.AttendanceID;
 import com.vn.ivs.ctu.entity.Club;
+import com.vn.ivs.ctu.entity.DateOfWeek;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.entity.Train;
@@ -44,7 +45,7 @@ public class TrainController {
 	public String Index(ModelMap modelMap) {
 		modelMap.put("action1", "train");
 		modelMap.put("action2", "index");
-		modelMap.put("title", "Train");
+		modelMap.put("title", "Thêm lịch thủ công");
 		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club  = clubService.getLeaderClub(idMember);
 		if(club!=null) {
@@ -63,8 +64,8 @@ public class TrainController {
 		Schedule schedule = new Schedule();
 		Train train = new Train();
 		train.setDateTrain(dateTrain);
-		int dow = DateUtils.getDateOfWeek(dateTrain);
-		System.out.println(dow);
+		DateOfWeek dow = dowService.getByVariable(DateUtils.getDateOfWeek(dateTrain));
+		schedule.setDateOfWeek(dow);
 		schedule.setNameSchedule(nameSchedule);
 		schedule.setTimeSchedule(timeSchedule);
 		schedule.setLocationSchedule(locationSchedule);
@@ -116,7 +117,7 @@ public class TrainController {
 	public String trainAuto(ModelMap modelMap) {
 		modelMap.put("action1", "train");
 		modelMap.put("action2", "trainauto");
-		modelMap.put("title", "Train");
+		modelMap.put("title", "Lịch tự động tạo");
 		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club  = clubService.getLeaderClub(idMember);
 		if(club!=null) {

@@ -19,6 +19,9 @@ public class Attendance {
 	
 	@Column(name="IS_ATTENDANCE")
 	private boolean attendance;
+	
+	@Column(name="REASON")
+	private String reason;
 
 	@OneToOne(cascade  = {CascadeType.PERSIST,CascadeType.REMOVE},fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_TRAIN", insertable=false, updatable=false)
@@ -59,5 +62,14 @@ public class Attendance {
 	public void setAttendance(boolean attendance) {
 		this.attendance = attendance;
 	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	
 
 }

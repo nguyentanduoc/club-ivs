@@ -10,7 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Proxy;
+
 @Entity(name="schedule")
+@Proxy(lazy=false)
 public class Schedule {
 	
 	@Id

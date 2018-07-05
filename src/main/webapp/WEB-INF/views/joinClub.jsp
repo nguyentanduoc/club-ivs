@@ -34,7 +34,7 @@
 	      <div class="container-fluid">
 	      	<div class="row">
 	          <!-- left column -->
-	          <div class="col-md-5">
+	          <div class="col-md-4">
 	            <!-- general form elements -->
 	            <div class="card card-primary">
 	              <div class="card-header">
@@ -94,7 +94,7 @@
 	            </div>
 	            <!-- /.card -->
 		    	</div>	
-		    	<div class="col-md-7"> 
+		    	<div class="col-md-8"> 
 		    		<div class="card">
 						<div class="card-header">
 							<h3 class="card-title">Danh sách Tham gia Câu Lạc Bộ</h3>
@@ -103,11 +103,10 @@
 							<div class="text-danger text-center" id="messageJoinClub"></div>
 							<table class="table" id="tableJoinClub">
 			                  <tr>		                   
-			                    <th>Tên câu Lạc bộ</th>
-			                    <th>Thời gian tham gia</th>
-			                    <th>Thời gian ngưng hoạt động</th>		      
-			                    <th>Tình hiện tại</th>	            
-			                    <th style="width:150px">Tuỳ Chỉnh</th>	                 	 
+			                    <th>Tên CLB</th>
+			                    <th>Ngày tham gia</th>
+			                    <th>Ngày ngưng hoạt động</th>		      
+			                    <th>Tình hiện tại</th>  
 			                  </tr>
 			                   <tbody id="listJoinClub">
 			                        
@@ -153,8 +152,19 @@
 							view += "<td>"+row.club.nameClub+"</td>";
 							view += "<td>"+dateJoin+"</td>";
 							view += "<td>"+dateLeave+"</td>";
-							view += "<td>"+row.status.nameStatus+"</td>";
-							view += "<td><a href='${pageContext.request.contextPath}/club/joinClub/"+row.idJoinClub+"'> <i class='fa fa-pencil edit'></i></a>";
+						
+							if(row.status==true){
+								view +="<td><div class='btn-group btn-group-toggle' data-toggle='buttons'>"
+								  	+"<label class='btn btn-outline-primary active btn-sm'>"
+							    	+"<input type='radio' autocomplete='off' checked> On </label>"
+								 	+"<label class='btn btn-outline-primary btn-sm' onclick='offActive("+row.idJoinClub+")'> <input type='radio' autocomplete='off'>Off</label></div></td>";
+							}else{
+								view +="<td><div class='btn-group btn-group-toggle disabled' data-toggle='dispose'>"
+								  	+"<label class='btn btn-outline-primary btn-sm '>"
+							    	+"<input type='radio' autocomplete='off'> On </label>"
+								 	+"<label class='btn btn-outline-primary active btn-sm'> <input type='radio' autocomplete='off' checked>Off</label></div></td>";
+							}
+								
 							view += "</tr>"; 
 							 /*$("#clubs").each(function(index1,element){
 							        console.log(element);
@@ -171,8 +181,29 @@
 					
 				}
 			});	
-		});
+		});		
+		
 	})
+	function offActive(idJoinClub){
+		$("#messageJoinClub").empty();
+		$.ajax({
+			url:"/Club-IVS/club/active",
+			type:"POST",
+			data:{
+				"idJoinClub":idJoinClub,	
+				"status":0
+			},
+			success:function(data){
+				if(data.status==200){
+					$("#messageJoinClub").append("Thành công!");
+					$("#messageJoinClub").removeClass("text-danger");
+					$("#messageJoinClub").addClass("text-success");
+				}else{
+					$("#messageJoinClub").append("Thất bại!");
+				}
+			}
+		});
+	}
 	</script>
 	</body>
 </html>

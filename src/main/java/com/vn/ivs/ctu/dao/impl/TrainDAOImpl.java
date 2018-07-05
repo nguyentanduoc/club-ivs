@@ -138,5 +138,20 @@ public class TrainDAOImpl implements TrainDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	public Train getTrainById(int id) {
+		try {
+		return currentSession().load(Train.class,id);
+		}catch (Exception ex) {
+			return null;
+		}
+	}
+	public List<Train> getTrainBySchedule(int idSchedule){
+		try {
+			return currentSession().createQuery("select t from train t where t.schedule.idSchedule = ?",Train.class)
+					.setParameter(0, idSchedule).list();
+		}catch(Exception ex) {
+			System.out.println(ex.toString());
+			return null;
+		}
+	}
 }

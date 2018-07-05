@@ -5,9 +5,11 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 	<!-- Brand Logo -->
-	<a href="<c:url value="/"/>" class="brand-link"> <span
-		class="brand-text font-weight-light">Club - IVS</span>
+	<a href="<c:url value="/"/>" class="brand-link">
+	<span class="brand-text font-weight-light">Club - IVS
+	</span>
 	</a>
+	
 	<!-- Sidebar -->
 	<div class="sidebar">
 		<!-- Sidebar user panel (optional) -->
@@ -38,9 +40,8 @@
 							Dashboard
 						</p>
 					</a>
-				</li>
+				</li>				
 				<sec:authorize access="hasAuthority('ADMIN')">
-
 				<!--  admin  menu role -->
 				<li	class="nav-item ${action1 eq  'role' ? 'menu-open' : ''}">
 					<a href="<c:url value="/role/index"/>" class="nav-link ${action1 eq  'role' ? 'active' : ''}">
@@ -59,9 +60,10 @@
 		              </p>
 		            </a>		            
 				</li><!-- ./admin menu branch -->
-				</sec:authorize>	
+				</sec:authorize>
 				<!-- menu member -->
-				<li class="nav-item has-treeview ${action1 eq  'member' ? 'menu-open' : ''}">
+				<sec:authorize access="hasAnyAuthority('LEADER','ADMIN')">
+				<li class="nav-item has-treeview ${action1 eq  'member' ? 'menu-open' : ''}">		            
 		            <a href="#" class="nav-link ${action1 eq  'member' ? 'active' : ''}">
 		             <i class="fa fa-users" aria-hidden="true"></i>
 		              <p>
@@ -76,7 +78,7 @@
 		                  <i class="fa fa-circle-o nav-icon"></i>
 		                  <p>Thêm thành viên Admin</p>
 		                </a>
-		              </li>
+		              </li>		              
 		              </sec:authorize>
 		              <sec:authorize access="hasAuthority('LEADER')">
 		              <li class="nav-item">
@@ -84,30 +86,39 @@
 		                  <i class="fa fa-circle-o nav-icon"></i>
 		                  <p>Thêm thành viên</p>
 		                </a>
-		              </li>		              
+		              </li>
 		              </sec:authorize>
-		            </ul>            
+		            </ul>
+		                      
 		          </li><!-- .// menu member -->
-				<sec:authorize access="hasAuthority('LEADER')">
-				<li class="nav-item has-treeview">
-					<a href="#" class="nav-link">
+				</sec:authorize>
+				  <sec:authorize access="hasAuthority('LEADER')">
+				<li class="nav-item has-treeview ${action1 eq  'club' ? 'menu-open' : ''}">
+					<a href="#" class="nav-link ${action1 eq  'club' ? 'active' : ''}">
 					<i class="fa fa-star" aria-hidden="true"></i>
 						<!-- <i class="nav-icon fa fa-edit"></i> -->
-						<p>Câu lạc bộ <i class="fa fa-angle-left right"></i></p>
+						<p>CLB<i class="fa fa-angle-left right"></i></p>
 					</a>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href='<c:url value="/club/index"/>'
-							class="nav-link ${action2 eq  'index' ? 'active' : ''}"> <i
+							class="nav-link ${action2 eq  'create' ? 'active' : ''}"> <i
 								class="fa fa-circle-o nav-icon"></i>
-								<p>Index</p>
+								<p>Danh sách CLB</p>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href='<c:url value="/club/joinClub"/>'
 							class="nav-link ${action2 eq  'joinClub' ? 'active' : ''}"> <i
 								class="fa fa-circle-o nav-icon"></i>
-								<p>Thành Viên Câu Lạc Bộ</p>
+								<p>Thêm thành viên</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href='<c:url value="/club/listJoinClub"/>'
+							class="nav-link ${action2 eq  'listJoinClub' ? 'active' : ''}"> <i
+								class="fa fa-circle-o nav-icon"></i>
+								<p>DS hoạt động</p>
 							</a>
 						</li>
 					</ul>
@@ -126,11 +137,10 @@
 					<a href="<c:url value="/member/profile"/>" class="nav-link">
 					<i class="fa fa-user" aria-hidden="true"></i>
 						<!-- <i class="nav-icon fa fa-edit"></i> -->
-<<<<<<< HEAD
 						<p>Trang cá nhân</p>
 					</a>					
 				</li><!-- ./menu profile -->
-				
+				<sec:authorize access="hasAuthority('ADMIN')">
 				<!-- menu date of week -->
 				<li class="nav-item has-treeview">
 					<a href="<c:url value="/dow/index"/>" class="nav-link">
@@ -139,8 +149,8 @@
 						<p>Ngày trong tuần</p>
 					</a>					
 				</li><!-- ./menu date of week -->
-	          
-	          
+	          </sec:authorize>
+	          <sec:authorize access="hasAuthority('LEADER_CLUB')">
 	          <!-- menu schedule -->
 	          <li class="nav-item has-treeview">
 	            <a href="#" class="nav-link">
@@ -189,52 +199,9 @@
 						<p>Điểm danh</p>
 					</a>					
 				</li><!-- ./menu attendance -->
+				</sec:authorize>
 			</ul>			
 	          <!-- .//menu schedule -->
-	          <li class="nav-item has-treeview">
-	            <a href="#" class="nav-link">
-	            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-	              <!-- <i class="nav-icon fa fa-edit"></i> -->
-	              <p>
-	                Train
-	                <i class="fa fa-angle-left right"></i>
-	              </p>
-	            </a>
-	            <ul class="nav nav-treeview">
-	              <li class="nav-item">
-	                <a href='<c:url value="/train/index"/>' class="nav-link ${action2 eq  'train' ? 'active' : ''}">
-	                  <i class="fa fa-circle-o nav-icon"></i>
-	                  <p>Lịch thủ công</p>
-	                </a>
-	              </li>
-	              <li class="nav-item">
-	                <a href='<c:url value="/train/trainauto"/>' class="nav-link ${action2 eq  'trainauto' ? 'active' : ''}">
-	                  <i class="fa fa-circle-o nav-icon"></i>
-	                  <p>Lịch tự động</p>
-	                </a>
-	              </li>	              
-	            </ul>
-	          </li>
-	          <!--  menu dow -->
-	          	<li class="nav-item has-treeview">
-		            <a href="#" class="nav-link">
-		            <i class="fa fa-check-square-o" aria-hidden="true"></i>
-		              <!-- <i class="nav-icon fa fa-edit"></i> -->
-		              <p>
-		                Điểm Danh
-		                <i class="fa fa-angle-left right"></i>
-		              </p>
-		            </a>
-		            <ul class="nav nav-treeview">
-		            	<li class="nav-item">
-			                <a href='<c:url value="/attendance/index"/>' class="nav-link ${action2 eq  'attendance' ? 'active' : ''}">
-			                  <i class="fa fa-circle-o nav-icon"></i>
-			                  <p>Index</p>
-			                </a>
-		            	</li>
-					</ul>		
-				</li>	
-			</ul>
 		</nav>
 		<!-- /.sidebar-menu -->
 	</div>

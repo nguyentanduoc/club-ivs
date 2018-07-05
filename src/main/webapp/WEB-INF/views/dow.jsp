@@ -62,14 +62,14 @@
 	            <!-- /.card -->
 		    	</div>
 		    	<div class="col-md-6">
-		            <div class="card">
+		            <div class="card-primary">
 		              <div class="card-header">
 		                <h3 class="card-title">Danh sách ngày trong tuần</h3>	
 		                
 		              </div>
 		              <!-- /.card-header -->
 		              <div class="card-body p-0">
-		                <table class="table">
+		                <table class="table table-hover table-sm table-info">
 		                  <tr>		                   
 		                    <th style="width: 10px">#</th>
 		                    <th>Thứ</th>

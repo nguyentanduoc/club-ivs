@@ -9,4 +9,5 @@ public interface DowDAO {
 	public long create(DateOfWeek dow);
 	public List<DateOfWeek> getAll();
 	public boolean delete(int id);
+	public DateOfWeek getByVariable(int variableDow); 
 }

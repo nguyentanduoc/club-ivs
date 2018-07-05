@@ -31,6 +31,7 @@ import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.RoleService;
 import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
+import com.vn.ivs.ctu.utils.VNCharacterUtils;
 
 @Controller
 @RequestMapping("api/")
@@ -212,8 +213,8 @@ public class ApiController {
 	//start schedule
 	@GetMapping("deleteSchedule")
 	@ResponseBody
-	public String deleteSchedule(@RequestParam int id) {		
-		boolean rs = scheduleService.deleteSchedule(id);
+	public String deleteSchedule(@RequestParam int idSchedule) {		
+		boolean rs = scheduleService.deleteSchedule(idSchedule);
 		if(rs) {
 			return "true";
 		}else {
@@ -294,4 +295,12 @@ public class ApiController {
 		return map;
 	}
 	//end join club
+	@PostMapping(path="VNI")
+	@ResponseBody
+	public Map<String,Object>getJoinClub(String text){
+		Map<String,Object> map = new HashMap<>();
+		map.put("text", VNCharacterUtils.removeAccent(text));
+		return map;
+	}
+	
 }

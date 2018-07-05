@@ -36,19 +36,6 @@ public class AttendanceDAOImpl implements AttendanceDAO{
 			return false;
 		}
 	}
-
-	@Override
-	public List<Attendance> getAttendanceByTrain(int id) {
-		try {
-			return currentSession().createQuery("from attendance a where a.attendanceID.idTrain=?", Attendance.class).setParameter(0, id).list();
-		}
-		catch (Exception ex)
-		{
-			System.out.println(ex.toString());
-			return null;
-		}
-	}
-
 	@Override
 	public boolean deleteAttendanceByTrain(int idTrain) {
 		try {
@@ -63,7 +50,17 @@ public class AttendanceDAOImpl implements AttendanceDAO{
 			return false;
 		}
 	}
-
+	@Override
+	public List<Attendance> getAttendanceByTrain(int id) {
+		try {
+			return currentSession().createQuery("from attendance a where a.attendanceID.idTrain=?", Attendance.class).setParameter(0, id).list();
+		}
+		catch (Exception ex)
+		{
+			System.out.println(ex.toString());
+			return null;
+		}
+	}
 	public List<Attendance> getAttendanceByClub(int curentMonth,int idClub) {
 		try {
 			//currentSession().createQuery("from attendance a where  a.train")
@@ -74,13 +71,11 @@ public class AttendanceDAOImpl implements AttendanceDAO{
 			return null;
 		}
 	}
-
 	@Override
 	public Attendance getAttendByIdMember(int idMember, int idTrain) {
 		try {
-			return currentSession().createQuery("select a from attendance a where a.attendanceID.idMember =? and a.attendanceID.idTrain=?",Attendance.class)
-					.setParameter(0, idMember).setParameter(1, idTrain).getSingleResult();
-			
+			return currentSession().createQuery("from attendance a where a.train.idTrain=? and a.member.idMember=?", Attendance.class).setParameter(0, idTrain).setParameter(1, idMember).getSingleResult();
+		
 		}catch(Exception e) {
 			System.out.println(e.toString());
 			return null;

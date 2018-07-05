@@ -50,5 +50,12 @@ public class DowDAOImpl implements DowDAO {
 			return false;
 		}	
 	}
-
+	@Transactional
+	public DateOfWeek getByVariable(int variableDow) {		
+		try {
+			return currentSession().createQuery("from date_of_week d where d.variableDow=?",DateOfWeek.class).setParameter(0, variableDow).getSingleResult();}
+		catch (Exception ex) {
+			return null;
+		}
+	}
 }

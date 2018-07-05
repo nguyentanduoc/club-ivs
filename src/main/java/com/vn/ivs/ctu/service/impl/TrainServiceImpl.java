@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import com.vn.ivs.ctu.dao.TrainDAO;
+import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.AttendanceService;
 import com.vn.ivs.ctu.service.TrainService;
@@ -77,5 +78,14 @@ public class TrainServiceImpl implements TrainService {
 	@Override
 	public List<Train> getAllTrainByClub(int month, int year, int idClub) {
 		return trainDAO.getAllTrainByClub(month, year, idClub);
-	}	
+	}
+	@Override
+	public Train getTrainById(int id) {
+		return trainDAO.getTrainById(id);
+	}
+
+	@Override
+	public List<Train> getTrainBySchedule(int idSchedule) {
+		return trainDAO.getTrainBySchedule(idSchedule);
+	}
 }

@@ -12,6 +12,7 @@ pageEncoding="UTF-8" session="false"%>
 				<h5 class="text-danger text-center"><i class="icon fa fa-check"></i> ${message}</h5>
 		    </c:when>
 	    </c:choose>
+	    </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
       </li>
