@@ -61,6 +61,8 @@ pageEncoding="UTF-8" session="false"%>
 				                  <th>Tên Thành Viên</th>
 				                  <th>Điểm Số</th>
 				                  <th>Yêu cầu thưởng</th>	
+				                  <th>Chấp nhận thưởng</th>	
+				                  <th>Nội Dung</th>
 				                  <th>Hoàn tất</th>				                 
 				                </tr>
 				                </thead>
@@ -69,18 +71,24 @@ pageEncoding="UTF-8" session="false"%>
 						                  <tr>
 						                  	<td>${sum.getMember().getNameMember()}</td>
 						                    <td>${sum.getScoreBranch()}</td>						                    
+						                    <td align="center">					                   		
+						                    	<label class="btn ${sum.isDonate()==false ?'btn-secondary':'btn-warning'} btn-sm " data-id="${sum.getIdSumBranch()}">
+													<i class="fa fa-gift" aria-hidden="true"></i>
+												</label>												
+						                    </td>	
 						                    <td >
 						                   		<div class="btn-group btn-group-toggle" data-toggle="buttons">
 							                    	<label class="btn btn-outline-primary ${sum.isDonate()==false ?'active':''} btn-sm offRequire" data-id="${sum.getIdSumBranch()}">
-														<input type="radio" name="options" id="option1" autocomplete="off" checked>Không
+														<input type="radio" name="options" id="option1" autocomplete="off" checked><i class="fa fa-circle-thin" aria-hidden="true"></i>
 													</label>
 													<label class="btn btn-outline-primary btn-sm onRequire ${sum.isDonate()==true?'active':''}" data-id="${sum.getIdSumBranch()}" >
-														<input type="radio" name="options" id="option3" autocomplete="off">Có
+														<input type="radio" name="options" id="option3" autocomplete="off"><i class="fa fa-check" aria-hidden="true"></i>
 													</label>
 												</div>
 						                    </td>	
+						                      <td><input class="form-control" type="text"/></td>
 						                    <td>
-						                    	<input type="button" class="btn btn-info btn-sm update" value="Cập Nhật" data-id="${sum.getIdSumBranch()}">
+						                    	<button type="button" class="btn btn-info btn-sm update"  data-id="${sum.getIdSumBranch()}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
 						                    </td>	                               
 						                  </tr>	
 				                  	 </c:forEach>  	     

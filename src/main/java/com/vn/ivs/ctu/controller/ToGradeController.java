@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
@@ -22,6 +26,7 @@ import com.vn.ivs.ctu.service.SumarizationBranchService;
 import com.vn.ivs.ctu.service.SumarizationService;
 import com.vn.ivs.ctu.utils.DateUtils;
 import com.vn.ivs.ctu.utils.SecurityUtils;
+import com.vn.ivs.ctu.views.ExcelScoreClub;
 
 @Controller
 @RequestMapping(path="to-grade/")
@@ -82,5 +87,23 @@ public class ToGradeController {
 			System.out.println(sum);
 		}		
 		return "scoreTotalBranch";
+	}
+	
+	@GetMapping(path="exportExcel")
+	public ModelAndView sroceClub(HttpServletRequest req, HttpServletResponse res) {
+		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		Club club = clubService.getLeaderClub(idMember);
+		if(club!=null) {
+			List<Summarization> sums =  sumarizationService.getSumByClubPreMonth(club.getIdClub(), DateUtils.getCurentMonth()-1,DateUtils.getCurentYear());
+			if(sums!=null) {
+				return  new ModelAndView(new ExcelScoreClub(),"sums",sums);
+			}else {
+				return new ModelAndView("tableScore","sums",sums);
+			}
+		}	else {
+			return null;
+		}
+		
+		
 	}
 }

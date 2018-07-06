@@ -36,15 +36,18 @@ pageEncoding="UTF-8" session="false"%>
 	    <div class="card">
             <div class="card-header">
             	<div class="row">
-            		<div class="col-md-8">
+            		<div class="col-md-6">
             			 <h3 class="card-title">Điểm Số</h3>
             		</div>
-            		<div class="col-md-4">
-            			 <div class="form-group row">            			 	              
-			             	<input name="month" id="month" type="text" class="month-piker form-control col-md-10" placeholder="Chọn Tháng"/>
-			              	<div class="col-md-2">
+            		<div class="col-md-6">
+            			 <div class="form-group row">       			 	              
+			             	<input name="month" id="month" type="text" class="month-piker form-control col-md-9" placeholder="Chọn Tháng"/>
+			              	<div class="col-md-2 text-center">
 			              		<button type="button" class="btn btn-outline-primary">Tìm</button>
 			              	</div>
+			              	 <div class="col-md-1">
+	            				 <a class="btn btn-success float-right" href="<c:url value="/to-grade/exportExcel"/>" role="button"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>   	
+	            			 </div> 
 			              </div>
             		</div>
             	</div>          
@@ -76,15 +79,15 @@ pageEncoding="UTF-8" session="false"%>
 					                    <td >
 					                   		<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						                    	<label class="btn btn-outline-primary ${score.isRequireDonate()==false ?'active':''} btn-sm offRequire" data-id="${score.getIdSum()}">
-													<input type="radio" name="options" id="option1" autocomplete="off" checked>Không
+													<input type="radio" name="options" id="option1" autocomplete="off" checked><i class="fa fa-circle-thin" aria-hidden="true"></i>
 												</label>
 												<label class="btn btn-outline-primary btn-sm onRequire ${score.isRequireDonate()==true?'active':''}" data-id="${score.getIdSum()}" >
-													<input type="radio" name="options" id="option3" autocomplete="off">Có
+													<input type="radio" name="options" id="option3" autocomplete="off"><i class="fa fa-check" aria-hidden="true"></i>
 												</label>
 											</div>
 					                    </td>	
 					                    <td>
-					                    	<input type="button" class="btn btn-info btn-sm update" value="Cập Nhật" data-id="${score.getIdSum()}">
+					                    	<button type="button" class="btn btn-info btn-sm update" value="" data-id="${score.getIdSum()}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
 					                    </td>	                               
 					                  </tr>	
 			                  	 </c:forEach>  
