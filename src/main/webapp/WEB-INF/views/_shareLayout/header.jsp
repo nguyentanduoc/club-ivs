@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/plugins/iCheck/all.css"/>">
 <!-- Date Picker -->
 <link rel="stylesheet" href="<c:url value="/resources/plugins/datepicker/datepicker3.css"/>">
-<!-- Daterange picker -->
+<!-- Daterange picker dddd-->
 <link rel="stylesheet" href="<c:url value="/resources/plugins/daterangepicker/daterangepicker-bs3.css"/>">
 <!-- bootstrap wysihtml5 - text editor -->
 <link rel="stylesheet" href="<c:url value="/resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>">
