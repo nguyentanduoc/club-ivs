@@ -21,6 +21,7 @@
 		<intercept-url pattern="/club/joinClub" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/club/listJoinClub" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/member/editMember/**" access="hasAuthority('LEADER')" />
+		<intercept-url pattern="/to-grade/scoreTotalBrach" access="hasAuthority('LEADER')" />
 		
 		<!-- <intercept-url pattern="/schedule/index" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/train/index" access="hasAuthority('LEADER')" /> -->
