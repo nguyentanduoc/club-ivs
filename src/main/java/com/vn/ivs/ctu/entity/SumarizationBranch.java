@@ -11,8 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 @Entity(name="sumarization_branch")
 @Table(name="sumarization_branch")
+@Proxy(lazy=false)
 public class SumarizationBranch {
 	
 	@Id
@@ -38,7 +41,7 @@ public class SumarizationBranch {
 	private int year;
 	
 	@Column(name="DONATE")
-	private float donate;
+	private boolean donate;
 	
 	@Column(name="CONTAIN_DONATE")
 	private String containDonate;
@@ -96,12 +99,12 @@ public class SumarizationBranch {
 	public void setYear(int year) {
 		this.year = year;
 	}
-
-	public float getDonate() {
+	
+	public boolean isDonate() {
 		return donate;
 	}
 
-	public void setDonate(float donate) {
+	public void setDonate(boolean donate) {
 		this.donate = donate;
 	}
 

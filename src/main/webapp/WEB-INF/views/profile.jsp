@@ -116,7 +116,6 @@
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                  
                   <li class="nav-item"><a class="active nav-link" href="#settings" data-toggle="tab">Cập nhật thông tin</a></li>
                   <li class="nav-item"><a class="nav-link" href="#updateAvatar" data-toggle="tab">Cập nhật ảnh</a></li>
                   <li class="nav-item"><a class="nav-link" href="#chagePassWord" data-toggle="tab">Thay đổi mật khẩu</a></li>
@@ -124,43 +123,71 @@
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
-                  
-                  
                   <div class="active tab-pane" id="settings">
                     <form class="form-horizontal">
                       <div class="form-group row">
                         <label for="nameMember" class="col-md-3 col-sm-2 control-label">Họ và Tên</label>
                         <div class="col-md-9 col-sm-10">
-                          <input type="text" class="form-control"  name = "nameMember" id="nameMember" placeholder="Nhập Họ và Tên">
+                          <input type="text" value="${member.getNameMember()}" class="form-control"  name = "nameMember" id="nameMember" placeholder="Nhập Họ và Tên">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="isSexMember" class="col-md-3 col-sm-2 control-label">Giới tính</label>
                         <div class="col-sm-10 col-md-9">
-                          <label class="mr-2">
-		                    <input type="radio" name="isSexMember" class="minimal">Nam
-		                  </label>
-		                  <label>
-		                    <input type="radio" name="isSexMember" class="minimal">Nữ
-		                  </label>
+                        <c:choose>
+						<c:when test="${member.isSexMember()==true}">
+							<label class="mr-2">
+			                	<input type="radio" name="isSexMember" class="minimal" checked>Nam
+			               	</label>
+			                <label>
+			                	<input type="radio" name="isSexMember" class="minimal">Nữ
+			                </label>
+						</c:when>
+						<c:when test="${member.isSexMember()==false}">
+							<label class="mr-2">
+			                	<input type="radio" name="isSexMember" class="minimal">Nam
+			                </label>
+			                <label>
+			                	<input type="radio" name="isSexMember" class="minimal" checked>Nữ
+			                </label>
+						</c:when>
+					</c:choose>
+                          
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="birthDayMember" class="col-sm-2 col-md-3 control-label">Sinh Nhật</label>
                         <div class="col-sm-10 col-md-9">
-                          <input type="text" class="form-control datepicker" name="birthDayMember" id="birthDayMember" placeholder="Ngày tháng năm sinh">
-                        </div>
+                        <c:choose>
+						<c:when test="${member.getBirthDayMember()!=null}">
+						<fmt:formatDate var="fmtDate" value="${member.getBirthDayMember()}" pattern="dd/MM/yyyy"/>
+						<input class="form-control" type="text" name="bean.dateProperty" value="${fmtDate}" 
+						name="birthDayMember" id="birthDayMember" placeholder="Nhập Ngày tháng năm sinh"/>
+						</c:when>
+						<c:otherwise>
+							<i>Đang cập nhật</i>
+						</c:otherwise>
+					</c:choose>
+						
+						</div>
                       </div>
                       <div class="form-group row">
                         <label for="phoneNumerMember" class="col-sm-2 col-md-3 control-label">Số Điện Thoại</label>
-                        <div class="col-sm-10 col-md-9">
-                          <input type="text" class="form-control" name="phoneNumerMember" id="phoneNumerMember" placeholder="Số điện thoại">
+                        	<div class="col-sm-10 col-md-9">
+	                        <c:choose>
+								<c:when test="${member.getPhoneNumberMember()!=null}">
+									<input type="text" value="${member.getPhoneNumberMember()}"class="form-control" name="phoneNumerMember" id="phoneNumerMember" placeholder="Số điện thoại">
+								</c:when>
+								<c:otherwise>
+									<i></i>
+								</c:otherwise>
+							</c:choose>
                         </div>
                       </div>
                       <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                          <button type="submit" class="btn btn-success">Cập Nhật</button>
-                           <button type="submit" class="btn btn-primary">Lưu lại</button>
+                          <button type="submit" class="btn btn-success submit">Cập Nhật</button>
+                           <button class="btn btn-primary">Lưu lại</button>
                         </div>
                       </div>
                     </form>
@@ -239,7 +266,17 @@
       </div><!-- /.container-fluid -->
     </section>
 	    <!-- /.content -->
-  	</div>    	
+  	</div>
+  	<script>
+  	$(document).ready(function(){
+  	    $(document).ajaxSuccess(function(){
+  	        alert("AJAX request successfully completed");
+  	    });
+  	    $("button").click(function(){
+  	        $("div").load("demo_ajax_load.txt");
+  	    });
+  	});
+		</script>
     	<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
     </div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>

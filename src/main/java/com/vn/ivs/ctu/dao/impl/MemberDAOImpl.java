@@ -13,7 +13,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.MemberDAO;
-import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.utils.Pagination;
@@ -167,5 +166,14 @@ public class MemberDAOImpl implements MemberDAO {
 			System.out.println("deleteMember-"+ ex.toString());
 			return false;
 		}	
+	}
+	
+	@Override
+	public List<Member> getAllLeaderClubByBranch(int idBranch){
+		try {
+			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole =? and m.branch.idBranch = ?",Member.class).setParameter(0, "LEADER_CLUB").setParameter(1, idBranch).list();
+		}catch(Exception e) {
+			return null;
+		}
 	}
 }

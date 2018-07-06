@@ -186,7 +186,27 @@ public class MemberController {
 			return "redirect:/404";
 		}
 	}	
+	@GetMapping(path="editAdminMember/{idMember}")
+	public String editAdminMember(@PathVariable(name="idMember",required=false)String idMember,ModelMap modelMap) {
 
+		if(idMember!=null) {
+			try {
+				modelMap.put("action1", "member");
+				modelMap.put("title", "Member");
+				int IntidMember = Integer.parseInt(idMember);
+				Member member = memberService.getMemberById(IntidMember);
+				modelMap.put("member", member);
+				modelMap.put("listRole", roleService.getAll());
+				return "editMember";
+			}
+			catch(Exception e) {
+				return "redirect:/404";
+			}
+		}		
+		else {
+			return "redirect:/404";
+		}
+	}	
 	@PostMapping(path="/update")
 	public String updateMember(@RequestParam("idMember")int idMember, @RequestParam("roles") String[] roles) {
 	

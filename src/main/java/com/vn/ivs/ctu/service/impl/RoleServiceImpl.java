@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import com.vn.ivs.ctu.dao.RoleDAO;
-import com.vn.ivs.ctu.dao.impl.RoleDAOImpl;
 import com.vn.ivs.ctu.entity.Role;
 import com.vn.ivs.ctu.service.RoleService;
 

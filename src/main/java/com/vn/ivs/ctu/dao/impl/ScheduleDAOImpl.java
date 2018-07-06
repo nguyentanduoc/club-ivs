@@ -12,9 +12,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.ScheduleDAO;
-import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Schedule;
-import com.vn.ivs.ctu.entity.Train;
 
 
 

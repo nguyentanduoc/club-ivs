@@ -11,8 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 @Entity(name="sumarization")
 @Table(name="sumarization")
+@Proxy(lazy=false)
 public class Summarization {	
 	
 	@Id
@@ -43,11 +46,8 @@ public class Summarization {
 	@JoinColumn(name="ID_CLUB")
 	Club club;
 
-	@Column(name="PLUS_SCORE")
-	private float plusScore;
-	
-	@Column(name="MINUS_SCORE")
-	private float minusScore;
+	@Column(name="TO_ARISE_SCORE")
+	private float toAriseScore;
 	
 	@Column(name="NOTE")
 	private String note;
@@ -116,20 +116,12 @@ public class Summarization {
 		this.yearSum = yearSum;
 	}
 
-	public float getPlusScore() {
-		return plusScore;
+	public float getToAriseScore() {
+		return toAriseScore;
 	}
 
-	public void setPlusScore(float plusScore) {
-		this.plusScore = plusScore;
-	}
-
-	public float getMinusScore() {
-		return minusScore;
-	}
-
-	public void setMinusScore(float minusScore) {
-		this.minusScore = minusScore;
+	public void setToAriseScore(float toAriseScore) {
+		this.toAriseScore = toAriseScore;
 	}
 
 	public String getNote() {

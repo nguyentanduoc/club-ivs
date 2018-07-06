@@ -3,8 +3,6 @@ package com.vn.ivs.ctu.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.sound.midi.Soundbank;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.Club;
-import com.vn.ivs.ctu.entity.Schedule;
-import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.AttendanceService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;

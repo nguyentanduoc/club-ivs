@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.vn.ivs.ctu.dao.ScheduleDAO;
 import com.vn.ivs.ctu.entity.Schedule;
-import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
 

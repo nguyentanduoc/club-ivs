@@ -8,10 +8,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import com.vn.ivs.ctu.dao.DowDAO;
-import com.vn.ivs.ctu.dao.impl.DowDAOImpl;
-
 import com.vn.ivs.ctu.entity.DateOfWeek;
-
 import com.vn.ivs.ctu.service.DowService;
 
 @Service

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -47,7 +46,8 @@
             <div class="small-box bg-info">
               <div class="inner">
                 <h3>${train.getSchedule().getClub().getNameClub()}</h3>
-                <p>${train.getSchedule().getNameSchedule()} - ${train.getSchedule().getDateOfWeek().getNameDow()}</p>
+                <p>${train.getSchedule().getNameSchedule()}<br/><fmt:formatDate var="fmtDate" value="${train.getDateTrain()}" pattern="dd/MM/yyyy"/>
+                <strong>${fmtDate}</strong></p>
                 
               </div>
               <div class="icon">

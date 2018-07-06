@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.AttendanceID;
-import com.vn.ivs.ctu.entity.Club;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.entity.Train;
@@ -19,12 +18,7 @@ import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.ScheduleService;
-import com.vn.ivs.ctu.service.SumarizationService;
 import com.vn.ivs.ctu.service.TrainService;
-
-import com.vn.ivs.ctu.utils.SecurityUtils;
-import com.vn.ivs.ctu.service.AttendanceService;
-import com.vn.ivs.ctu.service.ClubService;
 
 
 @Component

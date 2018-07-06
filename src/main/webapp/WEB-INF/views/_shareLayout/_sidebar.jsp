@@ -125,13 +125,35 @@
 				</li><!-- ./menu club -->
 				</sec:authorize>
 				<!-- menu score -->
+				<sec:authorize access="hasAnyAuthority('LEADER','LEADER_CLUB')">
 				<li class="nav-item has-treeview">
-					<a href="<c:url value="/to-grade/index"/>" class="nav-link">
+					<a href="#" class="nav-link">
 					<i class="fa fa-list-ol" aria-hidden="true"></i>
 						<!-- <i class="nav-icon fa fa-edit"></i> -->
 						<p>Bản Điểm</p>
-					</a>					
+					</a>						
+					<ul class="nav nav-treeview">
+					<sec:authorize access="hasAnyAuthority('LEADER_CLUB')">
+						<li class="nav-item">
+							<a href='<c:url value="/to-grade/index"/>'
+							class="nav-link ${action2 eq  'create' ? 'active' : ''}"> <i
+								class="fa fa-circle-o nav-icon"></i>
+								<p>Điểm CLB</p>
+							</a>
+						</li>
+						</sec:authorize>
+						<sec:authorize access="hasAnyAuthority('LEADER')">
+						<li class="nav-item">
+							<a href='<c:url value="/to-grade/scoreTotalBrach"/>'
+							class="nav-link ${action2 eq  'joinClub' ? 'active' : ''}"> <i
+								class="fa fa-circle-o nav-icon"></i>
+								<p>Điểm Chi Nhánh</p>
+							</a>
+						</li>	
+						</sec:authorize>					
+					</ul>				
 				</li><!-- ./menu score -->
+				</sec:authorize>
 				<!-- menu profile -->
 				<li class="nav-item has-treeview">
 					<a href="<c:url value="/member/profile"/>" class="nav-link">

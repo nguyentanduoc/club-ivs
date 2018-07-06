@@ -15,9 +15,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 
 @Entity(name="join_club")
 @Table(name = "join_club")
