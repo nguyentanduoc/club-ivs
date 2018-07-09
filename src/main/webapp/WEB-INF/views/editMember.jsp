@@ -21,9 +21,9 @@
 						</div>
 						<!-- /.col -->
 						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Thành Viên</a></li>
-								<li class="breadcrumb-item active">Index</li>
+							<ol class="breadcrumb float-md-right">
+								<li class="breadcrumb-item"><a href='<c:url value='/member/create'/>'>Thành Viên</a></li>
+								<li class="breadcrumb-item active">Cập Nhật</li>
 							</ol>
 						</div>
 						<!-- /.col -->
@@ -91,10 +91,24 @@
 															<c:set var="check" value="" />
 														</c:forEach>
 													</div>
-													<br /> <a id="resetPassWord" href="#">Đặt lại mật khẩu</a> <input
+													
+													<input
 														type="hidden" name="${_csrf.parameterName}"
 														value="${_csrf.token}" />
 												</div>
+												<div  class="form-group row">
+													<label class="col-md-4 col-form-label">Tình trạng:</label>	
+													<div  class="col-md-8">
+													 <label>
+									                    <input type="radio" name="status" class="minimal" ${member.isStatusMember()==true?'checked':''} value="true"> Hoạt động
+									                  </label>
+									                  <br/>
+									                  <label>
+									                    <input type="radio" name="status" class="minimal" ${member.isStatusMember()==false?'checked':''} value="false"> Ngừng hoạt động
+									                  </label>
+													</div>
+												</div>
+												<div class="float-right"><a id="resetPassWord" href="#">Đặt lại mật khẩu</a> </div>
 											</div>
 											<!-- /.card-body -->
 											<div class="card-footer">

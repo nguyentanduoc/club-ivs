@@ -12,13 +12,13 @@ public class SecurityUtils {
 		return (MyUserDetail) (SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static List<String> getAuthorities() {
         List<String> results = new ArrayList<String>();
         List<GrantedAuthority> authorities = (List<GrantedAuthority>)(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         for (GrantedAuthority authority : authorities) {
             results.add(authority.getAuthority());
         }
-        //hia
         return results;
     }
 }

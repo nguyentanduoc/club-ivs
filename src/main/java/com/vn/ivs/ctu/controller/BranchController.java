@@ -49,7 +49,7 @@ public class BranchController {
 	
 	@PostMapping("/insert")
 	public String createBranch(@ModelAttribute("branch") Branch branch, BindingResult result, ModelMap modelMap) {
-				
+		
 		if(branchServiceImpl.saveOrUpdate(branch) >  0) {
 			return "redirect:/branch/index?message=success";	
 		}else {

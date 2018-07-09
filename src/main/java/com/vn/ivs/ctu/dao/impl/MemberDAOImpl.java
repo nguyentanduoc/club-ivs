@@ -44,14 +44,14 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 
-	public int saveOrUpdate(Member member) {
+	public long saveOrUpdate(Member member) {
 		currentSession().saveOrUpdate(member);
 		return member.getIdMember();
 	}
 
 	public Member findByUseName(String name) {
 		try {
-			List<Member> list  = currentSession().createQuery("from member where userNameMember = ?",Member.class).setParameter(0, name)
+			List<Member> list  = currentSession().createQuery("from member where userNameMember =:userName and status =:status",Member.class).setParameter("userName", name).setParameter("status",true)
 					.list();
 			if(list.size()>0) {
 				return list.get(0);
@@ -76,8 +76,8 @@ public class MemberDAOImpl implements MemberDAO {
 	public List<Member> getAllRoleOTC() {
 		try {
 			List<Member> members = currentSession().
-					createQuery("SELECT m FROM member m JOIN m.roles r  WHERE r.codeRole = ?",Member.class).
-					setParameter(0, "LEADER").list();
+					createQuery("SELECT m FROM member m JOIN m.roles r  WHERE r.codeRole =:codeRole and m.status=:status",Member.class).
+					setParameter("codeRole", "LEADER").setParameter("status",true).list();
 			if (members != null) {
 				return members;
 			}
@@ -89,8 +89,8 @@ public class MemberDAOImpl implements MemberDAO {
 	public List<Member> getAllByBranch(int idBranch) {
 		try {
 			List<Member> members = currentSession().
-					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch = ?",Member.class).
-					setParameter(0, idBranch).list();
+					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch =:idBranch",Member.class).
+					setParameter("idBranch", idBranch).list();
 			if (members != null) {
 				return members;
 			}
@@ -103,8 +103,8 @@ public class MemberDAOImpl implements MemberDAO {
 	public List<Member> getAllByBranch(int idBranch,int startPosition) {
 		try {
 			List<Member> members = currentSession().
-					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch = ?",Member.class).setFirstResult(startPosition).setMaxResults(Pagination.MAX_SIZE_MEMBER).
-					setParameter(0, idBranch).list();			
+					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch =:idBranch",Member.class).setFirstResult(startPosition).setMaxResults(Pagination.MAX_SIZE_MEMBER).
+					setParameter("idBranch", idBranch).list();			
 			if (members != null) {
 				return members;
 			}			
@@ -114,17 +114,7 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return null;
 	}
-	public List<Member> getMemberNoClub(){
-		/*try {
-			List<Member> members = currentSession().
-					createQuery("SELECT m FROM member m LEFT JOIN  = ?",Member.class).
-					setParameter(0, idBranch).list();
-			
-		}catch(Exception e) {
-			return null;
-		}	*/
-		 return null;
-	}
+	
 	public boolean joinClub(JoinClub joinClub) {
 		try {
 			currentSession().saveOrUpdate(joinClub);
@@ -133,13 +123,13 @@ public class MemberDAOImpl implements MemberDAO {
 			return false;
 		}		
 	}
-	public 	Member getMemberById(int idMember) {
+	public 	Member getMemberById(long idMember) {
 		return currentSession().find(Member.class, idMember);
 	}
 	
 	public List<Member> getAllLeaderClub(){
 		try {
-			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole = ?",Member.class).setParameter(0, "LEADER_CLUB").list();
+			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole =:codeRole and m.status=:status",Member.class).setParameter("codeRole", "LEADER_CLUB").setParameter("status", true).list();
 		}catch(Exception e) {
 			return null;
 		}
@@ -157,7 +147,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public boolean delete(int idMember) {
+	public boolean delete(long idMember) {
 		try {
 			Member member = getMemberById(idMember);
 			currentSession().delete(member);
@@ -171,7 +161,7 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public List<Member> getAllLeaderClubByBranch(int idBranch){
 		try {
-			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole =? and m.branch.idBranch = ?",Member.class).setParameter(0, "LEADER_CLUB").setParameter(1, idBranch).list();
+			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole =:codeRole and m.branch.codeRole =:codeRole",Member.class).setParameter("codeRole", "LEADER_CLUB").setParameter("codeRole", idBranch).list();
 		}catch(Exception e) {
 			return null;
 		}

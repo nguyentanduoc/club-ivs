@@ -10,6 +10,6 @@ public interface BranchDAO {
 	public Branch findById(int id);
 	public boolean delete(int id);
 	public List<Branch> getAll();
-	public Branch getBranchByMember(int idMember);
+	public Branch getBranchByMember(long idMember);
 	public Branch getBranchById(int id);
 }

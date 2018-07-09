@@ -19,7 +19,6 @@ import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.AttendanceID;
 import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
-import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.Role;
 import com.vn.ivs.ctu.service.AttendanceService;
@@ -277,23 +276,7 @@ public class ApiController {
 		return 400;
 	}
 
-	@PostMapping(path="getJoinClub")
-	@ResponseBody
-	public Map<String,Object>getJoinClub(@RequestParam("idMember")int idMember){
-		Map<String,Object> map = new HashMap<>();
-		List<JoinClub> joinClubs = joinClubService.getJoinClubByIdMember(idMember);
-		if(joinClubs!=null){
-			if(joinClubs.size()>0) {
-				map.put("status", 200);
-				map.put("joinClubs", joinClubs);
-			}else {
-				map.put("status", 404);
-			}
-		}else {
-			map.put("status", 400);
-		}
-		return map;
-	}
+	
 	//end join club
 	@PostMapping(path="VNI")
 	@ResponseBody

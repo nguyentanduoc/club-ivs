@@ -16,21 +16,29 @@
 		<intercept-url pattern="/role/index" access="hasAuthority('ADMIN')" />
 		<intercept-url pattern="/member/admin" access="hasAuthority('ADMIN')" />
 		<intercept-url pattern="/dow/index" access="hasAuthority('ADMIN')" />
-		<!-- <intercept-url pattern="/member/profile" access="hasAuthority('ADMIN')" /> -->
+		<intercept-url pattern="/member/update" method="POST" access="hasAuthority('ADMIN')" />
+		<intercept-url pattern="/member/editAdminMember/**" access="hasAuthority('ADMIN')" />
+		<intercept-url pattern="/branch/index" access="hasAuthority('ADMIN')" />
+		
 		<intercept-url pattern="/member/create" access="hasAuthority('LEADER')" />
+		<intercept-url pattern="/member/editMember/**" access="hasAnyAuthority('LEADER')" />
+		
+		<intercept-url pattern="/member/profile" access="hasAuthority('MEMBER')" />
+		<intercept-url pattern="/member/update" method="POST" access="hasAuthority('MEMBER')" />
+
+		<intercept-url pattern="/member/create" access="hasAuthority('LEADER')" />
+		<intercept-url pattern="/member/editMember/**" access="hasAnyAuthority('LEADER')" />
+
 		<intercept-url pattern="/club/index" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/club/joinClub" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/club/listJoinClub" access="hasAuthority('LEADER')" />
-		<intercept-url pattern="/member/editMember/**" access="hasAuthority('LEADER')" />
-		<intercept-url pattern="/to-grade/scoreTotalBrach" access="hasAuthority('LEADER')" />
+		<intercept-url pattern="/club/editClub/**" access="hasAuthority('LEADER')" />
 		
-		<!-- <intercept-url pattern="/schedule/index" access="hasAuthority('LEADER')" />
-		<intercept-url pattern="/train/index" access="hasAuthority('LEADER')" /> -->
+		<intercept-url pattern="/to-grade/scoreTotalBrach" access="hasAuthority('LEADER')" />
+		<intercept-url pattern="/" access="permitAll"/>
+		<intercept-url pattern="/login" access="permitAll"/>
 		<intercept-url pattern="/404" access="permitAll"/>
 		<intercept-url pattern="/**" access="permitAll"/>	
-	
-		<intercept-url pattern="/role/index" access="permitAll"/>
-
 		
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />

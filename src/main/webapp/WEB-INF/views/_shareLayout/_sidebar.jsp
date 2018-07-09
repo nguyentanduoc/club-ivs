@@ -30,8 +30,7 @@
 		</div>
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
-			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-			
+			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">			
 				<!--  admin  menu role -->
 				<li	class="nav-item ${action1 eq  'dashboard' ? 'menu-open' : ''}">
 					<a href="#" class="nav-link ${action1 eq  'dashboard' ? 'active' : ''}">

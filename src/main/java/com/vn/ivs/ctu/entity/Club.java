@@ -1,14 +1,23 @@
 package com.vn.ivs.ctu.entity;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+
 import org.hibernate.annotations.Proxy;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 
 @Entity(name="club")
@@ -27,9 +36,11 @@ public class Club {
 	@JoinColumn(name="ID_BRANCH")
 	private Branch branch;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)
-	@JoinColumn(name="ID_MEMBER")
-	private Member member;
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinTable(name = "manage_club", joinColumns = { @JoinColumn(name = "ID_CLUB") }, inverseJoinColumns = {
+			@JoinColumn(name = "ID_MEMBER") })
+	@JsonProperty(access = Access.WRITE_ONLY)
+	Set<Member> members;
 	
 	public int getIdClub() {
 		return idClub;
@@ -55,11 +66,11 @@ public class Club {
 		this.branch = branch;
 	}
 
-	public Member getMember() {
-		return member;
+	public Set<Member> getMembers() {
+		return members;
 	}
-	public void setMember(Member member) {
-		this.member = member;
-	}
-	
+
+	public void setMembers(Set<Member> members) {
+		this.members = members;
+	}	
 }

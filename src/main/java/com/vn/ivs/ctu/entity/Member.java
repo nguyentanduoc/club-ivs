@@ -18,24 +18,19 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity(name = "member")
 @Table(name = "member")
 @Proxy(lazy = false)
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "idMember")
 public class Member {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_MEMBER")
-	private int idMember;
+	private long idMember;
 
 	@Column(name = "NAME_MEMBER", nullable = false, length = 100)
 	private String nameMember;
@@ -57,6 +52,9 @@ public class Member {
 
 	@Column(name = "AVARTAR_MEMBER")
 	private String avartarMember;
+	
+	@Column(name="STATUS_MEMBER")
+	private boolean status;
 
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_BRANCH", referencedColumnName = "ID_BRANCH")
@@ -67,6 +65,11 @@ public class Member {
 	@JoinTable(name = "member_role", joinColumns = { @JoinColumn(name = "ID_MEMBER") }, inverseJoinColumns = {
 			@JoinColumn(name = "ID_ROLE") })
 	private Set<Role> roles ;
+	
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinTable(name = "manage_club", joinColumns = { @JoinColumn(name = "ID_MEMBER") }, inverseJoinColumns = {
+			@JoinColumn(name = "ID_CLUB") })
+	private Set<Club> clubs ;
 
 	public Set<Role> getRoles() {
 		return roles;
@@ -84,11 +87,11 @@ public class Member {
 		this.branch = branch;
 	}
 
-	public int getIdMember() {
+	public long getIdMember() {
 		return idMember;
 	}
 
-	public void setIdMember(int idMember) {
+	public void setIdMember(long idMember) {
 		this.idMember = idMember;
 	}
 
@@ -148,26 +151,20 @@ public class Member {
 		this.avartarMember = avartarMember;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + idMember;
-		return result;
+	public boolean isStatus() {
+		return status;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Member other = (Member) obj;
-		if (idMember != other.idMember)
-			return false;
-		return true;
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public Set<Club> getClubs() {
+		return clubs;
+	}
+
+	public void setClubs(Set<Club> clubs) {
+		this.clubs = clubs;
 	}
 
 }

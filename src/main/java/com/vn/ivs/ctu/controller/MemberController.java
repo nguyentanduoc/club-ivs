@@ -63,6 +63,7 @@ public class MemberController {
 		modelMap.put("action2", "adminMember");
 		modelMap.put("title", "Thêm thành viên và gán quyền");
 		Member member = new Member();
+		member.setSexMember(true);
 		modelMap.put("member", member);
 		modelMap.put("listRole", roleService.getAll());
 		modelMap.put("listMember", memberService.findAll(0));
@@ -85,6 +86,7 @@ public class MemberController {
 	public String add(@ModelAttribute("member") Member member, BindingResult result, ModelMap modelMap) {
 
 		member.setPassWordMember(PasswordEncoder.BCryptPassdEncoder(member.getPassWordMember()));
+		member.setStatus(true);
 		if (memberService.saveOrUpdate(member) > 0) {
 			return "redirect:/member/admin?status=200";
 		} else {
@@ -96,10 +98,9 @@ public class MemberController {
 	public String create(@RequestParam(name="status",required=false) String status,ModelMap modelMap) {
 		modelMap.put("action1", "member");
 		modelMap.put("action2", "indexMember");
-		modelMap.put("title", "Thêm thành viên");
-		
+		modelMap.put("title", "Member");
 		if(SecurityUtils.getMyUserDetail()!=null) {
-			int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+			long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 			Branch branch = branchSevice.getBranchByMember(idLeader);
 			if(branch!=null) {								
 				List<Member> members = memberService.getAllByBranch(branch.getIdBranch());
@@ -132,15 +133,16 @@ public class MemberController {
 	@PostMapping(path = "/create")
 	public String create(@ModelAttribute("member") Member member, BindingResult result, ModelMap modelMap) {
 		try {
-			int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+			long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 			Branch branch = branchSevice.getBranchByMember(idLeader);
 			member.setBranch(branch);
+			member.setStatus(true);
 			member.setPassWordMember(PasswordEncoder.BCryptPassdEncoder(member.getPassWordMember()));
 			if (memberService.saveOrUpdate(member) > 0) {
 				return "redirect:/member/create?status=200";
 			} else {
 				return "redirect:/member/create?status=400";
-			}
+			}			
 		}catch (Exception e) {
 			return "redirect:/member/create?status=400";
 		}
@@ -149,7 +151,8 @@ public class MemberController {
 	
 	@GetMapping(path="profile")
 	public String profileMember(ModelMap modelMap) {
-		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		long idMember = SecurityUtils.getMyUserDetail().getIdMember();		
+		modelMap.put("member",memberService.getMemberById(idMember));
 		modelMap.put("title", "Trang cá nhân");
 		Club club  = clubSerive.getLeaderClub(idMember);
 		List<JoinClub> joinclubs = joinClubService.getJoinClubByIdMember(idMember);
@@ -242,9 +245,10 @@ public class MemberController {
 		}
 	}	
 	@PostMapping(path="/update")
-	public String updateMember(@RequestParam("idMember")int idMember, @RequestParam("roles") String[] roles) {
+	public String updateMember(@RequestParam("idMember")long idMember, @RequestParam("roles") String[] roles,@RequestParam("status")boolean status) {
 	
 		Member member = memberService.getMemberById(idMember);
+		member.setStatus(status);
 		Set<Role>  rolesMember = new HashSet<>();
 		for(String s:roles) {
 			Role r = new Role();
@@ -253,10 +257,10 @@ public class MemberController {
 		}
 		member.setRoles(rolesMember);
 		if(memberService.saveOrUpdate(member)>0) {
-			return "redirect:/member/editMember/"+idMember;
+			return "redirect:/member/editAdminMember/"+idMember;
 		}
 		else {
-			return "redirect:/member/editMember/"+idMember;
+			return "redirect:/member/editAdminMember/"+idMember;
 		}
 	}
 	

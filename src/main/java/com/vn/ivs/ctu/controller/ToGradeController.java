@@ -40,7 +40,7 @@ public class ToGradeController {
 	@RequestMapping(path="index")
 	public String tableScore(ModelMap map) {
 		
-		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idMember);
 		if(club!=null) {
 			List<Summarization> sums =  sumarizationService.getSumByClubPreMonth(club.getIdClub(), DateUtils.getCurentMonth()-1,DateUtils.getCurentYear());
@@ -51,10 +51,10 @@ public class ToGradeController {
 			else {
 				map.put("status", 400);
 			}
-		}		
+		}
 		return "tableScore";
 	}
-	//
+	
 	@PostMapping(path="updateScore")
 	@ResponseBody
 	public Map<String,Object> updateScore(int id, float toArise, String note, boolean require){
@@ -77,7 +77,7 @@ public class ToGradeController {
 	public String  scoreTotalBranch(ModelMap modelMap) {
 		int month = DateUtils.getCurentMonth()-1;
 		int year = DateUtils.getCurentYear();
-		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+		long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 		Branch branch = branchSevice.getBranchByMember(idLeader);
 		List<SumarizationBranch> sum = sumarizationBranchService.getSumByBranch(branch.getIdBranch(), month, year);
 		
@@ -85,25 +85,24 @@ public class ToGradeController {
 			modelMap.put("status", 200);
 			modelMap.put("sums", sum);
 			System.out.println(sum);
-		}		
+		}
 		return "scoreTotalBranch";
 	}
 	
 	@GetMapping(path="exportExcel")
 	public ModelAndView sroceClub(HttpServletRequest req, HttpServletResponse res) {
-		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		ModelAndView modelAndView=null;
+		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idMember);
 		if(club!=null) {
 			List<Summarization> sums =  sumarizationService.getSumByClubPreMonth(club.getIdClub(), DateUtils.getCurentMonth()-1,DateUtils.getCurentYear());
 			if(sums!=null) {
-				return  new ModelAndView(new ExcelScoreClub(),"sums",sums);
+				modelAndView=  new ModelAndView(new ExcelScoreClub(),"sums",sums);
 			}else {
-				return new ModelAndView("tableScore","sums",sums);
+				modelAndView= new ModelAndView("tableScore","sums",sums);
 			}
-		}	else {
-			return null;
 		}
-		
+		return modelAndView;
 		
 	}
 }

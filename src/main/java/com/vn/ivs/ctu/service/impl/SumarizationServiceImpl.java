@@ -18,7 +18,7 @@ public class SumarizationServiceImpl implements SumarizationService{
 	@Autowired SumarizationDAO sumarizationDAO;
 	
 	@Override
-	public int createOrUpdate(Summarization sum) {
+	public long createOrUpdate(Summarization sum) {
 		return sumarizationDAO.createOrUpdate(sum);
 	}
 
@@ -28,7 +28,7 @@ public class SumarizationServiceImpl implements SumarizationService{
 	}
 
 	@Override
-	public List<Summarization> getSumByMemberPreMonth(int idMember, int month, int year) {
+	public List<Summarization> getSumByMemberPreMonth(long idMember, int month, int year) {
 		return sumarizationDAO.getSumByMemberPreMonth(idMember, month, year);
 	}
 

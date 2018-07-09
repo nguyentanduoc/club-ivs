@@ -72,7 +72,7 @@ public class AttendanceDAOImpl implements AttendanceDAO{
 		}
 	}
 	@Override
-	public Attendance getAttendByIdMember(int idMember, int idTrain) {
+	public Attendance getAttendByIdMember(long idMember, int idTrain) {
 		try {
 			return currentSession().createQuery("from attendance a where a.train.idTrain=? and a.member.idMember=?", Attendance.class).setParameter(0, idTrain).setParameter(1, idMember).getSingleResult();
 		

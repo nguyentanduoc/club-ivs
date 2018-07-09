@@ -46,7 +46,7 @@ public class TrainController {
 		modelMap.put("action1", "train");
 		modelMap.put("action2", "index");
 		modelMap.put("title", "Thêm lịch thủ công");
-		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club  = clubService.getLeaderClub(idMember);
 		if(club!=null) {
 		modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));
@@ -70,7 +70,7 @@ public class TrainController {
 		schedule.setTimeSchedule(timeSchedule);
 		schedule.setLocationSchedule(locationSchedule);
 		schedule.setAutoSchedule(false);
-		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+		long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idLeader);
 		schedule.setClub(club);
 		Date myDate = dateTrain;
@@ -115,7 +115,7 @@ public class TrainController {
 		modelMap.put("action1", "train");
 		modelMap.put("action2", "trainauto");
 		modelMap.put("title", "Lịch tự động tạo");
-		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club  = clubService.getLeaderClub(idMember);
 		if(club!=null) {
 		modelMap.put("listTrainAuto", trainService.getAllTrainAuto(club.getIdClub()));

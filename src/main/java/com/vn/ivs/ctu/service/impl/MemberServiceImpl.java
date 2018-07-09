@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.check(name);
 	}
 	@Override
-	public int saveOrUpdate(Member member) {
+	public long saveOrUpdate(Member member) {
 		return memberDAO.saveOrUpdate(member);
 	}
 	
@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService{
 	public boolean joinClub(JoinClub joinClub) {
 		return memberDAO.joinClub(joinClub);
 	}
-	public 	Member getMemberById(int idMember) {
+	public 	Member getMemberById(long idMember) {
 		return memberDAO.getMemberById(idMember);
 	}
 	public List<Member> getAllLeaderClub(){
@@ -69,7 +69,7 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.count();
 	}
 	@Override
-	public boolean delete(int idMember) {
+	public boolean delete(long idMember) {
 		return memberDAO.delete(idMember);
 	}
 	@Override

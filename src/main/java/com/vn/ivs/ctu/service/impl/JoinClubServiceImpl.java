@@ -21,12 +21,12 @@ public class JoinClubServiceImpl implements JoinClubService{
 	}
 
 	@Override
-	public int createOrUpdate(JoinClub joinClub) {
+	public long createOrUpdate(JoinClub joinClub) {
 		return joinClubDAO.createOrUpdate(joinClub);
 	}
 
 	@Override
-	public List<JoinClub> getJoinClubByIdMember(int idMember) {
+	public List<JoinClub> getJoinClubByIdMember(long idMember) {
 		return joinClubDAO.getJoinClubByIdMember(idMember);
 	}
 

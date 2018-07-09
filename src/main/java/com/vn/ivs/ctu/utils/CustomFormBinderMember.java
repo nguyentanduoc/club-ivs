@@ -4,27 +4,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 
-import com.vn.ivs.ctu.service.RoleService;
+import com.vn.ivs.ctu.service.MemberService;
 
-public class CustomFormBinder<T extends RoleService> extends CustomCollectionEditor {
+public class CustomFormBinderMember<T extends MemberService> extends CustomCollectionEditor {
 	
 	private final T dao;
 	private static final Logger LOG = LoggerFactory.getLogger(CustomFormBinder.class);
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public CustomFormBinder(final T daoIn, final Class collectionType) {
+	public CustomFormBinderMember(final T daoIn, final Class collectionType) {
 		super(collectionType, true);
 	      dao = daoIn;
 	}
-	
+
 	@Override
 	protected Object convertElement(final Object element) {
 		try {		
-			return dao.getRoleById(Integer.valueOf(element.toString()));
+			return dao.getMemberById(Long.valueOf(element.toString()));
 		} catch (NumberFormatException e) {
+			System.out.println("CustomFormBinderMember "+e.toString());
 			LOG.warn("Unable to convert " + element + " to an integer");
 			return null;
 		}
 	}
-
 }

@@ -31,8 +31,8 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 		try {
 
 			return currentSession().
-					createQuery("FROM join_club j WHERE j.club.idClub = ? and j.status = ?",JoinClub.class).
-					setParameter(0, idClub).setParameter(1, true).list();	
+					createQuery("FROM join_club j WHERE j.club.idClub =:idClub and j.status =:statuss",JoinClub.class).
+					setParameter("idClub", idClub).setParameter("status", true).list();	
 		}catch(Exception ex) {
 			System.out.println(ex.toString());
 			return null;
@@ -40,7 +40,7 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 	}
 
 	@Override
-	public int createOrUpdate(JoinClub joinClub) {
+	public long createOrUpdate(JoinClub joinClub) {
 		try {
 			currentSession().saveOrUpdate(joinClub);
 			return joinClub.getIdJoinClub();
@@ -51,11 +51,11 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 	}
 
 	@Override
-	public List<JoinClub> getJoinClubByIdMember(int idMember) {
+	public List<JoinClub> getJoinClubByIdMember(long idMember) {
 		try {
 			return currentSession().
-					createQuery("FROM join_club j WHERE j.member.idMember = ?",JoinClub.class).
-					setParameter(0, idMember).list();	
+					createQuery("FROM join_club j WHERE j.member.idMember =:idMember",JoinClub.class).
+					setParameter("idMember", idMember).list();	
 		}catch(Exception e) {
 			System.out.println("Join Club DAO "+e.toString());
 			return null;
@@ -63,7 +63,7 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 	}
 
 	@Override
-	public JoinClub getJoinClub(int idJoinClub) {
+	public JoinClub getJoinClub(long idJoinClub) {
 		try {
 			return currentSession().load(JoinClub.class, idJoinClub);
 		}catch (Exception e) {
@@ -76,8 +76,8 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 	public List<JoinClub> getListMemberActive(int idClub) {
 		try {
 			return currentSession().
-					createQuery("FROM join_club j WHERE j.club.idClub = ? and j.status=?",JoinClub.class).
-					setParameter(0, idClub).setParameter(1, true).list();	
+					createQuery("FROM join_club j WHERE j.club.idClub =:idClub and j.status=:status",JoinClub.class).
+					setParameter("idClub", idClub).setParameter("status", true).list();	
 		}catch(Exception e) {
 			System.out.println("Join Club DAO "+e.toString());
 			return null;

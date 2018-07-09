@@ -15,15 +15,11 @@
 			<!-- Content Header (Page header) -->
 			<div class="content-header">
 				<div class="container-fluid">
-					<div class="row mb-2">
-						<div class="col-sm-6">
-							<h1 class="m-0 text-dark">Thành Viên</h1>
-						</div>
+					<div class="row mb-2">						
 						<!-- /.col -->
 						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Gán quyền</a></li>
-								<li class="breadcrumb-item active">Thành viên</li>
+							<ol class="breadcrumb float-sm-right">							
+								<li class="breadcrumb-item active">Thành Viên</li>
 							</ol>
 						</div>
 						<!-- /.col -->
@@ -79,7 +75,7 @@
 										<div class="col-sm-8">
 											<form:input type="text" path="userNameMember"
 													class="form-control" id="userNameMember"
-													placeholder=""  readonly="true"/>
+													placeholder="" />
 										</div>										
 										<div class="nameMemberErro text-danger"></div>																					
 									</div>										
@@ -135,7 +131,8 @@
 											<th style="width: 10px">#</th>
 											<th>Tên Chức Vụ</th>
 											<th>Chức vụ</th>
-											<th style="width: 150px">Tuỳ Chỉnh</th>
+											<th>TTHĐ</th>
+											<th>Tuỳ Chỉnh</th>
 										</tr>
 										<tbody id="listMember">
 											<c:forEach var="member" items="${listMember}">
@@ -144,11 +141,26 @@
 													<td>${member.getNameMember()}</td>
 													<td><c:forEach var="role" items="${member.getRoles()}">
 															<c:out value="${role.getNameRole()}"></c:out><br/>
-														</c:forEach></td>
-													<td>
+														</c:forEach>
+													</td>
+													<td align="center">
+													<c:choose>
+														<c:when test="${member.isStatus()==true}">
+															 <label class="btn btn-success btn-sm active">
+															 	<i class="fa fa-check" aria-hidden="true"></i>												 
+															 </label>
+														</c:when>
+														<c:when test="${member.isStatus()==false}">
+															 <label class="btn btn-secondary btn-sm active">
+															 	<i class="fa fa-circle-o" aria-hidden="true"></i>											 
+															 </label>
+														</c:when>
+													</c:choose>														
+													</td>
+													<td align="center">
 														<a href="${pageContext.request.contextPath}/member/editAdminMember/${member.getIdMember()}"> <i class="fa fa-pencil edit"></i></a>
 														<span class="deleteMember" onclick="deleteMember(${member.getIdMember()})"><i class="fa fa-times delete"></i></span> 
-														</td>	
+													</td>	
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -213,9 +225,14 @@
 									$.each(row.roles,function(index1,row1){									
 										view += row1.nameRole +"<br/>";										
 									})
+								}	
+								view+="</td><td align='center'>";
+								if(row.status==true){
+									view+="<label class='btn btn-success btn-sm'><i class='fa fa-check' aria-hidden='true'></i></label>";
+								}else{
+									view+="<label class='btn btn-secondary btn-sm'><i class='fa fa-circle-o' aria-hidden='true'></i></label>";
 								}								
-								view+="</td>";
-								view +="<td><a href='${pageContext.request.contextPath}/member/editAdminMember/"+row.idMember+"'> <i class='fa fa-pencil edit'></i></a>";
+								view +="</td><td align='center'><a href='${pageContext.request.contextPath}/member/editAdminMember/"+row.idMember+"'> <i class='fa fa-pencil edit'></i></a>";
 								view+="<span class='deleteMember' onclick ='deleteMember("+row.idMember+")'><i class='fa fa-times delete'></i></span></td></tr>";
 								
 							});

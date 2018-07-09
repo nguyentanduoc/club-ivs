@@ -34,7 +34,7 @@ public class BranchServiceImpl implements BranchService{
 		return branchDAO.getAll();
 	}
 	
-	public Branch getBranchByMember(int idMember) {
+	public Branch getBranchByMember(long idMember) {
 		return branchDAO.getBranchByMember(idMember);
 	}
 

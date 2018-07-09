@@ -23,8 +23,8 @@ public class JoinClub {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID_JOIN_CLUB")
-	private int idJoinClub;
+	@Column(name="ID_JOIN")
+	private long idJoinClub;
 	
 	@Column(name="DATE_JOIN")
 	private Date dateJoin;
@@ -37,8 +37,7 @@ public class JoinClub {
 	
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_MEMBER")
-	private Member member;
-	
+	private Member member;	
 		
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_CLUB")
@@ -52,11 +51,11 @@ public class JoinClub {
 		this.dateJoin = dateJoin;
 	}
 
-	public int getIdJoinClub() {
+	public long getIdJoinClub() {
 		return idJoinClub;
 	}
 
-	public void setIdJoinClub(int idJoinClub) {
+	public void setIdJoinClub(long idJoinClub) {
 		this.idJoinClub = idJoinClub;
 	}
 

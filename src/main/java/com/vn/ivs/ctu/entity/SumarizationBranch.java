@@ -21,7 +21,7 @@ public class SumarizationBranch {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID_SUM_BRANCH")
-	private int idSumBranch;
+	private long idSumBranch;
 	
 	@OneToOne(cascade  = CascadeType.PERSIST,fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_MEMBER")
@@ -52,11 +52,14 @@ public class SumarizationBranch {
 	@Column(name="COMFIRM")
 	private boolean confirm;
 
-	public int getIdSumBranch() {
+	@Column(name="REQUIRE_DONATE")
+	private boolean requireDonate;
+	
+	public long getIdSumBranch() {
 		return idSumBranch;
 	}
 
-	public void setIdSumBranch(int idSumBranch) {
+	public void setIdSumBranch(long idSumBranch) {
 		this.idSumBranch = idSumBranch;
 	}
 
@@ -130,6 +133,14 @@ public class SumarizationBranch {
 
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
+	}
+
+	public boolean isRequireDonate() {
+		return requireDonate;
+	}
+
+	public void setRequireDonate(boolean requireDonate) {
+		this.requireDonate = requireDonate;
 	}
 	
 	

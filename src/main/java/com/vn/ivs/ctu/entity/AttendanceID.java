@@ -13,15 +13,15 @@ public class AttendanceID implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Column(name="ID_MEMBER")
-	private int idMember;
+	private long idMember;
 	
 	@Column(name="ID_TRAIN")
 	private int idTrain;
 	
-	public int getIdMember() {
+	public long getIdMember() {
 		return idMember;
 	}
-	public void setIdMember(int idMember) {
+	public void setIdMember(long idMember) {
 		this.idMember = idMember;
 	}
 	public int getIdTrain() {
@@ -34,7 +34,7 @@ public class AttendanceID implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idMember;
+		result = prime * result + (int) (idMember ^ (idMember >>> 32));
 		result = prime * result + idTrain;
 		return result;
 	}
@@ -54,4 +54,5 @@ public class AttendanceID implements Serializable{
 		return true;
 	}
 	
+		
 }

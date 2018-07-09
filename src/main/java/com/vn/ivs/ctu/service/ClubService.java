@@ -11,5 +11,5 @@ public interface ClubService {
 	public List<Club> getClubByBranch(int idBranch);
 	public Club getClubById(int id);
 	public boolean deleteClub(int id);
-	Club getLeaderClub(int idLeader);
+	Club getLeaderClub(long idMember);
 }

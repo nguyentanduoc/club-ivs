@@ -70,13 +70,13 @@ pageEncoding="UTF-8" session="false"%>
 			                          <c:forEach var="sum" items="${sums}">
 						                  <tr>
 						                  	<td>${sum.getMember().getNameMember()}</td>
-						                    <td>${sum.getScoreBranch()}</td>						                    
-						                    <td align="center">					                   		
+						                    <td align="right" >${sum.getScoreBranch()}</td>						                    
+						                    <td align="center">	                   		
 						                    	<label class="btn ${sum.isDonate()==false ?'btn-secondary':'btn-warning'} btn-sm " data-id="${sum.getIdSumBranch()}">
 													<i class="fa fa-gift" aria-hidden="true"></i>
 												</label>												
 						                    </td>	
-						                    <td >
+						                    <td align="center" >
 						                   		<div class="btn-group btn-group-toggle" data-toggle="buttons">
 							                    	<label class="btn btn-outline-primary ${sum.isDonate()==false ?'active':''} btn-sm offRequire" data-id="${sum.getIdSumBranch()}">
 														<input type="radio" name="options" id="option1" autocomplete="off" checked><i class="fa fa-circle-thin" aria-hidden="true"></i>
@@ -87,7 +87,7 @@ pageEncoding="UTF-8" session="false"%>
 												</div>
 						                    </td>	
 						                      <td><input class="form-control" type="text"/></td>
-						                    <td>
+						                    <td  align="center">
 						                    	<button type="button" class="btn btn-info btn-sm update"  data-id="${sum.getIdSumBranch()}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
 						                    </td>	                               
 						                  </tr>	

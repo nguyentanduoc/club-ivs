@@ -7,7 +7,7 @@ import com.vn.ivs.ctu.entity.Member;
 
 public interface MemberService {
 	public boolean check(String name);
-	public int saveOrUpdate(Member member);
+	public long saveOrUpdate(Member member);
 	public Member findByUseName(String name);
 	public List<Member> findAll(int startPosition);
 	public List<Member> getAllRoleOTC();
@@ -15,9 +15,9 @@ public interface MemberService {
 	public List<Member> getAllByBranch(int idBranch,int startPosition);
 	public List<Member> getMemberNoClub();
 	public boolean joinClub(JoinClub joinClub);
-	public Member getMemberById(int idMember);
+	public Member getMemberById(long idMember);
 	public List<Member> getAllLeaderClub();
 	public long count();
-	public boolean delete(int idMember);
+	public boolean delete(long idMember);
 	public List<Member> getAllLeaderClubByBranch(int idBranch);
 }

@@ -275,11 +275,9 @@ $(document).ready(function(){
 			success : function(data) {
 				if(data.status=="200"){
 					 $("#userNameMember").addClass("is-invalid");
-					 $(".nameMemberErro").append("Trùng tên với một người nào đó!");
-					 $("#userNameMember").removeAttr("readonly");
+					 $(".nameMemberErro").append("Trùng tên với một người nào đó!");					
 				}else{
-					 $("#userNameMember").removeClass("is-invalid");
-					 $("#userNameMember").attr("readonly","true");
+					 $("#userNameMember").removeClass("is-invalid");				
 				}
 			}
 		});
@@ -306,15 +304,9 @@ $(document).ready(function(){
 					 text = text.toLowerCase();
 					 text +="@gmail.com";
 					 $("#userNameMember").val(text); 
-
-					 var pass = "abc123";
-					 /*var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-					 for (var i = 0; i < 8; i++)
-						  pass += possible.charAt(Math.floor(Math.random() * possible.length));*/
-					 $("#passWordMember").val(pass);		 
-					 			 
+					 var pass = "abc123";					
+					 $("#passWordMember").val(pass);			 
 					 docheck(text);	
-					 
 					 $("#userNameMember").blur(function(){
 						 var email = $("#userNameMember").val();
 						docheck(email);

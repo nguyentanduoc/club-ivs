@@ -27,7 +27,7 @@ public class SumarizationBrachDAOImpl implements SumarizationBrachDAO{
 	}	
 	
 	@Override
-	public int saveOrUpdate(SumarizationBranch sumBranch) {
+	public long saveOrUpdate(SumarizationBranch sumBranch) {
 		try {
 			currentSession().saveOrUpdate(sumBranch);
 			return sumBranch.getIdSumBranch();
@@ -38,7 +38,7 @@ public class SumarizationBrachDAOImpl implements SumarizationBrachDAO{
 	}
 
 	@Override
-	public SumarizationBranch getById(int id) {
+	public SumarizationBranch getById(long id) {
 		try {
 			return currentSession().load(SumarizationBranch.class, id);
 		}catch (Exception e) {

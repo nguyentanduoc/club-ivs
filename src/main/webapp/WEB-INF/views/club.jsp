@@ -71,18 +71,8 @@
 												id="nameClub" placeholder="Nhập Tên Câu Lạc Bộ" />
 										</div>										
 										<div class="form-group">
-										<c:choose>
-											<c:when test="${members.size()==0}">
-												<div class="text-danger text-center">Bạn hãy tạo người quản lý câu lạc bộ</div>
-											</c:when>
-											<c:when test="${members.size()>0}">
-												<label for="member.idMember">Nhân viên quản lý câu lạc bộ</label>
-											<form:select id="idMember" path="member.idMember" class="form-control">												
-												<form:options items="${members}" itemValue="idMember"  itemLabel="nameMember" />
-											</form:select>
-											</c:when>
-										</c:choose>											
-											<div id="messageMember"></div>
+											<form:select cssClass="select2 form-control" path="members" var="member" items="${members}" multiple="true" itemLabel="nameMember" itemValue="idMember" data-placeholder="Chọn người quản lý">
+											</form:select>											
 										</div>
 									</div>
 									<!-- ./card-body -->
@@ -112,9 +102,15 @@
 			                  <tr>
 			                  	<td>${club.getNameClub()}</td>
 			                    <td>${club.getBranch().getNameBranch()}</td>		   
-			                    <td>${club.getMember().getNameMember()}</td>                           
+			                    <td>			                    
+			                    	<c:forEach var="member" items="${club.getMembers()}">
+			                    		${member.getNameMember()}<br/>
+			                    	</c:forEach>
+			                    </td>                           
 			                    <td>
-			                    	<span class="editClub" data-id = "${club.getIdClub()}"> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal" data-target="#editClub"></i></span>
+			                    	<a  href="<c:url value='editClub/'/>${club.getIdClub()}">
+			                    		<i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal" data-target="#editClub"></i>
+			                    	</a>
 			                    	<span class="deleteClub" data-id = "${club.getIdClub()}"><i class="fa fa-times delete"></i></span>	
 			                    </td>	                               
 			                  </tr>	
@@ -128,82 +124,9 @@
 				</div>
 			</section>
 			<!-- /.content -->
-			<!-- modal -->
-			<div id="editClub" class="modal fade" role="dialog">
-				<div class="modal-dialog">
-					<!-- Modal content-->
-					<div class="modal-content">						
-						<div class="modal-header">
-							<h4 class="modal-title">Chỉnh sửa Câu lạc Bộ</h4>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<div class="modal-body">
-							<input type="hidden" id="idEditClub"/>
-							<div class="text-center text-danger" id="errorEditClub"></div>
-							<div class="form-group">
-								<label for="nameEditClub">Tên Câu Lạc Bộ</label>
-								<input type="text" id="nameEditClub" id="nameEditClub" class="form-control"
-									 placeholder="Nhập Tên Câu Lạc Bộ" />
-							</div>
-							<div class="form-group">
-								<label for="branchEditClub">Thuộc chi nhánh</label>
-								<select id="branchEditClub" name="branchEditClub" class="form-control">									
-									
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="memberEditClub">Nhân viên quản lý câu lạc bộ</label>
-								<select id="memberEditClub" name ="memberEditClub" class="form-control">																
-								</select>								
-							</div>
-							
-						</div>
-						<div class="modal-footer">
-							<button type="button" id="saveChangeClub" class="btn btn-primary">Lưu</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/.modal -->
 		</div>
 		<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
 	</div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
-	<script>
-		$(document).ready(function(){
-			var idMember = $("#idMember").val();
-			$("#messageMember").empty();
-			$.ajax({
-				url:"/Club-IVS/club/checkMember",
-				type:"POST",
-				data:{
-					idMember:idMember
-				},
-				success:function(data){
-					if(data.status==200){
-						$("#messageMember").append("Thành viên này đã quản lý CLB nào đó!");
-						$("#messageMember").addClass("text-danger text-center");
-					}								
-				}					
-			});
-			$("#idMember").change(function(){
-				$("#messageMember").empty();
-				$.ajax({
-					url:"/Club-IVS/club/checkMember",
-					type:"POST",
-					data:{
-						idMember:idMember
-					},
-					success:function(data){
-						if(data.status==200){
-							$("#messageMember").append("Thành viên này đã quản lý CLB nào đó!");
-							$("#messageMember").addClass("text-danger text-center");
-						}								
-					}					
-				});
-			})
-		})
-	</script>
 </body>
 </html>

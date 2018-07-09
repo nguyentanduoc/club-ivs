@@ -10,6 +10,6 @@ public interface AttendanceDAO {
 	public List<Attendance> getAttendanceByTrain(int id);
 	public boolean deleteAttendanceByTrain(int idTrain);
 	public List<Attendance> getAttendanceByClub(int curentMonth, int idClub);
-	public Attendance getAttendByIdMember(int idMember, int idTrain);
+	public Attendance getAttendByIdMember(long idMember, int idTrain);
 
 }

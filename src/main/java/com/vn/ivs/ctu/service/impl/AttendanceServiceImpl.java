@@ -35,7 +35,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 	
 	@Override
-	public Attendance getAttendByIdMember(int idMember, int idTrain) {
+	public Attendance getAttendByIdMember(long idMember, int idTrain) {
 		return attendanceDAO.getAttendByIdMember(idMember, idTrain);
 	}
 }

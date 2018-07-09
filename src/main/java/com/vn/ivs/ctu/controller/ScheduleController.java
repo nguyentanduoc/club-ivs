@@ -39,7 +39,7 @@ public class ScheduleController {
 		modelMap.put("title","Thêm lịch tự động");	
 		Schedule schedule = new Schedule();
 		schedule.setAutoSchedule(true);
-		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club  = clubService.getLeaderClub(idMember);
 		if(club!=null) {
 		modelMap.put("schedule", schedule);
@@ -53,7 +53,7 @@ public class ScheduleController {
 	}
 	@PostMapping ("/create")
 	public String createSchedule(@ModelAttribute("schedule") Schedule schedule, BindingResult result, ModelMap modelMap) {		
-		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+		long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idLeader);
 		schedule.setClub(club);
 		if (scheduleService.create(schedule)>0) {
@@ -70,7 +70,7 @@ public class ScheduleController {
 		modelMap.put("action2", "traintotal");
 		modelMap.put("title", "Tổng lịch");
 		
-		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
+		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		Club club  = clubService.getLeaderClub(idMember);
 		if(club!=null) {
 		modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));

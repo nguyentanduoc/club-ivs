@@ -2,10 +2,12 @@ package com.vn.ivs.ctu.utils;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import com.vn.ivs.ctu.entity.Club;
 
 public class MyUserDetail extends User {
 	
@@ -16,18 +18,18 @@ public class MyUserDetail extends User {
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 	}
-		
-	private int idMember;
+	private long idMember;
 	private String nameMember;
 	private Date birthDayMember;
 	private boolean sexMember;
 	private String phoneNumberMember;
 	private String avartarMember;
+	private Set<Club> clubs;
 	
-	public int getIdMember() {
+	public long getIdMember() {
 		return idMember;
 	}
-	public void setIdMember(int idMember) {
+	public void setIdMember(long idMember) {
 		this.idMember = idMember;
 	}
 	public String getNameMember() {
@@ -60,5 +62,11 @@ public class MyUserDetail extends User {
 	public void setAvartarMember(String avartarMember) {
 		this.avartarMember = avartarMember;
 	}
-
+	public Set<Club> getClubs() {
+		return clubs;
+	}
+	public void setClubs(Set<Club> clubs) {
+		this.clubs = clubs;
+	}
+	
 }

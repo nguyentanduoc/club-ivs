@@ -37,7 +37,7 @@ public class AttendanceController {
 		modelMap.put("action1","attendance");
 		modelMap.put("action2","index");
 		modelMap.put("title","Sự kiện trong tuần");
-		int idLeader =  SecurityUtils.getMyUserDetail().getIdMember();
+		long idLeader =  SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idLeader);
 		if(club!=null) {
 			modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));
@@ -45,7 +45,7 @@ public class AttendanceController {
 		}else {
 			modelMap.put("status", 403);
 			modelMap.put("message", "bạn không có quyền truy cập!");
-		}	
+		}
 		return "attendance";
 	}
 	@GetMapping ("/diemdanh/{id}")
@@ -54,7 +54,7 @@ public class AttendanceController {
 		modelMap.put("action1","attendance");
 		modelMap.put("action2","diemdanh");
 		modelMap.put("title","Danh sách điểm danh");
-		int idLeader =  SecurityUtils.getMyUserDetail().getIdMember();
+		long idLeader =  SecurityUtils.getMyUserDetail().getIdMember();
 		Club club = clubService.getLeaderClub(idLeader);
 		if(club!=null) {
 			modelMap.put("listAttendance", attendanceService.getAttendanceByTrain(id));

@@ -1,17 +1,20 @@
 package com.vn.ivs.ctu.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +28,7 @@ import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
+import com.vn.ivs.ctu.utils.CustomFormBinderMember;
 import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Controller
@@ -36,23 +40,20 @@ public class ClubController {
 	@Autowired MemberService memberService;
 	@Autowired JoinClubService joinClubService;
 	
+	@InitBinder
+	public void bindForm(final WebDataBinder binder) {
+		binder.registerCustomEditor(Set.class, "members", new CustomFormBinderMember<MemberService>(memberService, Set.class));
+	}
+	
 	@GetMapping(path="/index")
 	public String index(@RequestParam(name="message",required=false) String message, ModelMap modelMap){
 		modelMap.put("action1", "club");
 		modelMap.put("action2", "create");
-		modelMap.put("title", "Câu Lạc Bộ");			
-		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
-		Branch branch = branchSevice.getBranchByMember(idLeader);		
+		modelMap.put("title", "CLB");			
 		Club club = new Club();
 		modelMap.put("clubs", clubService.getAll());
-		List<Member> members = memberService.getAllLeaderClubByBranch(branch.getIdBranch());
-		List<Member> notfount = new ArrayList<>();
-		for(Member m:members) {
-			if(clubService.getLeaderClub(m.getIdMember())==null) {
-				notfount.add(m);
-			}			
-		}
- 		modelMap.put("members",notfount);
+		List<Member> members = memberService.getAllLeaderClub();
+ 		modelMap.put("members",members);
 		modelMap.put("club", club);
 		if(message!=null) {
 			if(message.equals("success")) {
@@ -68,9 +69,8 @@ public class ClubController {
 	
 	@PostMapping(path="/create")
 	public String create(@ModelAttribute("club") Club club,BindingResult result, ModelMap modelMap ) {
-		
 		if(SecurityUtils.getMyUserDetail()!=null) {
-			int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+			long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 			Branch branch = branchSevice.getBranchByMember(idLeader);
 			club.setBranch(branch);
 			if(clubService.saveOrUpdate(club)>0) {
@@ -87,8 +87,8 @@ public class ClubController {
 	public String joinClub(@RequestParam(name="message",required=false)String message,ModelMap modelMap) {
 		modelMap.put("action1", "club");
 		modelMap.put("action2", "joinClub");
-		modelMap.put("title", "Thêm thành viên vào Club");
-		int idOTC = SecurityUtils.getMyUserDetail().getIdMember();
+		modelMap.put("title", "Join Club");
+		long idOTC = SecurityUtils.getMyUserDetail().getIdMember();
 		Branch branch = branchSevice.getBranchByMember(idOTC);
 		if(branch!=null) {
 			modelMap.put("members", memberService.getAllByBranch(branch.getIdBranch()));
@@ -108,7 +108,7 @@ public class ClubController {
 		}
 		return "joinClub";
 	}
-
+	
 	@PostMapping(path = "/joinClub")
 	public String createJoinClub(@RequestParam("idMember") int idMember, @RequestParam("clubs") String[]  clubs) {
 		boolean success = true;
@@ -142,24 +142,13 @@ public class ClubController {
 		
 	}
 	
-	@PostMapping(path="checkMember")
-	@ResponseBody
-	public Map<String,Object> checkMember(int idMember){
-		Map<String,Object> map =new HashMap<>();
-		if(clubService.getLeaderClub(idMember)!=null) {
-			map.put("status", 200);
-		}else {
-			map.put("status", 404);
-		}
-		return map;
-	}
 	
 	@GetMapping(path="/listJoinClub")
 	public String listJoinClub(ModelMap modelMap) {
 		modelMap.put("action1", "club");
 		modelMap.put("action2", "listJoinClub");
-		modelMap.put("title", "Danh sách hoạt động");	
-		int idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+		modelMap.put("title", "CLB");	
+		long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 		Branch branch = branchSevice.getBranchByMember(idLeader);
 		List<Club> clubs = clubService.getClubByBranch(branch.getIdBranch());
 		modelMap.put("clubs", clubs);
@@ -188,6 +177,54 @@ public class ClubController {
 		Map<String,Object> map = new HashMap<>();
 		map.put("member", joinClubService.getListMemberActive(idClub));
 		map.put("status", 200);
+		return map;
+	}
+	
+	@GetMapping(path="/editClub/{id}")
+	public String editClub(@PathVariable(name="id",required=false)String id,ModelMap modelMap) {
+		String url="";
+		if(id!=null) {
+			try {
+				List<Member> members = memberService.getAllLeaderClub();
+		 		modelMap.put("members",members);
+				modelMap.put("club", clubService.getClubById(Integer.parseInt(id)));
+				url="editClub";
+			}catch(Exception e) {
+				url="redirect:/404";
+			}
+		}else {
+			url="redirect:/404";
+		}
+		return url;
+	}
+	
+	@PostMapping(path="/saveChangeClub")
+	public String saveChangeClub(@ModelAttribute("club") Club club){
+		String url="";
+		Map<String,String>  map =  new HashMap<>();
+		if(clubService.saveOrUpdate(club)>0) {
+			map.put("status", "200");
+		}else {
+			map.put("status", "400");
+		}		
+		return url;
+	}
+	@PostMapping(path="getJoinClub")
+	@ResponseBody
+	public Map<String,Object>getJoinClub(@RequestParam("idMember")long idMember){
+		Map<String,Object> map = new HashMap<>();
+		List<JoinClub> joinClubs = joinClubService.getJoinClubByIdMember(idMember);
+		if(joinClubs!=null){
+			if(joinClubs.size()>0) {
+				System.out.println(joinClubs);
+				map.put("status", 200);
+				map.put("joinClubs", joinClubs);
+			}else {
+				map.put("status", 404);
+			}
+		}else {
+			map.put("status", 400);
+		}
 		return map;
 	}
 }

@@ -31,7 +31,7 @@ public class MyUserDetailsService implements UserDetailsService {
 		Member member;
 
 		try{
-			member  = memberDAOImpl.findByUseName(username);			
+			member  = memberDAOImpl.findByUseName(username);		
 			if(member==null) {
 				log.error("Username not found");
 				throw new UsernameNotFoundException("Username not found");
