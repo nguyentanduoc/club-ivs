@@ -31,7 +31,7 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 		try {
 
 			return currentSession().
-					createQuery("FROM join_club j WHERE j.club.idClub =:idClub and j.status =:statuss",JoinClub.class).
+					createQuery("FROM join_club j WHERE j.club.idClub =:idClub and j.status =:status",JoinClub.class).
 					setParameter("idClub", idClub).setParameter("status", true).list();	
 		}catch(Exception ex) {
 			System.out.println(ex.toString());
@@ -81,6 +81,17 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 		}catch(Exception e) {
 			System.out.println("Join Club DAO "+e.toString());
 			return null;
+		}
+	}
+
+	@Override
+	public boolean delete(long idJoin) {
+		try {
+			currentSession().delete(currentSession().load(JoinClub.class,idJoin));
+			return true;
+		}	catch(Exception ex) {
+			System.out.println("Delete JoinCLub -"+ ex.toString());
+			return false;
 		}
 	}
 	

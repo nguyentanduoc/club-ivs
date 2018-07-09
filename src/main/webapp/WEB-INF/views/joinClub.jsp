@@ -134,7 +134,7 @@
 			$("#listJoinClub").empty();
 			var idMember = $("#idMember").val();
 			$.ajax({
-				url:"/Club-IVS/club/getJoinClub",
+				url:"/Club-IVS/api/getJoinClub",
 				type:"POST",
 				data:{
 					"idMember":idMember,				
@@ -173,7 +173,6 @@
 	                    })
 						$("#listJoinClub").append(view);
 					}else{
-						console.log(data);
 						if(data.status==404){
 							$("#messageJoinClub").append("Thành viên này chưa tham gia câu lạc bộ nào!");
 						}else{

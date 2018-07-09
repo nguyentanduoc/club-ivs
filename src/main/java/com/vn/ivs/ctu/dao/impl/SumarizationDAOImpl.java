@@ -27,7 +27,7 @@ public class SumarizationDAOImpl implements SumarizationDAO{
 	}	
 	
 	@Override
-	public long createOrUpdate(Summarization sum) {
+	public int createOrUpdate(Summarization sum) {
 		try {
 			currentSession().saveOrUpdate(sum);
 			return sum.getIdSum();
@@ -67,7 +67,7 @@ public class SumarizationDAOImpl implements SumarizationDAO{
 	}
 
 	@Override
-	public List<Summarization> getSumByMember(int idMember, int month, int year) {
+	public List<Summarization> getSumByMember(long idMember, int month, int year) {
 		try {
 			return currentSession().createQuery("from sumarization s where s.monthSum = ? and s.member.idMember =? and s.yearSum=?",Summarization.class).setParameter(0, month).setParameter(1, idMember).setParameter(2, year).list();
 		}catch (Exception e) {

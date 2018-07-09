@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -16,7 +15,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import com.vn.ivs.ctu.entity.Club;
-import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.utils.MyUserDetail;
 import com.vn.ivs.ctu.utils.RoleUtils;
 import com.vn.ivs.ctu.utils.SecurityUtils;
@@ -24,8 +22,6 @@ import com.vn.ivs.ctu.utils.SecurityUtils;
 @Component
 public class MySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-	@Autowired MemberService memberService;
-	
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	public void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -40,10 +36,10 @@ public class MySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 	public String determineTargetUrl(Authentication authentication,HttpServletRequest request) {
 		String url = "";
-		if(SecurityUtils.getMyUserDetail()!=null) {
+		List<String> roles = SecurityUtils.getAuthorities();
+		try{
 			MyUserDetail myUser = SecurityUtils.getMyUserDetail();			
-			List<String> roles = SecurityUtils.getAuthorities();
-			if(myUser.getClubs()!=null) {
+			if(RoleUtils.isLeaderClub(roles)) {
 				if(myUser.getClubs().size()>1) {
 					url = "/chooseClub";
 				}else {		
@@ -63,8 +59,12 @@ public class MySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 				} else if (RoleUtils.isMember(roles)) {
 					url = "/member";
 				}
-			}			
+			}
+		}catch (Exception e) {
+			System.out.println(e.toString());
+			url="/login";
 		}
+		
 		return url;
 	}
 

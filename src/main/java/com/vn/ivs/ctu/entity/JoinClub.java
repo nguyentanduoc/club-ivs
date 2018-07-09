@@ -37,7 +37,8 @@ public class JoinClub {
 	
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_MEMBER")
-	private Member member;	
+	private Member member;
+	
 		
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_CLUB")

@@ -20,12 +20,12 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 	
 	@Override
-	public List<Attendance> getAttendanceByTrain(int id) {
+	public List<Attendance> getAttendanceByTrain(long id) {
 		return attendanceDAO.getAttendanceByTrain(id);
 	}
 	
 	@Override
-	public boolean deleteAttendanceByTrain (int idTrain) {
+	public boolean deleteAttendanceByTrain (long idTrain) {
 		return attendanceDAO.deleteAttendanceByTrain(idTrain);
 	}
 	
@@ -35,7 +35,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 	
 	@Override
-	public Attendance getAttendByIdMember(long idMember, int idTrain) {
+	public Attendance getAttendByIdMember(long idMember, long idTrain) {
 		return attendanceDAO.getAttendByIdMember(idMember, idTrain);
 	}
 }

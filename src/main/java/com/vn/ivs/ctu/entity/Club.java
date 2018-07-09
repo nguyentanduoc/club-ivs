@@ -16,9 +16,6 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Proxy;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 
 @Entity(name="club")
 @Proxy(lazy = false)
@@ -39,7 +36,6 @@ public class Club {
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "manage_club", joinColumns = { @JoinColumn(name = "ID_CLUB") }, inverseJoinColumns = {
 			@JoinColumn(name = "ID_MEMBER") })
-	@JsonProperty(access = Access.WRITE_ONLY)
 	Set<Member> members;
 	
 	public int getIdClub() {

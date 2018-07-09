@@ -15,14 +15,10 @@
 			<!-- Content Header (Page header) -->
 			<div class="content-header">
 				<div class="container-fluid">
-					<div class="row mb-2">						
-						<!-- /.col -->
+					<div class="row mb-2">
 						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">							
-								<li class="breadcrumb-item active">Thành Viên</li>
-							</ol>
-						</div>
-						<!-- /.col -->
+							<h1 class="m-0 text-dark">Thành Viên</h1>
+						</div>						
 					</div>
 					<!-- /.row -->
 				</div>
@@ -75,7 +71,7 @@
 										<div class="col-sm-8">
 											<form:input type="text" path="userNameMember"
 													class="form-control" id="userNameMember"
-													placeholder="" />
+													placeholder=""/>
 										</div>										
 										<div class="nameMemberErro text-danger"></div>																					
 									</div>										
@@ -144,18 +140,15 @@
 														</c:forEach>
 													</td>
 													<td align="center">
-													<c:choose>
-														<c:when test="${member.isStatus()==true}">
-															 <label class="btn btn-success btn-sm active">
-															 	<i class="fa fa-check" aria-hidden="true"></i>												 
-															 </label>
-														</c:when>
-														<c:when test="${member.isStatus()==false}">
-															 <label class="btn btn-secondary btn-sm active">
-															 	<i class="fa fa-circle-o" aria-hidden="true"></i>											 
-															 </label>
-														</c:when>
-													</c:choose>														
+
+														<c:choose>
+															<c:when test="${member.isStatus()==true}">
+																 <label class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i></label>
+															</c:when>
+															<c:when test="${member.isStatus()==false}">
+																 <label class="btn btn-secondary btn-sm"><i class="fa fa-circle-o" aria-hidden="true"></i></label>
+															</c:when>
+														</c:choose>
 													</td>
 													<td align="center">
 														<a href="${pageContext.request.contextPath}/member/editAdminMember/${member.getIdMember()}"> <i class="fa fa-pencil edit"></i></a>
@@ -232,12 +225,21 @@
 								}else{
 									view+="<label class='btn btn-secondary btn-sm'><i class='fa fa-circle-o' aria-hidden='true'></i></label>";
 								}								
+<<<<<<< Upstream, based on branch 'master' of https://github.com/nguyentanduoc/club-ivs
 								view +="</td><td align='center'><a href='${pageContext.request.contextPath}/member/editAdminMember/"+row.idMember+"'> <i class='fa fa-pencil edit'></i></a>";
+=======
+								view+="</td><td align='center'>";
+								if(row.status==true){
+									view+="<label class='btn btn-success btn-sm'><i class='fa fa-check' aria-hidden='true'></i></label>";
+								}else{
+									view+="<label class='btn btn-secondary btn-sm'><i class='fa fa-circle-o' aria-hidden='true'></i></label>";
+								}
+								view +="</td><td  align='center'><a href='${pageContext.request.contextPath}/member/editAdminMember/"+row.idMember+"'> <i class='fa fa-pencil edit'></i></a>";
+>>>>>>> 701c7b3 update database
 								view+="<span class='deleteMember' onclick ='deleteMember("+row.idMember+")'><i class='fa fa-times delete'></i></span></td></tr>";
 								
 							});
-							$("#listMember").append(view);
-							console.log(data)										
+							$("#listMember").append(view);									
 						}else{
 							
 						}

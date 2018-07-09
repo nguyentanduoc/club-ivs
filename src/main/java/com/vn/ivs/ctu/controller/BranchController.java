@@ -33,7 +33,6 @@ public class BranchController {
 		modelMap.put("title","Chi Nhánh");		
 		Branch branch  = new Branch();
 		modelMap.put("branch",branch);
-		modelMap.put("listMember", memberServiceImpl.getAllRoleOTC());
 		modelMap.put("listBranch", branchServiceImpl.getAll());
 		if(message!=null) {
 			if(message.equals("success")) {
@@ -49,7 +48,7 @@ public class BranchController {
 	
 	@PostMapping("/insert")
 	public String createBranch(@ModelAttribute("branch") Branch branch, BindingResult result, ModelMap modelMap) {
-		
+				
 		if(branchServiceImpl.saveOrUpdate(branch) >  0) {
 			return "redirect:/branch/index?message=success";	
 		}else {
@@ -59,7 +58,7 @@ public class BranchController {
 	
 	@PostMapping(path="/checkMember")
 	@ResponseBody
-	public Map<String,Object> checkMemberBranch(int idMember){
+	public Map<String,Object> checkMemberBranch(long idMember){
 		Map<String,Object> map = new HashMap<>();
 		if(branchServiceImpl.getBranchByMember(idMember)==null) {
 			map.put("status", 404);

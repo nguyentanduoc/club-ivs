@@ -58,5 +58,15 @@ public class RoleDAOImpl implements RoleDAO {
 			System.out.println(e.toString());
 			return null;
 		}
+	}
+
+	@Override
+	public Role getRoleByCode(String code) {
+		try {
+			return currentSession().createQuery("select r from role r where r.codeRole=:code",Role.class).setParameter("code", code).getSingleResult();
+		}catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
 	} 
 }

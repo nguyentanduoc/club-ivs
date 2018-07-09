@@ -71,5 +71,4 @@ public class Attendance {
 		this.reason = reason;
 	}
 	
-
 }

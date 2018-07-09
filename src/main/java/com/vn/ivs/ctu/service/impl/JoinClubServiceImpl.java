@@ -15,8 +15,7 @@ public class JoinClubServiceImpl implements JoinClubService{
 	@Autowired JoinClubDAO joinClubDAO;
 	
 	@Override
-	public List<JoinClub> getJoinClubByClub(int idClub) {
-		
+	public List<JoinClub> getJoinClubByClub(int idClub) {		
 		return joinClubDAO.getJoinClubByClub(idClub);
 	}
 
@@ -31,13 +30,18 @@ public class JoinClubServiceImpl implements JoinClubService{
 	}
 
 	@Override
-	public JoinClub getJoinClub(int idJoinClub) {
+	public JoinClub getJoinClub(long idJoinClub) {
 		return joinClubDAO.getJoinClub(idJoinClub);
 	}
 
 	@Override
 	public List<JoinClub> getListMemberActive(int idClub) {
 		return joinClubDAO.getListMemberActive(idClub);
+	}
+
+	@Override
+	public boolean delete(long idJoin) {
+		return joinClubDAO.delete(idJoin); 
 	}
 
 }

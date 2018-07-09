@@ -9,6 +9,7 @@ public interface JoinClubService {
 	public List<JoinClub> getJoinClubByClub(int idClub);
 	public long createOrUpdate(JoinClub joinClub);
 	public List<JoinClub> getJoinClubByIdMember(long idMember);
-	public JoinClub getJoinClub(int idJoinClub);
+	public JoinClub getJoinClub(long idJoinClub);
 	public List<JoinClub> getListMemberActive(int idClub);
+	public boolean delete(long idJoin);
 }

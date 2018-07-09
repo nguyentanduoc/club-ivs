@@ -31,7 +31,7 @@ public class TrainServiceImpl implements TrainService {
 		return trainDAO.getAllTrainManual(idClub);
 	}
 	
-	public boolean deleteTrain(int idTrain) {
+	public boolean deleteTrain(long idTrain) {
 		if(attendanceService.deleteAttendanceByTrain(idTrain)) {
 			return trainDAO.deleteTrain(idTrain);
 		}
@@ -49,11 +49,11 @@ public class TrainServiceImpl implements TrainService {
 	}
 	
 	@Override
-	public List<Train> getListTrainByIdSchedule(int idSchedule){
+	public List<Train> getListTrainByIdSchedule(long idSchedule){
 		return trainDAO.getListTrainByIdSchedule(idSchedule);
 	}
 	@Override
-	public boolean deleteTrainByIdSchedule(int idShedule) {
+	public boolean deleteTrainByIdSchedule(long idShedule) {
 		boolean rs=false;
 		List<Train> trains = getListTrainByIdSchedule(idShedule);
 		if(trains!=null) {
@@ -79,13 +79,12 @@ public class TrainServiceImpl implements TrainService {
 		return trainDAO.getAllTrainByClub(month, year, idClub);
 	}
 	@Override
-	public Train getTrainById(int id) {
+	public Train getTrainById(long id) {
 		return trainDAO.getTrainById(id);
 	}
 
 	@Override
-	public List<Train> getTrainBySchedule(int idSchedule) {
+	public List<Train> getTrainBySchedule(long idSchedule) {
 		return trainDAO.getTrainBySchedule(idSchedule);
 	}
-
 }

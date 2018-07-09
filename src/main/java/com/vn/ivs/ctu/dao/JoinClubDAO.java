@@ -12,4 +12,5 @@ public interface JoinClubDAO {
 	public List<JoinClub> getJoinClubByIdMember(long idMember);
 	public JoinClub getJoinClub(long idJoinClub);
 	public List<JoinClub> getListMemberActive(int idClub);
+	public boolean delete(long idJoin);
 }

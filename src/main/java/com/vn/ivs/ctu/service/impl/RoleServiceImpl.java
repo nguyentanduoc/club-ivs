@@ -37,5 +37,10 @@ public class RoleServiceImpl implements RoleService{
 	public List<Role> getOfLeader() {
 		return roleDAO.getOfLeader();
 	}
+
+	@Override
+	public Role getRoleByCode(String code) {
+		return roleDAO.getRoleByCode(code);
+	}
 	
 }

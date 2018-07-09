@@ -85,7 +85,7 @@ public class ToGradeController {
 			modelMap.put("status", 200);
 			modelMap.put("sums", sum);
 			System.out.println(sum);
-		}
+		}		
 		return "scoreTotalBranch";
 	}
 	
@@ -103,6 +103,5 @@ public class ToGradeController {
 			}
 		}
 		return modelAndView;
-		
 	}
 }

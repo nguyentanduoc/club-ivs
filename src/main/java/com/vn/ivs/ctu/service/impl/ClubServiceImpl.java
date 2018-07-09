@@ -33,8 +33,8 @@ public class ClubServiceImpl implements ClubService{
 	}
 
 	@Override
-	public Club getLeaderClub(long idMember) {
-		return clubDAO.getClubByLeader(idMember);
+	public Club getLeaderClub(long idLeader) {
+		return clubDAO.getClubByLeader(idLeader);
 	}		
 	@Override
 	public Club getClubById(int id) {

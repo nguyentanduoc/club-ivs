@@ -19,6 +19,7 @@ import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.AttendanceID;
 import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
+import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.Role;
 import com.vn.ivs.ctu.service.AttendanceService;
@@ -114,7 +115,8 @@ public class ApiController {
 		try{
 			map.put("status",200);
 			map.put("branch", branchService.getBranchById(id));
-			map.put("members", memberService.getAllRoleOTC());
+			map.put("members", memberService.getAllLeader());
+
 		}catch(Exception e) {
 			map.put("status", 400);
 		}
@@ -197,15 +199,18 @@ public class ApiController {
 		}		
 		return map;
 	}
+	
 	@PostMapping(path="/deleteClub")
 	@ResponseBody
 	public Map<String,String> deleteClub(@RequestParam("idClub") int id){
-		Map<String,String>  map =  new HashMap<>();		
-		if(clubService.deleteClub(id)) {
-			map.put("status", "200");
-		}else {
+		Map<String,String>  map =  new HashMap<>();	
+		try {
+			if(clubService.deleteClub(id)) {
+				map.put("status", "200");
+			}	
+		}catch (Exception e) {
 			map.put("status", "400");
-		}		
+		}			
 		return map;
 	}//end club
 	
@@ -276,7 +281,23 @@ public class ApiController {
 		return 400;
 	}
 
-	
+	@PostMapping(path="getJoinClub")
+	@ResponseBody
+	public Map<String,Object>getJoinClub(@RequestParam("idMember")int idMember){
+		Map<String,Object> map = new HashMap<>();
+		List<JoinClub> joinClubs = joinClubService.getJoinClubByIdMember(idMember);
+		if(joinClubs!=null){
+			if(joinClubs.size()>0) {
+				map.put("status", 200);
+				map.put("joinClubs", joinClubs);
+			}else {
+				map.put("status", 404);
+			}
+		}else {
+			map.put("status", 400);
+		}
+		return map;
+	}
 	//end join club
 	@PostMapping(path="VNI")
 	@ResponseBody

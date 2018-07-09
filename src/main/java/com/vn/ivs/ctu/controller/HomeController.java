@@ -1,6 +1,5 @@
 package com.vn.ivs.ctu.controller;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -44,7 +42,6 @@ import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Controller
 @RequestMapping(value= {"/"})
-@Scope("session")
 public class HomeController {
 	
 	
@@ -59,25 +56,11 @@ public class HomeController {
 	@Autowired SumarizationBranchService sumarizationBranchService;
 	
 	@GetMapping(path="")
-	public String Index(HttpServletRequest request) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();		
+	public String Index() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		List<String> roles = SecurityUtils.getAuthorities();
 		String url = "login";
-		if(auth!=null) {	
-			if(SecurityUtils.getAuthorities().contains("ROLE_ANONYMOUS")==false){
-				if(SecurityUtils.getMyUserDetail()!=null) {
-					MyUserDetail myUser = SecurityUtils.getMyUserDetail();	
-					if(myUser.getClubs().size()>1) {
-						url = "/chooseClub";
-					}else {		
-						if(myUser.getClubs().size()==1) {
-							Set<Club> clubs = myUser.getClubs() ;
-							Iterator<Club> iter = clubs.iterator();
-							request.getSession().setAttribute("club",(Club)iter.next());
-						}					
-					}
-				}	
-			}
-			List<String> roles = SecurityUtils.getAuthorities();
+		if(auth!=null) {
 			if (RoleUtils.isAdmin(roles)) {
 				url = "/admin";
 			} else if (RoleUtils.isLeader(roles)) {
@@ -91,37 +74,12 @@ public class HomeController {
 		return "redirect:"+url;
 	}
 	
-	@GetMapping(path="chooseClub")
-	public String chooseClub(ModelMap modelMap) {
-		MyUserDetail myUser = SecurityUtils.getMyUserDetail();	
-		modelMap.put("clubs", myUser.getClubs());		
-		return "chooseClub";
-	}
-	
-	@SuppressWarnings("unlikely-arg-type")
-	@PostMapping(path="chooseClub")
-	public String chooseClub(@RequestParam(name="club",required=false) String idClub,HttpServletRequest request) {
-		if(idClub!=null) {
-			MyUserDetail myUser = SecurityUtils.getMyUserDetail();	
-			Set<Club> clubs = myUser.getClubs() ;
-			for(Club club:clubs) {
-				if(idClub.equals(club.getIdClub())) {
-					request.getSession().setAttribute("club",club);
-				}
-			}			
-			return "redirect:/";
-		}else {
-			return "redirect:/chooseClub";
-		}
-	}
-	
 	@GetMapping(value="logout")
     public String logoutPage (HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        
         return "redirect:/login";
     }
 	
@@ -220,7 +178,7 @@ public class HomeController {
 								requireDonate=true;
 							}
 						}
-						total = (score + (c-1)*10);//trung binh
+						total = (score + (c-1)*10);
 						SumarizationBranch sum =  new SumarizationBranch();
 						sum.setScoreBranch(total*Float.parseFloat("0.8"));
 						sum.setMember(member);
@@ -238,5 +196,28 @@ public class HomeController {
 		}
 		
 		return "404";
+	}
+	@GetMapping(path="chooseClub")
+	public String chooseClub(ModelMap modelMap) {
+		MyUserDetail myUser = SecurityUtils.getMyUserDetail();	
+		modelMap.put("clubs", myUser.getClubs());		
+		return "chooseClub";
+	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	@PostMapping(path="chooseClub")
+	public String chooseClub(@RequestParam(name="club",required=false) String idClub,HttpServletRequest request) {
+		if(idClub!=null) {
+			MyUserDetail myUser = SecurityUtils.getMyUserDetail();	
+			Set<Club> clubs = myUser.getClubs() ;
+			for(Club club:clubs) {
+				if(idClub.equals(club.getIdClub())) {
+					request.getSession().setAttribute("club",club);
+				}
+			}			
+			return "redirect:/";
+		}else {
+			return "redirect:/chooseClub";
+		}
 	}
 }

@@ -42,4 +42,5 @@ public class BranchServiceImpl implements BranchService{
 	public Branch getBranchById(int id) {
 		return branchDAO.getBranchById(id);
 	}
+
 }

@@ -8,6 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import com.vn.ivs.ctu.entity.Club;
+import com.vn.ivs.ctu.entity.Role;
+
 
 public class MyUserDetail extends User {
 	
@@ -18,12 +20,14 @@ public class MyUserDetail extends User {
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 	}
+		
 	private long idMember;
 	private String nameMember;
 	private Date birthDayMember;
 	private boolean sexMember;
 	private String phoneNumberMember;
 	private String avartarMember;
+	private Set<Role> roles;
 	private Set<Club> clubs;
 	
 	public long getIdMember() {
@@ -61,6 +65,12 @@ public class MyUserDetail extends User {
 	}
 	public void setAvartarMember(String avartarMember) {
 		this.avartarMember = avartarMember;
+	}
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 	public Set<Club> getClubs() {
 		return clubs;

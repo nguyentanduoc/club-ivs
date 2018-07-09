@@ -37,7 +37,7 @@ public class AttendanceDAOImpl implements AttendanceDAO{
 		}
 	}
 	@Override
-	public boolean deleteAttendanceByTrain(int idTrain) {
+	public boolean deleteAttendanceByTrain(long idTrain) {
 		try {
 			List<Attendance> ats = getAttendanceByTrain(idTrain);
 			for (Attendance a : ats) {
@@ -51,7 +51,7 @@ public class AttendanceDAOImpl implements AttendanceDAO{
 		}
 	}
 	@Override
-	public List<Attendance> getAttendanceByTrain(int id) {
+	public List<Attendance> getAttendanceByTrain(long id) {
 		try {
 			return currentSession().createQuery("from attendance a where a.attendanceID.idTrain=?", Attendance.class).setParameter(0, id).list();
 		}
@@ -72,7 +72,7 @@ public class AttendanceDAOImpl implements AttendanceDAO{
 		}
 	}
 	@Override
-	public Attendance getAttendByIdMember(long idMember, int idTrain) {
+	public Attendance getAttendByIdMember(long idMember, long idTrain) {
 		try {
 			return currentSession().createQuery("from attendance a where a.train.idTrain=? and a.member.idMember=?", Attendance.class).setParameter(0, idTrain).setParameter(1, idMember).getSingleResult();
 		

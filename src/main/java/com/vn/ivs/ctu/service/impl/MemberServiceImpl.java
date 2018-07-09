@@ -37,10 +37,7 @@ public class MemberServiceImpl implements MemberService{
 	public List<Member> findAll(int startPosition) {
 		return memberDAO.findAll(startPosition);
 	}
-	@Override
-	public List<Member> getAllRoleOTC(){
-		return memberDAO.getAllRoleOTC();
-	}
+
 	@Override
 	public List<Member> getAllByBranch(int idBranch){
 		return memberDAO.getAllByBranch(idBranch);
@@ -48,11 +45,6 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<Member> getAllByBranch(int idBranch,int startPosition){
 		return memberDAO.getAllByBranch(idBranch,startPosition);
-	}
-	@Override
-	public List<Member> getMemberNoClub() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	@Override
 	public boolean joinClub(JoinClub joinClub) {
@@ -75,5 +67,9 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<Member> getAllLeaderClubByBranch(int idBranch) {
 		return memberDAO.getAllLeaderClubByBranch(idBranch);
+	}
+	@Override
+	public List<Member> getAllLeader() {
+		return memberDAO.getAllLeader();
 	}
 }

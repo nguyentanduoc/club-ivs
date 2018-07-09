@@ -19,6 +19,14 @@
 						<div class="col-sm-6">
 							<h1 class="m-0 text-dark">Thành Viên</h1>
 						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Thêm thành Viên</a></li>
+								<li class="breadcrumb-item active">Thành viên</li>
+							</ol>
+						</div>
+						<!-- /.col -->
 					</div>
 					<!-- /.row -->
 				</div>
@@ -75,7 +83,7 @@
 										<div class="col-sm-8">
 											<form:input type="text" path="userNameMember"
 													class="form-control" id="userNameMember"
-													placeholder="" />
+													placeholder=""  readonly="true"/>
 										</div>										
 										<div class="nameMemberErro text-danger"></div>																					
 									</div>										
@@ -158,8 +166,7 @@
 	</div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
 	<script>
-		$(document).ready(function(){	
-			
+		$(document).ready(function(){			
 			var currentPage=1;
 			$("#paginate").empty();
 			var viewPage="";		
@@ -233,7 +240,6 @@
 					}
 				})
 			});
-			
 		})
 	</script>
 </body>

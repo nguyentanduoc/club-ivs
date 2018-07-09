@@ -16,7 +16,7 @@ public class AttendanceID implements Serializable{
 	private long idMember;
 	
 	@Column(name="ID_TRAIN")
-	private int idTrain;
+	private long idTrain;
 	
 	public long getIdMember() {
 		return idMember;
@@ -24,10 +24,10 @@ public class AttendanceID implements Serializable{
 	public void setIdMember(long idMember) {
 		this.idMember = idMember;
 	}
-	public int getIdTrain() {
+	public long getIdTrain() {
 		return idTrain;
 	}
-	public void setIdTrain(int idTrain) {
+	public void setIdTrain(long idTrain) {
 		this.idTrain = idTrain;
 	}
 	@Override
@@ -35,7 +35,7 @@ public class AttendanceID implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (int) (idMember ^ (idMember >>> 32));
-		result = prime * result + idTrain;
+		result = prime * result + (int) (idTrain ^ (idTrain >>> 32));
 		return result;
 	}
 	@Override
@@ -53,6 +53,5 @@ public class AttendanceID implements Serializable{
 			return false;
 		return true;
 	}
-	
 		
 }

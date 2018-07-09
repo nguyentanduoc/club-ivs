@@ -53,7 +53,6 @@ public class MemberController {
 
 	@InitBinder
 	public void bindForm(final WebDataBinder binder) {
-
 		binder.registerCustomEditor(Set.class, "roles", new CustomFormBinder<RoleService>(roleService, Set.class));
 	}
 
@@ -61,7 +60,7 @@ public class MemberController {
 	public String Index(@RequestParam(name="status",required=false) String status,ModelMap modelMap) {
 		modelMap.put("action1", "member");
 		modelMap.put("action2", "adminMember");
-		modelMap.put("title", "Thêm thành viên và gán quyền");
+		modelMap.put("title", "Thêm thành viên");
 		Member member = new Member();
 		member.setSexMember(true);
 		modelMap.put("member", member);
@@ -84,9 +83,8 @@ public class MemberController {
 
 	@PostMapping(path = "/admin")
 	public String add(@ModelAttribute("member") Member member, BindingResult result, ModelMap modelMap) {
-
-		member.setPassWordMember(PasswordEncoder.BCryptPassdEncoder(member.getPassWordMember()));
 		member.setStatus(true);
+		member.setPassWordMember(PasswordEncoder.BCryptPassdEncoder(member.getPassWordMember()));
 		if (memberService.saveOrUpdate(member) > 0) {
 			return "redirect:/member/admin?status=200";
 		} else {
@@ -98,7 +96,8 @@ public class MemberController {
 	public String create(@RequestParam(name="status",required=false) String status,ModelMap modelMap) {
 		modelMap.put("action1", "member");
 		modelMap.put("action2", "indexMember");
-		modelMap.put("title", "Member");
+		modelMap.put("title", "Thêm thành viên");
+		
 		if(SecurityUtils.getMyUserDetail()!=null) {
 			long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 			Branch branch = branchSevice.getBranchByMember(idLeader);
@@ -142,7 +141,7 @@ public class MemberController {
 				return "redirect:/member/create?status=200";
 			} else {
 				return "redirect:/member/create?status=400";
-			}			
+			}
 		}catch (Exception e) {
 			return "redirect:/member/create?status=400";
 		}
@@ -245,7 +244,7 @@ public class MemberController {
 		}
 	}	
 	@PostMapping(path="/update")
-	public String updateMember(@RequestParam("idMember")long idMember, @RequestParam("roles") String[] roles,@RequestParam("status")boolean status) {
+	public String updateMember(@RequestParam("idMember")int idMember, @RequestParam("roles") String[] roles, @RequestParam(name="status")boolean status) {
 	
 		Member member = memberService.getMemberById(idMember);
 		member.setStatus(status);
@@ -257,10 +256,10 @@ public class MemberController {
 		}
 		member.setRoles(rolesMember);
 		if(memberService.saveOrUpdate(member)>0) {
-			return "redirect:/member/editAdminMember/"+idMember;
+			return "redirect:/member/editMember/"+idMember;
 		}
 		else {
-			return "redirect:/member/editAdminMember/"+idMember;
+			return "redirect:/member/editMember/"+idMember;
 		}
 	}
 	

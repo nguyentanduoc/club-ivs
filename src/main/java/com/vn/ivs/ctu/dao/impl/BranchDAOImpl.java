@@ -56,7 +56,6 @@ public class BranchDAOImpl  implements BranchDAO{
 			return currentSession().createQuery("from branch b where b.member.idMember=:idMember",Branch.class).
 					setParameter("idMember", idMember).getSingleResult();
 		} catch (Exception e) {
-			System.out.println(e.toString());
 			return null;
 		}
 	}

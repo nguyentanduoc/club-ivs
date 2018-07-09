@@ -21,7 +21,7 @@ public class Summarization {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "ID_SUM")
-	private long idSum;
+	private int idSum;
 	
 	@Column(name="MONTH_SUM")
 	private int monthSum;
@@ -52,11 +52,11 @@ public class Summarization {
 	@Column(name="NOTE")
 	private String note;
 	
-	public long getIdSum() {
+	public int getIdSum() {
 		return idSum;
 	}
 
-	public void setIdSum(long idSum) {
+	public void setIdSum(int idSum) {
 		this.idSum = idSum;
 	}
 

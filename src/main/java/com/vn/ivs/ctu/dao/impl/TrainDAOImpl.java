@@ -31,7 +31,7 @@ public class TrainDAOImpl implements TrainDAO{
 		return train.getIdTrain();
 	}
 	
-	public boolean deleteTrain(int idTrain) {		
+	public boolean deleteTrain(long idTrain) {		
 		try {
 			Train loadTrain = currentSession().load(Train.class,idTrain);
 			currentSession().delete(loadTrain);
@@ -83,7 +83,7 @@ public class TrainDAOImpl implements TrainDAO{
 	}
 
 	@Override
-	public List<Train> getListTrainByIdSchedule(int idSchedule) {
+	public List<Train> getListTrainByIdSchedule(long idSchedule) {
 		
 		try {
 			return currentSession().createQuery("from train t where t.schedule.idSchedule=?",Train.class).setParameter(0, idSchedule).list();
@@ -115,32 +115,15 @@ public class TrainDAOImpl implements TrainDAO{
 			return null;
 		}
 	}
-
-	@Override
-	public List<Train> getAllTrain() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Train> getAllTrainAuto() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Train> getAllTrainOnWeek() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public Train getTrainById(int id) {
+	
+	public Train getTrainById(long id) {
 		try {
 		return currentSession().load(Train.class,id);
 		}catch (Exception ex) {
 			return null;
 		}
 	}
-	public List<Train> getTrainBySchedule(int idSchedule){
+	public List<Train> getTrainBySchedule(long idSchedule){
 		try {
 			return currentSession().createQuery("select t from train t where t.schedule.idSchedule = ?",Train.class)
 					.setParameter(0, idSchedule).list();
@@ -149,4 +132,5 @@ public class TrainDAOImpl implements TrainDAO{
 			return null;
 		}
 	}
+
 }

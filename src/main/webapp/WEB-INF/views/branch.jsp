@@ -11,7 +11,6 @@
 	 <div class="wrapper">
     	<jsp:include page="_shareLayout/_navbar.jsp"></jsp:include>
     	<jsp:include page="_shareLayout/_sidebar.jsp"></jsp:include>	
-    	
     	<div class="content-wrapper">
 	    <!-- Content Header (Page header) -->
 	    <div class="content-header">
@@ -123,7 +122,7 @@
                    <div class="form-group">
                     <label for="memberEditBranch">Nhân viên quản lý Club tại Chi nhánh</label>
    		            <select id="memberEditBranch" name="memberEditBranch" class="form-control"/></select> 		  
-   		            <div class="text-danger" id="message"></div>                 
+   		            <div class="text-warning" id="message"></div>                 
                   </div>
                   <div class="form-group">
                     <label for="addressEditBranch">Địa chỉ</label>
@@ -156,12 +155,93 @@
 						idMember:idMember
 					},
 					success:function(data){
+						console.log(data);
 						if(data.status==200){
-							$("#message").append("Thành viên này đã quản lý CLB nào đó!");
-							$("#message").addClass("text-danger text-center");
+							$("#message").append("Bạn có muốn người này quản lý thêm chi nhánh!");
+							$("#message").addClass("text-warning text-center");
 						}								
 					}					
 				});
+			});
+			$(".editBranch").click(function(){
+				$("#memberEditBranch").empty();
+				$("#message").empty();
+				var id = $(this).attr('data-id');
+				$.ajax({
+					url:"/Club-IVS/api/getBranchById",
+					type:"POST",
+					data:{
+						id:id
+					},
+					success:function(data){
+						if(data.status==200){
+							var view="";
+							$("#idEditBranch").val(data.branch.idBranch);
+							$("#nameEditBranch").val(data.branch.nameBranch);
+							$("#addressEditBranch").val(data.branch.addressBranch);					
+							if(data.branch.member!=null){
+								
+								$.each(data.members, function (index, row) {						
+									if(row.idMember==data.branch.member.idMember){
+										 view += "<option value='" + row.idMember + "' selected>" + row.nameMember + " - " + row.userNameMember + "</option>";
+									}else{
+										view += "<option value='" + row.idMember + "'>" + row.nameMember + "-" + row.userNameMember + "</option>";
+									}                       
+			                    })
+							}else{
+								view += "<option value='0'>---Chọn Nhân Viên---</option>";   
+								$.each(data.members, function (index, row) {
+									view += "<option value='" + row.idMember + "'>" + row.nameMember + "-" + row.userNameMember + "</option>";             
+			                    })
+							}					
+		                    $("#memberEditBranch").append(view);
+						}else{
+							$("errorGetRole").append("Xảy ra lỗi khi lấy dữ liệu!");
+						}
+					}
+				})	
+			})	
+			$("#saveChangeBranch").click(function(){		
+				var err=false;
+				var id = $("#idEditBranch").val();
+				var nameBranch =$("#nameEditBranch").val();
+				var addressBranch= $("#addressEditBranch").val();
+				var member= $("#memberEditBranch").val();
+				
+				$("#errMemberEditBranch").empty();
+				$("#errNameEditBranch").empty();
+				$("#errAddressEditBranch").empty();
+				if(member==0){			
+					err = true;
+					$("#errMemberEditBranch").append("Chọn nhân viên!");
+				}
+				if(nameBranch==""){			
+					err = true;
+					$("#errNameEditBranch").append("Nhập tên chi nhánh");
+				}
+				if(addressBranch==""){
+					err = true;
+					$("#errAddressEditBranch").append("Nhập tên chi nhánh");
+				}	
+				if(err==false){
+					$.ajax({
+						url:"/Club-IVS/api/saveChangeBranch",
+						type:"POST",
+						data:{
+							"idBranch":id,
+							"nameBranch":nameBranch,
+							"addressBranch":addressBranch,
+							"member.IdMember":member
+						},
+						success:function(data){
+							if(data.status==200){					
+								location.reload();
+							}else{
+								$("errorGetRole").append("Xảy ra lỗi khi lưu!");
+							}					
+						}
+					});
+				}
 			});
 		});
 	</script>

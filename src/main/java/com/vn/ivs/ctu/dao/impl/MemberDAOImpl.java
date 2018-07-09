@@ -51,7 +51,8 @@ public class MemberDAOImpl implements MemberDAO {
 
 	public Member findByUseName(String name) {
 		try {
-			List<Member> list  = currentSession().createQuery("from member where userNameMember =:userName and status =:status",Member.class).setParameter("userName", name).setParameter("status",true)
+			List<Member> list  = currentSession().createQuery("from member where userNameMember =:userNameMember and status=:statusMember",Member.class).
+					setParameter("userNameMember", name).setParameter("statusMember", true)
 					.list();
 			if(list.size()>0) {
 				return list.get(0);
@@ -72,24 +73,10 @@ public class MemberDAOImpl implements MemberDAO {
 		
 	}
 
-	@Override
-	public List<Member> getAllRoleOTC() {
-		try {
-			List<Member> members = currentSession().
-					createQuery("SELECT m FROM member m JOIN m.roles r  WHERE r.codeRole =:codeRole and m.status=:status",Member.class).
-					setParameter("codeRole", "LEADER").setParameter("status",true).list();
-			if (members != null) {
-				return members;
-			}
-		}catch(Exception e) {
-			return null;
-		}
-		return null;
-	}
 	public List<Member> getAllByBranch(int idBranch) {
 		try {
 			List<Member> members = currentSession().
-					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch =:idBranch",Member.class).
+					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch = :idBranch",Member.class).
 					setParameter("idBranch", idBranch).list();
 			if (members != null) {
 				return members;
@@ -104,7 +91,7 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			List<Member> members = currentSession().
 					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch =:idBranch",Member.class).setFirstResult(startPosition).setMaxResults(Pagination.MAX_SIZE_MEMBER).
-					setParameter("idBranch", idBranch).list();			
+					setParameter(0, idBranch).list();			
 			if (members != null) {
 				return members;
 			}			
@@ -129,8 +116,10 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	public List<Member> getAllLeaderClub(){
 		try {
-			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole =:codeRole and m.status=:status",Member.class).setParameter("codeRole", "LEADER_CLUB").setParameter("status", true).list();
+			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole =:codeRole and m.status=:status",Member.class).
+					setParameter("codeRole", "LEADER_CLUB").setParameter("status", true).list();
 		}catch(Exception e) {
+			System.out.println(e.toString());
 			return null;
 		}
 	}
@@ -161,9 +150,19 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public List<Member> getAllLeaderClubByBranch(int idBranch){
 		try {
-			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole =:codeRole and m.branch.codeRole =:codeRole",Member.class).setParameter("codeRole", "LEADER_CLUB").setParameter("codeRole", idBranch).list();
+			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole =:codeRole and m.branch.idBranch =:idBranch and m.status=:status",Member.class).setParameter("codeRole", "LEADER_CLUB").setParameter("idBranch", idBranch).setParameter("status", true).list();
 		}catch(Exception e) {
 			return null;
 		}
 	}
+
+	@Override
+	public List<Member> getAllLeader() {
+		try {
+			return currentSession().createQuery("Select m from member m JOIN m.roles r  WHERE r.codeRole =:codeRole and m.status=:status",Member.class).setParameter("codeRole", "LEADER").setParameter("status", true).list();
+		}catch(Exception e) {
+			return null;
+		}
+	}
+
 }

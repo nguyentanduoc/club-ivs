@@ -11,4 +11,5 @@ public interface RoleDAO {
 	public boolean deleteRole(int id);
 	public Role getRoleById(int id);
 	public List<Role> getOfLeader();
+	public Role getRoleByCode(String code);
 }

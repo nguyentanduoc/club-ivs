@@ -31,6 +31,14 @@ public class Branch {
 	@JoinColumn(name="ID_MEMBER",referencedColumnName="ID_MEMBER")
 	private Member member;
 	
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
 	public String getAddressBranch() {
 		return addressBranch;
 	}
@@ -53,14 +61,6 @@ public class Branch {
 
 	public void setNameBranch(String nameBranch) {
 		this.nameBranch = nameBranch;
-	}
-
-	public Member getMember() {
-		return member;
-	}
-
-	public void setMember(Member member) {
-		this.member = member;
 	}
 	
 }

@@ -65,12 +65,12 @@ public class Member {
 	@JoinTable(name = "member_role", joinColumns = { @JoinColumn(name = "ID_MEMBER") }, inverseJoinColumns = {
 			@JoinColumn(name = "ID_ROLE") })
 	private Set<Role> roles ;
-	
+
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "manage_club", joinColumns = { @JoinColumn(name = "ID_MEMBER") }, inverseJoinColumns = {
 			@JoinColumn(name = "ID_CLUB") })
 	private Set<Club> clubs ;
-
+	
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -166,5 +166,5 @@ public class Member {
 	public void setClubs(Set<Club> clubs) {
 		this.clubs = clubs;
 	}
-
+	
 }
