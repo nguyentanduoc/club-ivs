@@ -22,7 +22,7 @@
 				<a href="#" class="d-block">
 					<c:choose>
 						<c:when test="${SecurityUtils.getMyUserDetail()!=null}">
-							<%=SecurityUtils.getMyUserDetail().getNameMember()%>
+							<%=SecurityUtils.getMyUserDetail().getNameMember()%><br/>
 						</c:when>
 					</c:choose>
 				</a>

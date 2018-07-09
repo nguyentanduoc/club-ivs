@@ -119,6 +119,8 @@
                   <li class="nav-item"><a class="active nav-link" href="#settings" data-toggle="tab">Cập nhật thông tin</a></li>
                   <li class="nav-item"><a class="nav-link" href="#updateAvatar" data-toggle="tab">Cập nhật ảnh</a></li>
                   <li class="nav-item"><a class="nav-link" href="#chagePassWord" data-toggle="tab">Thay đổi mật khẩu</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Điểm hàng tháng</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Nhật ký hoạt động</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
@@ -254,6 +256,92 @@
                         </div>
                       </div>
                   </div>
+                  <!-- activity -->
+                  <div class="tab-pane" id="activity">
+                  <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Lịch sử chấm điểm</h3>
+
+                <div class="card-tools">
+                  <ul class="pagination pagination-sm m-0 float-right">
+                    <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table table-striped" id="example1">
+                <thead align="center">
+                  <tr>
+                    <th>Tháng</th>
+                    <th>Nhận xét</th>
+                    <th>Thang điểm</th>
+                    <th>Khen thưởng</th>
+                  </tr>
+                  </thead>
+                  <c:forEach var="joinclub" items="${listJoinClubByIdMember}">
+                  <tr>
+                    <td align="center"><fmt:formatDate value="${joinclub.getDateJoin()}" pattern="MM/yyyy"/></td>
+                    <td>Update software</td>
+                    <td align="center"><span class="badge bg-danger">55%</span></td>	
+                    <td align="center"><button class="btn btn-warning btn-sm"><i class="fa fa-gift"></i></button></td>
+                  </tr>
+                  </c:forEach>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+             </div>
+            </div>
+                  <!-- activity -->
+                  
+                  <div class="tab-pane direct-chat-messages" id="timeline">
+                  <c:forEach var="date" items="${listDateSort}">
+                    <!-- The timeline -->
+                    
+                    <ul class="timeline timeline-inverse">
+                      <!-- timeline time label -->
+                      <li class="time-label">
+                      <c:choose>
+						<c:when test="${date.isStatus()==true}">
+                        <span class="bg-primary">
+                         <fmt:formatDate value="${date.getDateSort()}" pattern="dd/MM/yyyy"/>
+                        </span>
+                        </c:when>
+                        <c:when test="${date.isStatus()==false}">
+                        <span class="bg-danger" >
+                         	<fmt:formatDate value="${date.getDateSort()}" pattern="dd/MM/yyyy"/>
+                        </span>
+						</c:when>
+						</c:choose>
+                      </li>
+                      <!-- /.timeline-label -->
+                      <!-- timeline item -->
+                      <li>
+                        <i class="fa fa-clock-o bg-gray"></i>
+                        <div class="timeline-item">
+                        <c:choose>
+                        <c:when test="${date.isStatus()==true}">
+                          <h3 class="timeline-header"><a href="#">${date.getNameClub()}</a> tham gia Club</h3>
+						</c:when>
+						<c:when test="${date.isStatus()==false}">
+                          <h3 class="timeline-header"><a href="#">${date.getNameClub()}</a> rời khỏi Club</h3>
+						</c:when>
+					</c:choose>
+                          </div>
+                          </li>	
+                    </ul>
+                    </c:forEach>
+                  </div>
+                  
+                  <!-- /.tab-pane -->
+                  
                 </div>
                 <!-- /.tab-content -->
               </div><!-- /.card-body -->
@@ -276,7 +364,20 @@
   	        $("div").load("demo_ajax_load.txt");
   	    });
   	});
-		</script>
+	</script>
+	<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
+  });
+</script>
     	<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
     </div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>

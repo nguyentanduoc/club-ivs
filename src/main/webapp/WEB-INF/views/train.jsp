@@ -23,8 +23,9 @@
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Tạo lịch thủ công</a></li>
-	              <li class="breadcrumb-item active">Lên lịch</li>
+	              	<li class="breadcrumb-item"><a href="<c:url value="/schedule/index"/>">Thêm lịch tự động</a></li>
+					<li class="breadcrumb-item active"><a>Thêm lịch thủ công</a></li>
+					<li class="breadcrumb-item"><a href="<c:url value="/schedule/scheduletotal"/>">Tất cả các lịch</a></li>
 	            </ol>
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->

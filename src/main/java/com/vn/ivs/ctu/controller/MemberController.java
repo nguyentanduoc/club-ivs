@@ -1,5 +1,8 @@
 package com.vn.ivs.ctu.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,10 +25,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.dao.RoleDAO;
 import com.vn.ivs.ctu.entity.Branch;
+import com.vn.ivs.ctu.entity.Club;
+import com.vn.ivs.ctu.entity.JoinClub;
+import com.vn.ivs.ctu.entity.JoinDateLeave;
 import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.Role;
 import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
+import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.RoleService;
 import com.vn.ivs.ctu.utils.CustomFormBinder;
@@ -42,6 +49,7 @@ public class MemberController {
 	@Autowired	BranchService branchSevice;
 	@Autowired	RoleDAO roleDAO;
 	@Autowired	ClubService clubSerive;
+	@Autowired JoinClubService joinClubService;
 
 	@InitBinder
 	public void bindForm(final WebDataBinder binder) {
@@ -143,10 +151,36 @@ public class MemberController {
 	public String profileMember(ModelMap modelMap) {
 		int idMember = SecurityUtils.getMyUserDetail().getIdMember();
 		modelMap.put("title", "Trang cá nhân");
-		modelMap.put("member",memberService.getMemberById(idMember));
+		Club club  = clubSerive.getLeaderClub(idMember);
+		List<JoinClub> joinclubs = joinClubService.getJoinClubByIdMember(idMember);
+		List<JoinDateLeave> days = new ArrayList<>();
+		for(JoinClub j:joinclubs) {
+			if(j.isStatus()==false) {	
+				days.add(new JoinDateLeave(j.getDateLeave(),j.getClub().getNameClub(),j.isStatus()));
+				days.add(new JoinDateLeave(j.getDateJoin(),j.getClub().getNameClub(),j.isStatus()));
+			}	else {
+				days.add(new JoinDateLeave(j.getDateJoin(),j.getClub().getNameClub(),j.isStatus()));
+			}
+		}
+		
+		 Collections.sort(days, new Comparator<JoinDateLeave>() {
+		      @Override
+		      public int compare(final JoinDateLeave object1, final JoinDateLeave object2) {
+		          return - object1.getDateSort().compareTo(object2.getDateSort());
+		      }
+		  });
+		 
+			
+		if(club!=null) {
+			modelMap.put("listDateSort", days);
+			modelMap.put("member",memberService.getMemberById(idMember));
+			modelMap.put("listJoinClubByIdMember", joinClubService.getJoinClubByIdMember(idMember));
+		}else {
+			modelMap.put("status", 403);
+			modelMap.put("message", "bạn không có quyền truy cập!");
+		}
 		return "profile";		
 	}
-	
 	@PostMapping(path="loadMember")
 	@ResponseBody
 	public Map<String,Object> loadMember(@RequestParam("page") int page){

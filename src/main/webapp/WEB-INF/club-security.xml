@@ -16,6 +16,7 @@
 		<intercept-url pattern="/role/index" access="hasAuthority('ADMIN')" />
 		<intercept-url pattern="/member/admin" access="hasAuthority('ADMIN')" />
 		<intercept-url pattern="/dow/index" access="hasAuthority('ADMIN')" />
+		<!-- <intercept-url pattern="/member/profile" access="hasAuthority('ADMIN')" /> -->
 		<intercept-url pattern="/member/create" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/club/index" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/club/joinClub" access="hasAuthority('LEADER')" />

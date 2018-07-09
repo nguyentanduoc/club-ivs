@@ -22,8 +22,9 @@
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Thêm thành viên</a></li>
-	              <li class="breadcrumb-item active">Câu lạc bộ</li>
+	              	<li class="breadcrumb-item"><a href="<c:url value="/club/index"/>">Danh sách Câu lạc bộ</a></li>
+					<li class="breadcrumb-item active"><a>Thêm thành viên</a></li>
+					<li class="breadcrumb-item"><a href="<c:url value="/club/listJoinClub"/>">Danh sách hoạt động</a></li>
 	            </ol>
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->

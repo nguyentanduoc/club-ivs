@@ -22,7 +22,7 @@
 						<!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Admin</a></li>
+								<li class="breadcrumb-item"><a href="#">Gán quyền</a></li>
 								<li class="breadcrumb-item active">Thành viên</li>
 							</ol>
 						</div>
