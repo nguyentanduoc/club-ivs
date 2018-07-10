@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,6 @@ import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
 import com.vn.ivs.ctu.utils.DateUtils;
-import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Component
 @Controller
@@ -42,12 +43,11 @@ public class TrainController {
 	@Autowired ClubService clubService;
 	
 	@GetMapping(path = "/index")
-	public String Index(ModelMap modelMap) {
+	public String Index(ModelMap modelMap,HttpSession session) {
 		modelMap.put("action1", "train");
 		modelMap.put("action2", "index");
 		modelMap.put("title", "Thêm lịch thủ công");
-		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
-		Club club  = clubService.getLeaderClub(idMember);
+		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
 		modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));
 		modelMap.put("listTrainManual",trainService.getAllTrainManual(club.getIdClub()));
@@ -60,7 +60,7 @@ public class TrainController {
 	}
 
 	@PostMapping ("/create")
-	public String insertTrain(@RequestParam Date dateTrain, @RequestParam String nameSchedule, @RequestParam String timeSchedule, @RequestParam String locationSchedule, @RequestParam boolean autoSchedule, ModelMap modelMap) {	
+	public String insertTrain(@RequestParam Date dateTrain, @RequestParam String nameSchedule, @RequestParam String timeSchedule, @RequestParam String locationSchedule, @RequestParam boolean autoSchedule, ModelMap modelMap,HttpSession session) {	
 		Schedule schedule = new Schedule();
 		Train train = new Train();
 		train.setDateTrain(dateTrain);
@@ -70,14 +70,12 @@ public class TrainController {
 		schedule.setTimeSchedule(timeSchedule);
 		schedule.setLocationSchedule(locationSchedule);
 		schedule.setAutoSchedule(false);
-		long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
-		Club club = clubService.getLeaderClub(idLeader);
+		Club club = (Club)session.getAttribute("club");
 		schedule.setClub(club);
 		Date myDate = dateTrain;
 		Calendar cal = Calendar.getInstance();
         cal.setTime(myDate);
 		int week = cal.get(Calendar.WEEK_OF_YEAR);
-        System.out.println(DateUtils.getDateOfWeek(dateTrain));
 		if(scheduleService.create(schedule)>0) {
 			train.setSchedule(schedule);
 			train.setWeekend(week);
@@ -108,17 +106,16 @@ public class TrainController {
 			modelMap.put("message", "Tạo lịch bị lỗi!");
 		}
 		
-		return Index(modelMap);
+		return "redirect:/train/index";
 	}
 	@GetMapping(path = "/trainauto")
-	public String trainAuto(ModelMap modelMap) {
+	public String trainAuto(ModelMap modelMap, HttpSession session) {
 		modelMap.put("action1", "train");
 		modelMap.put("action2", "trainauto");
 		modelMap.put("title", "Lịch tự động tạo");
-		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
-		Club club  = clubService.getLeaderClub(idMember);
+		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
-		modelMap.put("listTrainAuto", trainService.getAllTrainAuto(club.getIdClub()));
+			modelMap.put("listTrainAuto", trainService.getAllTrainAuto(club.getIdClub()));
 		} else {
 			modelMap.put("status", 403);
 			modelMap.put("message", "bạn không có quyền truy cập!");

@@ -48,11 +48,10 @@
 								</div>
 								<!-- /.card-header -->
 								<!-- form start -->
-								<form:form method="POST" path="schedule" modelAttribute="schedule" action="${pageContext.request.contextPath}/schedule/create">
+								<form:form method="POST" modelAttribute="schedule" action="${pageContext.request.contextPath}/schedule/create">
 									<div class="card-body">
 										<div class="form-group">
 											<label for="nameSchedule">Tên Event</label>
-
 											<form:input type="text" path="nameSchedule"
 												class="form-control" id="nameSchedule"
 												placeholder="Nhập Tên Event" />

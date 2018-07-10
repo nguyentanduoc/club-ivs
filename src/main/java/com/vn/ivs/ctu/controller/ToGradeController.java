@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,10 +39,9 @@ public class ToGradeController {
 	@Autowired BranchService branchSevice;
 	
 	@RequestMapping(path="index")
-	public String tableScore(ModelMap map) {
+	public String tableScore(ModelMap map, HttpSession session) {
 		
-		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
-		Club club = clubService.getLeaderClub(idMember);
+		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
 			List<Summarization> sums =  sumarizationService.getSumByClubPreMonth(club.getIdClub(), DateUtils.getCurentMonth()-1,DateUtils.getCurentYear());
 			if(sums!=null) {
@@ -90,10 +90,9 @@ public class ToGradeController {
 	}
 	
 	@GetMapping(path="exportExcel")
-	public ModelAndView sroceClub(HttpServletRequest req, HttpServletResponse res) {
+	public ModelAndView sroceClub(HttpServletRequest req, HttpServletResponse res, HttpSession session) {
 		ModelAndView modelAndView=null;
-		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
-		Club club = clubService.getLeaderClub(idMember);
+		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
 			List<Summarization> sums =  sumarizationService.getSumByClubPreMonth(club.getIdClub(), DateUtils.getCurentMonth()-1,DateUtils.getCurentYear());
 			if(sums!=null) {

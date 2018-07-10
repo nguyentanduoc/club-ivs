@@ -15,10 +15,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Proxy;
+import org.springframework.context.annotation.Scope;
 
 
 @Entity(name="club")
 @Proxy(lazy = false)
+@Scope("session")
 public class Club {
 	
 	@Id

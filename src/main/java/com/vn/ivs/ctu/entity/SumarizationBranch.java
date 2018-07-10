@@ -13,15 +13,15 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
-@Entity(name="sumarization_branch")
-@Table(name="sumarization_branch")
+@Entity(name="summarization_branch")
+@Table(name="summarization_branch")
 @Proxy(lazy=false)
 public class SumarizationBranch {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID_SUM_BRANCH")
-	private int idSumBranch;
+	@Column(name="ID_SUM_SCORE")
+	private long idSumBranch;
 	
 	@OneToOne(cascade  = CascadeType.PERSIST,fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_MEMBER")
@@ -31,32 +31,35 @@ public class SumarizationBranch {
 	@JoinColumn(name="ID_BRANCH")
 	private Branch branch;
 	
-	@Column(name="Score_Branch")
-	private float scoreBranch;
-	
-	@Column(name="MONTH")
-	private int month;
-	
-	@Column(name="YEAR")
-	private int year;
-	
+	@Column(name="SCORE_BRANCH")
+	private float scoreBranch;	
+
 	@Column(name="DONATE")
 	private boolean donate;
 	
-	@Column(name="CONTAIN_DONATE")
+	@Column(name="DONATE_CONTAIN")
 	private String containDonate;
 	
-	@Column(name="CONFIRM_DONATE")
+	@Column(name="COMFIRM_DONATE")
 	private boolean confirmDonate;
 	
 	@Column(name="COMFIRM")
 	private boolean confirm;
-
-	public int getIdSumBranch() {
+	
+	@Column(name="MONTH_SUM_BRANCH")
+	private int month;
+	
+	@Column(name="YEAR_SUM_BRANCH")
+	private int year;
+	
+	@Column(name="REQUIRE_DONATE")
+	private boolean requireDonate;
+	
+	public long getIdSumBranch() {
 		return idSumBranch;
 	}
 
-	public void setIdSumBranch(int idSumBranch) {
+	public void setIdSumBranch(long idSumBranch) {
 		this.idSumBranch = idSumBranch;
 	}
 
@@ -131,6 +134,13 @@ public class SumarizationBranch {
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
 	}
-	
-	
+
+	public boolean isRequireDonate() {
+		return requireDonate;
+	}
+
+	public void setRequireDonate(boolean requireDonate) {
+		this.requireDonate = requireDonate;
+	}
+		
 }

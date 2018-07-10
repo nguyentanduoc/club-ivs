@@ -27,7 +27,7 @@ public class SumarizationBrachDAOImpl implements SumarizationBrachDAO{
 	}	
 	
 	@Override
-	public int saveOrUpdate(SumarizationBranch sumBranch) {
+	public long saveOrUpdate(SumarizationBranch sumBranch) {
 		try {
 			currentSession().saveOrUpdate(sumBranch);
 			return sumBranch.getIdSumBranch();
@@ -38,7 +38,7 @@ public class SumarizationBrachDAOImpl implements SumarizationBrachDAO{
 	}
 
 	@Override
-	public SumarizationBranch getById(int id) {
+	public SumarizationBranch getById(long id) {
 		try {
 			return currentSession().load(SumarizationBranch.class, id);
 		}catch (Exception e) {
@@ -50,7 +50,7 @@ public class SumarizationBrachDAOImpl implements SumarizationBrachDAO{
 	@Override
 	public List<SumarizationBranch> getSumByBranch(int idBranch, int month, int year) {
 		try {
-			return currentSession().createQuery("from sumarization_branch s where s.branch.idBranch=? and s.year=? and s.month=?",SumarizationBranch.class)
+			return currentSession().createQuery("from summarization_branch s where s.branch.idBranch=? and s.year=? and s.month=?",SumarizationBranch.class)
 					.setParameter(0, idBranch).setParameter(1, year).setParameter(2, month).list();
 		}catch(Exception e) {
 			System.out.println(e.toString());

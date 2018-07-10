@@ -19,7 +19,7 @@ public class Train {
 	@Column(name = "DATE_TRAIN")
 	private Date dateTrain;
 	
-	@Column(name = "WEEKEND")
+	@Column(name = "WEEKEND_TRAIN")
 	private int weekend;
 		
 	@OneToOne(cascade  = {CascadeType.PERSIST,CascadeType.REMOVE},fetch=FetchType.EAGER)

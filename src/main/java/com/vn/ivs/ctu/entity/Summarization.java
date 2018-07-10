@@ -13,20 +13,20 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
-@Entity(name="sumarization")
-@Table(name="sumarization")
+@Entity(name="summarization_club")
+@Table(name="summarization_club")
 @Proxy(lazy=false)
 public class Summarization {	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name= "ID_SUM")
-	private int idSum;
+	@Column(name= "ID_SUM_CLUB")
+	private long idSum;
 	
-	@Column(name="MONTH_SUM")
+	@Column(name="MONTH_SUM_CLUB")
 	private int monthSum;
 	
-	@Column(name="SCORE_CLUB")
+	@Column(name="SCORE_SUM_CLUB")
 	private float scoreClub;
 	
 	@Column(name="REQUIRE_DONATE")
@@ -35,7 +35,7 @@ public class Summarization {
 	@Column(name="SEE_DONATE")
 	private boolean seeDonate;
 	
-	@Column(name="YEAR_SUM")
+	@Column(name="YEAR_SUM_CLUB")
 	private int yearSum;
 	
 	@OneToOne(cascade  = CascadeType.PERSIST,fetch=FetchType.EAGER)
@@ -52,11 +52,11 @@ public class Summarization {
 	@Column(name="NOTE")
 	private String note;
 	
-	public int getIdSum() {
+	public long getIdSum() {
 		return idSum;
 	}
 
-	public void setIdSum(int idSum) {
+	public void setIdSum(long idSum) {
 		this.idSum = idSum;
 	}
 

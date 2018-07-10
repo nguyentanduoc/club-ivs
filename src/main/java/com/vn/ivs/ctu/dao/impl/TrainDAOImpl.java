@@ -44,8 +44,8 @@ public class TrainDAOImpl implements TrainDAO{
 
 	public List<Train> getAllTrainAuto(int idClub) {	
 			try {
-			return currentSession().createQuery("from train t where t.schedule.autoSchedule=? and t.schedule.club.idClub=?",Train.class)
-					.setParameter(0, true).setParameter(1, idClub).list();
+			return currentSession().createQuery("from train t where t.schedule.autoSchedule=:autoSchedule and t.schedule.club.idClub=:idClub",Train.class)
+					.setParameter("autoSchedule", true).setParameter("idClub", idClub).list();
 			}catch (Exception e) {
 				System.out.println(e.toString());
 				return null;

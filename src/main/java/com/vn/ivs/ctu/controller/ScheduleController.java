@@ -3,7 +3,10 @@ package com.vn.ivs.ctu.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,6 +27,7 @@ import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Controller
 @RequestMapping("schedule")
+@Scope("session")
 public class ScheduleController {
 	
 	@Autowired ScheduleService scheduleService;
@@ -33,14 +37,13 @@ public class ScheduleController {
 	
 	
 	@GetMapping ("/index")
-	public String Index(ModelMap modelMap){
+	public String Index(ModelMap modelMap,HttpSession session){
 		modelMap.put("action1","schedule");
 		modelMap.put("action2","index");
 		modelMap.put("title","Thêm lịch tự động");	
 		Schedule schedule = new Schedule();
 		schedule.setAutoSchedule(true);
-		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
-		Club club  = clubService.getLeaderClub(idMember);
+		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
 		modelMap.put("schedule", schedule);
 		modelMap.put("listDow",dowServiceImpl.getAll());
@@ -65,13 +68,12 @@ public class ScheduleController {
 	}
 	
 	@GetMapping(path = "/scheduletotal")
-	public String trainTotal(ModelMap modelMap) {
+	public String trainTotal(ModelMap modelMap, HttpSession session) {
 		modelMap.put("action1", "train");
 		modelMap.put("action2", "traintotal");
 		modelMap.put("title", "Tổng lịch");
 		
-		long idMember = SecurityUtils.getMyUserDetail().getIdMember();
-		Club club  = clubService.getLeaderClub(idMember);
+		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
 		modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));
 		}else {

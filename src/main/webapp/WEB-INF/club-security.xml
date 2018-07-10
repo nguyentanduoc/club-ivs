@@ -35,9 +35,12 @@
 		<intercept-url pattern="/login" access="permitAll"/>
 		
 		<intercept-url pattern="/chooseClub" access="hasAuthority('LEADER_CLUB')" />
-		
-		<!-- <intercept-url pattern="/schedule/index" access="hasAuthority('LEADER')" />
-		<intercept-url pattern="/train/index" access="hasAuthority('LEADER')" /> -->
+		<intercept-url pattern="/schedule/index" access="hasAuthority('LEADER_CLUB')" />
+		<intercept-url pattern="/train/trainauto" access="hasAuthority('LEADER_CLUB')" />	
+		<intercept-url pattern="/leaderclub" access="hasAuthority('LEADER_CLUB')" />	
+		<intercept-url pattern="/schedule/scheduletotal" access="hasAuthority('LEADER_CLUB')" />	
+		<intercept-url pattern="/attendance/index" access="hasAuthority('LEADER_CLUB')" />	
+		<intercept-url pattern="/to-grade/index" access="hasAuthority('LEADER_CLUB')" />	
 		<intercept-url pattern="/404" access="permitAll"/>
 		<intercept-url pattern="/**" access="permitAll"/>	
 		
@@ -52,6 +55,13 @@
 		<logout delete-cookies="JSESSIONID" />
 		<csrf/>
 		<remember-me key="rememberMe"/>
+		<session-management>
+	        <concurrency-control max-sessions="2" />
+	    </session-management>
+		<session-management>
+		    <concurrency-control expired-url="/chooseClub"/>
+		</session-management>
+		<session-management session-fixation-protection="migrateSession"></session-management>
 	</http>
 	<!-- <user-service> <user name="user" password="$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG" 
 		authorities="OTC" /> </user-service> -->

@@ -18,7 +18,7 @@ public class SumarizationServiceImpl implements SumarizationService{
 	@Autowired SumarizationDAO sumarizationDAO;
 	
 	@Override
-	public int createOrUpdate(Summarization sum) {
+	public long createOrUpdate(Summarization sum) {
 		return sumarizationDAO.createOrUpdate(sum);
 	}
 
@@ -33,7 +33,7 @@ public class SumarizationServiceImpl implements SumarizationService{
 	}
 
 	@Override
-	public Summarization getSumById(int id) {
+	public Summarization getSumById(long id) {
 		return sumarizationDAO.getSumById(id);
 	}
 

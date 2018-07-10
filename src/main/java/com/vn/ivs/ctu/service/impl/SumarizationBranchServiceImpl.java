@@ -18,12 +18,12 @@ public class SumarizationBranchServiceImpl implements SumarizationBranchService{
 	@Autowired SumarizationBrachDAO sumarizationBrachDAO;
 	
 	@Override
-	public int saveOrUpdate(SumarizationBranch sumBranch) {
+	public long saveOrUpdate(SumarizationBranch sumBranch) {
 		return sumarizationBrachDAO.saveOrUpdate(sumBranch);
 	}
 
 	@Override
-	public SumarizationBranch getById(int id) {
+	public SumarizationBranch getById(long id) {
 		return sumarizationBrachDAO.getById(id);
 	}
 

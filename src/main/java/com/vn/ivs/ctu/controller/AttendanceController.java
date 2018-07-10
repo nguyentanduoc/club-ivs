@@ -3,6 +3,8 @@ package com.vn.ivs.ctu.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,7 +21,6 @@ import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
-import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Controller
 @RequestMapping("attendance")
@@ -32,13 +33,12 @@ public class AttendanceController {
 	@Autowired ScheduleService scheduleService;
 	
 	@GetMapping ("/index")
-	public String Index(ModelMap modelMap) {
+	public String Index(ModelMap modelMap,HttpSession session) {
 
 		modelMap.put("action1","attendance");
 		modelMap.put("action2","index");
 		modelMap.put("title","Sự kiện trong tuần");
-		long idLeader =  SecurityUtils.getMyUserDetail().getIdMember();
-		Club club = clubService.getLeaderClub(idLeader);
+		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
 			modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));
 			modelMap.put("listAllTrainOnWeek", trainService.getListAllTrainOnWeek(club.getIdClub()));			
@@ -49,13 +49,12 @@ public class AttendanceController {
 		return "attendance";
 	}
 	@GetMapping ("/diemdanh/{id}")
-	public String Diemdanh(@PathVariable("id") int id, ModelMap modelMap) {
+	public String Diemdanh(@PathVariable("id") int id, ModelMap modelMap,HttpSession session) {
 
 		modelMap.put("action1","attendance");
 		modelMap.put("action2","diemdanh");
 		modelMap.put("title","Danh sách điểm danh");
-		long idLeader =  SecurityUtils.getMyUserDetail().getIdMember();
-		Club club = clubService.getLeaderClub(idLeader);
+		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
 			modelMap.put("listAttendance", attendanceService.getAttendanceByTrain(id));
 			modelMap.put("listSchedule",scheduleService.getAll(club.getIdClub()));

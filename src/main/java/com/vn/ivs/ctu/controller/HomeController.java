@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -42,8 +43,8 @@ import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Controller
 @RequestMapping(value= {"/"})
-public class HomeController {
-	
+@Scope("session")
+public class HomeController {	
 	
 	@Autowired TrainService trainService;
 	@Autowired AttendanceService attendanceService;
@@ -204,17 +205,19 @@ public class HomeController {
 		return "chooseClub";
 	}
 	
-	@SuppressWarnings("unlikely-arg-type")
 	@PostMapping(path="chooseClub")
-	public String chooseClub(@RequestParam(name="club",required=false) String idClub,HttpServletRequest request) {
+	public String chooseClub(@RequestParam(name="club",required=false) String idClub, HttpSession session) {
+		
 		if(idClub!=null) {
 			MyUserDetail myUser = SecurityUtils.getMyUserDetail();	
 			Set<Club> clubs = myUser.getClubs() ;
 			for(Club club:clubs) {
-				if(idClub.equals(club.getIdClub())) {
-					request.getSession().setAttribute("club",club);
+				int intIdClub = Integer.parseInt(idClub);
+				if(intIdClub==club.getIdClub()) {
+					session.setAttribute("club",club);		
 				}
 			}			
+			//System.out.println(((Club)session.getAttribute("club")).getNameClub());
 			return "redirect:/";
 		}else {
 			return "redirect:/chooseClub";

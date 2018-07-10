@@ -19,10 +19,16 @@
         </listener-class>
      </listener>
      <listener>
+    <listener-class>
+	      org.springframework.security.web.session.HttpSessionEventPublisher
+	    </listener-class>
+	</listener>
+     <listener>
         <listener-class>
             org.springframework.web.context.request.RequestContextListener
         </listener-class>
-     </listener>	
+     </listener>
+     
 	<!-- Dispartcher -->
 	<servlet>
 		<servlet-name>springDispatcherServlet</servlet-name>
@@ -43,6 +49,7 @@
 	<!-- .//Dispartcher -->
 	<session-config>
 		<session-timeout>30</session-timeout>
+		 <tracking-mode>COOKIE</tracking-mode>
 	</session-config>
 	<filter>
         <filter-name>encoding-filter</filter-name>

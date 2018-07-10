@@ -27,7 +27,7 @@ public class SumarizationDAOImpl implements SumarizationDAO{
 	}	
 	
 	@Override
-	public int createOrUpdate(Summarization sum) {
+	public long createOrUpdate(Summarization sum) {
 		try {
 			currentSession().saveOrUpdate(sum);
 			return sum.getIdSum();
@@ -41,7 +41,7 @@ public class SumarizationDAOImpl implements SumarizationDAO{
 	@Override
 	public List<Summarization> getSumByClubPreMonth(int idClub, int month,int year) {
 		try {
-			return currentSession().createQuery("from sumarization s where s.monthSum = ? and s.club.idClub =? and s.yearSum=?",Summarization.class).setParameter(0, month).setParameter(1, idClub).setParameter(2, year).list();
+			return currentSession().createQuery("from summarization_club s where s.monthSum = ? and s.club.idClub =? and s.yearSum=?",Summarization.class).setParameter(0, month).setParameter(1, idClub).setParameter(2, year).list();
 		}catch (Exception e) {
 			System.out.println(e.toString());
 			return null;
@@ -50,7 +50,7 @@ public class SumarizationDAOImpl implements SumarizationDAO{
 	@Override
 	public List<Summarization> getSumByMemberPreMonth(long idMember, int month,int year){
 		try {
-			return currentSession().createQuery("from sumarization s where s.monthSum = ? and s.member.idMember =? and s.yearSum=?",Summarization.class).setParameter(0, month).setParameter(1, idMember).setParameter(2, year).list();
+			return currentSession().createQuery("from summarization_club s where s.monthSum = ? and s.member.idMember =? and s.yearSum=?",Summarization.class).setParameter(0, month).setParameter(1, idMember).setParameter(2, year).list();
 		}catch (Exception e) {
 			System.out.println(e.toString());
 			return null;
@@ -58,7 +58,7 @@ public class SumarizationDAOImpl implements SumarizationDAO{
 	}
 
 	@Override
-	public Summarization getSumById(int id) {
+	public Summarization getSumById(long id) {
 		try {
 			return currentSession().load(Summarization.class, id);
 		}catch (Exception e) {
@@ -69,7 +69,7 @@ public class SumarizationDAOImpl implements SumarizationDAO{
 	@Override
 	public List<Summarization> getSumByMember(long idMember, int month, int year) {
 		try {
-			return currentSession().createQuery("from sumarization s where s.monthSum = ? and s.member.idMember =? and s.yearSum=?",Summarization.class).setParameter(0, month).setParameter(1, idMember).setParameter(2, year).list();
+			return currentSession().createQuery("from summarization_club s where s.monthSum = ? and s.member.idMember =? and s.yearSum=?",Summarization.class).setParameter(0, month).setParameter(1, idMember).setParameter(2, year).list();
 		}catch (Exception e) {
 			System.out.println(e.toString());
 			return null;
