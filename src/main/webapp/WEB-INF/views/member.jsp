@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -127,7 +128,8 @@
 										<tr>											
 											<th>Tên Chức Vụ</th>
 											<th>Chức vụ</th>
-											<th style="width: 150px">Tuỳ Chỉnh</th>
+											<th>TTHĐ</th>
+											<th>Tuỳ Chỉnh</th>
 										</tr>
 										</thead>
 										<tbody id="listMember">
@@ -140,6 +142,16 @@
 														</c:forEach>
 													</td>
 													<td align="center">
+														<c:choose>
+															<c:when test="${member.isStatus()==true}">
+																 <label class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i></label>
+															</c:when>
+															<c:when test="${member.isStatus()==false}">
+																 <label class="btn btn-secondary btn-sm"><i class="fa fa-circle-o" aria-hidden="true"></i></label>
+															</c:when>
+														</c:choose>
+													</td>
+													<td align="center">
 														<a href="${pageContext.request.contextPath}/member/editMember/${member.getIdMember()}"> <i class="fa fa-pencil edit"></i></a>														 
 													</td>
 												</tr>
@@ -147,10 +159,9 @@
 										</tbody>
 									</table>
 								</div>
-								<c:set value="1" var="curentPage"/>
+								<c:set value="${pageContext.request.contextPath}/member/create" var="url"/>
 								<div class="card-footer clearfix" >
-					                <ul class="pagination pagination-sm m-0 float-right" id="paginate">		
-					                </ul>
+					              <tag:paginate max="5" offset="${offset}" count="${count}" uri="${url}" next="&raquo;" previous="&laquo;"/>
 				              	</div>
 								<!-- /.card-body -->
 							</div>
@@ -167,65 +178,7 @@
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){			
-			var currentPage=1;
-			$("#paginate").empty();
-			var viewPage="";		
-			var totalPage = ${totalPage};
-			var idBranch= ${idBranch};
-			viewPage=" <li class='page-item' id='first'><a class='page-link pageClick' data-click='1' href='#'>&laquo;</a></li>";
-			if(totalPage>1){
-				for(var i=1;i<=totalPage;i++){				
-					if(currentPage==i){
-						viewPage += "<li class='page-item active'><a class='page-link pageClick' data-click='"+i+"' href='#'>"+i+"</a></li>";
-					}else{
-						viewPage += "<li class='page-item'><a class='page-link pageClick' data-click='"+i+"' href='#'>"+i+"</a></li>";
-					}				
-				}
-			}			
-			viewPage+=" <li class='page-item'><a class='page-link pageClick' data-click='"+totalPage+"' href='#'>&raquo;</a></li>";
-			$("#paginate").append(viewPage);
-			
-			$(".pageClick").click(function(){
-				var view="";
-				var page = $(this).attr('data-click');
-				$("#listMember").empty();
-				$(".page-item").each(function( index, element ) {
-					if ( $( this ).hasClass('active')) {
-						$( this ).removeClass('active');
-					}
-				})
-				$(this.parentNode).addClass("active");
 				
-				$.ajax({
-					url:"/Club-IVS/member/loadMemberBranch",
-					type:"POST",
-					data:{
-						page:page,
-						idBranch:idBranch
-					},
-					success:function(data){				
-						if(data.status==200){
-							$.each(data.listMember,function(index,row){
-								view +="<tr>";								
-								view +="<td>"+row.nameMember+"</td><td>";
-								if(row.roles!=null){
-									$.each(row.roles,function(index1,row1){
-										view+=row1.nameRole+"<br/>";
-									})
-								}								
-								
-								view+="</td>";
-								view +="<td><a href='${pageContext.request.contextPath}/member/editMember/"+row.idMember+"'> <i class='fa fa-pencil edit'></i></a>";
-								view+="</td></tr>";
-								
-							});
-							$("#listMember").append(view);															
-						}else{
-							
-						}
-					}
-				})
-			})		
 			$("#searchMember").click(function(){
 				var txtSearch = $("#txtSearch").val();
 

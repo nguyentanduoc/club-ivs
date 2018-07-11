@@ -11,9 +11,9 @@ public interface MemberDAO {
 	public 	boolean			check(String name);
 	public 	long 			saveOrUpdate(Member member);
 	public 	Member			findByUseName(String name);
-	public 	List<Member> 	findAll(int startPosition);
+	public 	List<Member> 	findAll(int startPosition,int maxResult);
 	public	List<Member> 	getAllByBranch(int idBranch);
-	public	List<Member> 	getAllByBranch(int idBranch,int startPosition);
+	public	List<Member> 	getAllByBranch(int idBranch,int offset,int maxResult);
 	public 	boolean 		joinClub(JoinClub joinClub);
 	public 	Member			getMemberById(long idMember);	
 	public 	List<Member>	getAllLeaderClub();

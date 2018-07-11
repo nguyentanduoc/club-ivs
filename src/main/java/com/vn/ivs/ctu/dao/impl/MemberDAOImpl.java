@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import com.vn.ivs.ctu.dao.MemberDAO;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
-import com.vn.ivs.ctu.utils.Pagination;
 
 @Repository()
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -62,9 +61,9 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 	}
 
-	public List<Member> findAll(int startPosition) {
+	public List<Member> findAll(int startPosition,int maxResult) {
 		try {
-			List<Member>  list = (List<Member>)currentSession().createQuery("from member", Member.class).setFirstResult(startPosition).setMaxResults(Pagination.MAX_SIZE_MEMBER).list();		
+			List<Member>  list = (List<Member>)currentSession().createQuery("from member", Member.class).setFirstResult(startPosition).setMaxResults(maxResult).list();		
 			return list;
 		}catch (Exception e) {
 			System.out.println(e.toString());
@@ -87,11 +86,11 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return null;
 	}
-	public List<Member> getAllByBranch(int idBranch,int startPosition) {
+	public List<Member> getAllByBranch(int idBranch,int startPosition, int maxResult) {
 		try {
 			List<Member> members = currentSession().
-					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch =:idBranch",Member.class).setFirstResult(startPosition).setMaxResults(Pagination.MAX_SIZE_MEMBER).
-					setParameter(0, idBranch).list();			
+					createQuery("SELECT m FROM member m JOIN m.branch b  WHERE b.idBranch =:idBranch",Member.class).setFirstResult(startPosition).setMaxResults(maxResult).
+					setParameter("idBranch", idBranch).list();			
 			if (members != null) {
 				return members;
 			}			

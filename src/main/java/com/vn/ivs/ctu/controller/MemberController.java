@@ -36,7 +36,6 @@ import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.RoleService;
 import com.vn.ivs.ctu.utils.CustomFormBinder;
-import com.vn.ivs.ctu.utils.Pagination;
 import com.vn.ivs.ctu.utils.PasswordEncoder;
 import com.vn.ivs.ctu.utils.SecurityUtils;
 
@@ -57,7 +56,9 @@ public class MemberController {
 	}
 
 	@GetMapping(path = "/admin")
-	public String Index(@RequestParam(name="status",required=false) String status,ModelMap modelMap) {
+	public String Index(@RequestParam(name="status",required=false) String status,ModelMap modelMap,Integer offset, Integer maxResults) {
+		maxResults=maxResults!=null?maxResults:5;
+		offset=offset!=null?offset:0;
 		modelMap.put("action1", "member");
 		modelMap.put("action2", "adminMember");
 		modelMap.put("title", "Thêm thành viên");
@@ -65,9 +66,11 @@ public class MemberController {
 		member.setSexMember(true);
 		modelMap.put("member", member);
 		modelMap.put("listRole", roleService.getAll());
-		modelMap.put("listMember", memberService.findAll(0));
+		modelMap.put("listMember", memberService.findAll(offset, maxResults));
 		modelMap.put("listBranch", branchSevice.getAll());		
-		modelMap.put("totalPage", Pagination.totalPage(memberService.count(), Pagination.MAX_SIZE_MEMBER));
+		modelMap.put("count", memberService.count());
+		modelMap.put("offset", offset);
+	
 		if(status!=null) {
 			if(status.equals("200")) {
 				modelMap.put("status", 200);
@@ -93,11 +96,12 @@ public class MemberController {
 	}
 	
 	@GetMapping(path = "/create")
-	public String create(@RequestParam(name="status",required=false) String status,ModelMap modelMap) {
+	public String create(@RequestParam(name="status",required=false) String status,ModelMap modelMap,Integer offset, Integer maxResult) {
 		modelMap.put("action1", "member");
 		modelMap.put("action2", "indexMember");
 		modelMap.put("title", "Thêm thành viên");
-		
+		maxResult=maxResult!=null?maxResult:5;
+		offset=offset!=null?offset:0;
 		if(SecurityUtils.getMyUserDetail()!=null) {
 			long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 			Branch branch = branchSevice.getBranchByMember(idLeader);
@@ -106,8 +110,9 @@ public class MemberController {
 				Member member = new Member();				
 				modelMap.put("member", member);
 				modelMap.put("listRole", roleService.getOfLeader());
-				modelMap.put("listMember", memberService.getAllByBranch(branch.getIdBranch(), 0));
-				modelMap.put("totalPage", Pagination.totalPage(members.size(), Pagination.MAX_SIZE_MEMBER));
+				modelMap.put("listMember", memberService.getAllByBranch(branch.getIdBranch(), offset, maxResult));
+				modelMap.put("count", members.size());
+				modelMap.put("offset", offset);
 				modelMap.put("idBranch",branch.getIdBranch());
 			}else {
 				modelMap.put("status", 403);
@@ -183,23 +188,23 @@ public class MemberController {
 		}
 		return "profile";		
 	}
-	@PostMapping(path="loadMember")
+	/*@PostMapping(path="loadMember")
 	@ResponseBody
 	public Map<String,Object> loadMember(@RequestParam("page") int page){
 		Map<String, Object> map = new HashMap<>();
 		map.put("status","200");
 		map.put("listMember", memberService.findAll(Pagination.MAX_SIZE_MEMBER*(page-1)));
 		return map;
-	}
+	}*/
 	
-	@PostMapping(path="loadMemberBranch")
+	/*@PostMapping(path="loadMemberBranch")
 	@ResponseBody
 	public Map<String,Object> loadMemberBranch(@RequestParam("page") int page,@RequestParam("idBranch") int idBranch){
 		Map<String, Object> map = new HashMap<>();
 		map.put("status","200");
 		map.put("listMember", memberService.getAllByBranch(idBranch,Pagination.MAX_SIZE_MEMBER*(page-1)));
 		return map;
-	}
+	}*/
 	
 	@GetMapping(path="editMember/{idMember}")
 	public String editMember(@PathVariable(name="idMember",required=false)String idMember,ModelMap modelMap) {

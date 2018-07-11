@@ -22,7 +22,7 @@
 		<intercept-url pattern="/member/editMember/**" access="hasAnyAuthority('LEADER')" />
 		
 		<intercept-url pattern="/member/profile" access="hasAuthority('MEMBER')" />
-		<intercept-url pattern="/member/update" method="POST" access="hasAuthority('MEMBER')" />
+		<intercept-url pattern="/member/update" method="POST" access="hasAnyAuthority('MEMBER','LEADER')" />
 
 		<intercept-url pattern="/member/create" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/member/editMember/**" access="hasAnyAuthority('LEADER')" />

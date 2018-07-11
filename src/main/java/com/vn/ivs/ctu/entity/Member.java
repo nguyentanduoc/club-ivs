@@ -64,11 +64,13 @@ public class Member {
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "member_role", joinColumns = { @JoinColumn(name = "ID_MEMBER") }, inverseJoinColumns = {
 			@JoinColumn(name = "ID_ROLE") })
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Set<Role> roles ;
 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "manage_club", joinColumns = { @JoinColumn(name = "ID_MEMBER") }, inverseJoinColumns = {
 			@JoinColumn(name = "ID_CLUB") })
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Set<Club> clubs ;
 	
 	public Set<Role> getRoles() {

@@ -43,5 +43,4 @@ public class JoinClubServiceImpl implements JoinClubService{
 	public boolean delete(long idJoin) {
 		return joinClubDAO.delete(idJoin); 
 	}
-
 }

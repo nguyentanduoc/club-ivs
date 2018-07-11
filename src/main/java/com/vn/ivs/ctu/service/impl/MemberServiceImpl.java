@@ -34,8 +34,8 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.findByUseName(name);
 	}
 	@Override
-	public List<Member> findAll(int startPosition) {
-		return memberDAO.findAll(startPosition);
+	public List<Member> findAll(int startPosition,int maxResult) {
+		return memberDAO.findAll(startPosition,maxResult);
 	}
 
 	@Override
@@ -43,8 +43,8 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.getAllByBranch(idBranch);
 	}
 	@Override
-	public List<Member> getAllByBranch(int idBranch,int startPosition){
-		return memberDAO.getAllByBranch(idBranch,startPosition);
+	public List<Member> getAllByBranch(int idBranch,int startPosition, int maxResult){
+		return memberDAO.getAllByBranch(idBranch,startPosition,maxResult);
 	}
 	@Override
 	public boolean joinClub(JoinClub joinClub) {

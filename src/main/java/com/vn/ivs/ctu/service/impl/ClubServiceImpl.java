@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.vn.ivs.ctu.dao.ClubDAO;
 import com.vn.ivs.ctu.entity.Club;
+import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.service.ClubService;
 
 @Service
@@ -16,6 +17,7 @@ import com.vn.ivs.ctu.service.ClubService;
 public class ClubServiceImpl implements ClubService{
 
 	@Autowired ClubDAO clubDAO;
+	@Autowired JoinClubServiceImpl joinClubServiceImpl;
 	
 	@Override
 	public int saveOrUpdate(Club club) {
@@ -42,6 +44,12 @@ public class ClubServiceImpl implements ClubService{
 	}
 	@Override
 	public boolean deleteClub(int id) {
+		List<JoinClub> jl = joinClubServiceImpl.getJoinClubByClub(id);
+		if(jl!=null) {
+			for(JoinClub j:jl) {
+				joinClubServiceImpl.delete(j.getIdJoinClub());
+			}
+		}
 		return clubDAO.deleteClub(id);
 	}
 }

@@ -66,12 +66,12 @@
 					                	</c:choose>	
 										<div class="form-group row">
 											<label for="nameBranch" class="col-md-4">Tên Câu Lạc Bộ</label>
-											<form:input type="text" path="nameClub" class="form-control col-md-8"
+											<form:input type="text" path="nameClub" class="form-control col-md-7"
 												id="nameClub" placeholder="Nhập Tên Câu Lạc Bộ" />
 										</div>										
 										<div class="form-group row">
 											<label for="members" class="col-md-4">Quản Lý</label>
-											<form:select path="members" items="${members}" cssClass="col-md-8 form-control select2" itemLabel="nameMember" itemValue="idMember" multiple="multiple" data-placeholder="Chọn quản lý">
+											<form:select path="members" items="${members}" cssClass="col-md-7 form-control select2" itemLabel="nameMember" itemValue="idMember" multiple="multiple" data-placeholder="Chọn quản lý">
 											</form:select>
 										</div>
 									</div>
