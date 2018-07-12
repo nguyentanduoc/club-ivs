@@ -11,7 +11,6 @@
 	<div class="wrapper">
 		<jsp:include page="_shareLayout/_navbar.jsp"></jsp:include>
 		<jsp:include page="_shareLayout/_sidebar.jsp"></jsp:include>
-
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<div class="content-header">
@@ -67,11 +66,11 @@
 										<div class="form-group row">
 											<label for="nameBranch" class="col-md-4">Tên Câu Lạc Bộ</label>
 											<form:input type="text" path="nameClub" class="form-control col-md-7"
-												id="nameClub" placeholder="Nhập Tên Câu Lạc Bộ" />
+												id="nameClub" placeholder="Nhập Tên Câu Lạc Bộ" required="required"/>
 										</div>										
 										<div class="form-group row">
 											<label for="members" class="col-md-4">Quản Lý</label>
-											<form:select path="members" items="${members}" cssClass="col-md-7 form-control select2" itemLabel="nameMember" itemValue="idMember" multiple="multiple" data-placeholder="Chọn quản lý">
+											<form:select required="required" path="members" items="${members}" cssClass="col-md-7 form-control select2" itemLabel="nameMember" itemValue="idMember" multiple="multiple" data-placeholder="Chọn quản lý">
 											</form:select>
 										</div>
 									</div>
@@ -109,7 +108,7 @@
 			                    	</c:forEach>
 			                    </td>                           
 			                    <td>
-			                    	<span class="editClub" data-id = "${club.getIdClub()}"> <i class="fa fa-pencil edit" aria-hidden="true" data-toggle="modal" data-target="#editClub"></i></span>
+			                    	<a href='<c:url value="/club/edit/?id=${club.getIdClub()}"/>' class="editClub"><i class="fa fa-pencil edit"></i></a>
 			                    	<span class="deleteClub" data-id = "${club.getIdClub()}"><i class="fa fa-times delete"></i></span>	
 			                    </td>	                               
 			                  </tr>	
@@ -123,144 +122,13 @@
 				</div>
 			</section>
 			<!-- /.content -->
-			<!-- modal -->
-			<div id="editClub" class="modal fade" role="dialog">
-				<div class="modal-dialog">
-					<!-- Modal content-->
-					<div class="modal-content">						
-						<div class="modal-header">
-							<h4 class="modal-title">Chỉnh sửa Câu lạc Bộ</h4>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<div class="modal-body">
-							<input type="hidden" id="idEditClub"/>
-							<div class="text-center text-danger" id="errorEditClub"></div>
-							<div class="form-group">
-								<label for="nameEditClub">Tên Câu Lạc Bộ</label>
-								<input type="text" id="nameEditClub" id="nameEditClub" class="form-control"
-									 placeholder="Nhập Tên Câu Lạc Bộ" />
-							</div>
-							<div class="form-group">
-								<label for="branchEditClub">Thuộc chi nhánh</label>
-								<select id="branchEditClub" name="branchEditClub" class="form-control">									
-									
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="memberEditClub">Nhân viên quản lý câu lạc bộ</label>
-								<select id="memberEditClub" name ="memberEditClub" class="form-control">																
-								</select>								
-							</div>
-							
-						</div>
-						<div class="modal-footer">
-							<button type="button" id="saveChangeClub" class="btn btn-primary">Lưu</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/.modal -->
 		</div>
 		<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
 	</div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
-			var idMember = $("#idMember").val();
-			$("#messageMember").empty();
-			$.ajax({
-				url:"/Club-IVS/club/checkMember",
-				type:"POST",
-				data:{
-					idMember:idMember
-				},
-				success:function(data){
-					if(data.status==200){
-						$("#messageMember").append("Thành viên này đã quản lý CLB nào đó!");
-						$("#messageMember").addClass("text-danger text-center");
-					}								
-				}					
-			});
-			$("#idMember").change(function(){
-				$("#messageMember").empty();
-				$.ajax({
-					url:"/Club-IVS/club/checkMember",
-					type:"POST",
-					data:{
-						idMember:idMember
-					},
-					success:function(data){
-						if(data.status==200){
-							$("#messageMember").append("Thành viên này đã quản lý CLB nào đó!");
-							$("#messageMember").addClass("text-danger text-center");
-						}								
-					}					
-				});
-			})
-			//club
-			$(".editClub").click(function(){
-				var id = $(this).attr('data-id');
-				$("#memberEditClub").empty();
-				$("#branchEditClub").empty();
-				var viewMember, viewBranch;
-				$.ajax({
-					type : "POST",
-					url : "/Club-IVS/api/getClubById",
-					data : {
-						id:id
-					},
-					success : function(data) {
-						if(data.status==200){
-							$("#idEditClub").val(data.club.idClub);
-							$("#nameEditClub").val(data.club.nameClub);
-							$.each(data.members, function (index, row) {
-								if(row.idMember==data.club.member.idMember){
-									viewMember += "<option value='" + row.idMember + "' selected>" + row.nameMember + " - " + row.userNameMember + "</option>";
-								}else{
-									viewMember += "<option value='" + row.idMember + "'>" + row.nameMember + "-" + row.userNameMember + "</option>";
-								}                        
-		                    })
-		                    $("#memberEditClub").append(viewMember);
-							$.each(data.branchs, function (index, row) {
-								if(row.idBranch==data.club.branch.idBranch){
-									viewBranch += "<option value='" + row.idBranch + "' selected>" + row.nameBranch + "</option>";
-								}else{
-									viewBranch += "<option value='" + row.idBranch + "'>" + row.nameBranch + "</option>";
-								}                        
-		                    })
-		                    $("#branchEditClub").append(viewBranch);
-						}else{
-							
-						}
-					}
-				});
-			});
-			$("#saveChangeClub").click(function(){
-				$("#errorEditClub").empty();
-				var id = $("#idEditClub").val();
-				var name = $("#nameEditClub").val();
-				var idMember = $("#memberEditClub").val();
-				var idBranch = $("#branchEditClub").val();
-				$.ajax({
-					url:"/Club-IVS/api/saveChangeClub",
-					type:"POST",
-					data:{
-						"idClub":id,
-						"nameClub":name,
-						"member.idMember":idMember,
-						"branch.idBranch":idBranch
-					},
-					success:function(data){
-						if(data.status==200){					
-							location.reload();
-						}else{
-							$("#errorEditClub").append("Xãy ra lỗi khi lưu!");
-						}
-						
-					}
-				});		
-			});
+			//club			
 			$(".deleteClub").click(function(){
 				$("#messageDeleteClub").empty();
 				var id = $(this).attr('data-id');

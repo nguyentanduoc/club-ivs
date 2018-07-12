@@ -68,8 +68,8 @@
 					                </c:choose>	
 									<div class="form-group row">
 										<label for="nameMember" class="col-sm-4 col-form-label">Họ Tên:</label>
-										 <div class="col-sm-8">
-											<form:input type="text" path="nameMember" class="form-control" id="nameMember" placeholder="Nhập Tên Nhân Viên" />
+										 <div class="col-sm-8"> 
+											<form:input type="text" path="nameMember" class="form-control" required="required" id="nameMember" placeholder="Nhập Tên Nhân Viên" />
 										</div>
 									</div>
 									<div class="form-group row">
@@ -84,7 +84,7 @@
 										<div class="col-sm-8">
 											<form:input type="text" path="userNameMember"
 													class="form-control" id="userNameMember"
-													placeholder=""  readonly="true"/>
+													placeholder="" required="required"/>
 										</div>										
 										<div class="nameMemberErro text-danger"></div>																					
 									</div>										
@@ -177,8 +177,7 @@
 	</div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
 	<script>
-		$(document).ready(function(){			
-				
+		$(document).ready(function(){	
 			$("#searchMember").click(function(){
 				var txtSearch = $("#txtSearch").val();
 

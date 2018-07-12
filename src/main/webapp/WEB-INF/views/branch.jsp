@@ -179,8 +179,7 @@
 							$("#idEditBranch").val(data.branch.idBranch);
 							$("#nameEditBranch").val(data.branch.nameBranch);
 							$("#addressEditBranch").val(data.branch.addressBranch);					
-							if(data.branch.member!=null){
-								
+							if(data.branch.member!=null){								
 								$.each(data.members, function (index, row) {						
 									if(row.idMember==data.branch.member.idMember){
 										 view += "<option value='" + row.idMember + "' selected>" + row.nameMember + " - " + row.userNameMember + "</option>";
@@ -243,6 +242,28 @@
 					});
 				}
 			});
+			//delete Branch
+			$(".deleteBranch").click(function(){
+				var r = confirm("Bạn thật sự muốn xoá?");
+				if(r){
+					var self = $(this);
+					var id = $(this).attr('data-id');
+					$.ajax({
+						url:"/Club-IVS/branch/deleteBranch",
+						type:"POST",
+						data:{
+							idBranch:id
+						},
+						success:function(data){
+							if(data.status==200){
+								self.closest("tr").remove();
+							}else{
+								alert("Xảy ra lỗi!");
+							}							
+						}
+					})	
+				}	
+			})// end delete Branh
 		});
 	</script>
 </html>

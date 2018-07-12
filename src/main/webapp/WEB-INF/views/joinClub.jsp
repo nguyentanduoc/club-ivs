@@ -45,46 +45,38 @@
 	              <!-- form -->
 	              	<form method="POST" action="${pageContext.request.contextPath}/club/joinClub">	          
 		                <div class="card-body">
-		                	<c:choose>
-							    <c:when test="${status==403}">
-							        <div class="text-danger text-center">
-							        	<h4><c:out value="${message}"/></h4>
+					      <div class="form-group">
+					      	<c:choose>
+					      		<c:when test="${status==200}">
+							        <div class="text-success text-center">
+							        	<h4>Thành công!</h4>
 							        </div>
-							    </c:when>    
-							    <c:otherwise>
-							      <div class="form-group">
-							      	<c:choose>
-							      		<c:when test="${status==200}">
-									        <div class="text-success text-center">
-									        	<h4><c:out value="${message}"/></h4>
-									        </div>
-								   		</c:when> 
-								   		<c:otherwise>								   			
-									        <div class="text-success text-center">
-									        	<h4><c:out value="${message}"/></h4>
-									        </div>								   		
-								   		</c:otherwise>
-							      	</c:choose>
-					                 <label for="idMember">Chọn Thành Viên</label>					              
-					                  <select id="idMember" name="idMember"  class="form-control select2" style="width: 100%;">
-					                    <option value="0">--- Chọn Nhân Viên ---</option>
-					                      <c:forEach var="member" items="${members}">									
-											  <option value="${member.getIdMember()}">${member.getNameMember()}</option>
-										</c:forEach>
-					                  </select>
-									</div>  
-									<div class="form-group">
-					                 	<label for="clubs">Chọn câu lạc bộ</label>		
-						                 <ul id="clubs">
-						                 	<c:forEach var="club" items="${clubs}">				                
-												<li>
-													<input class="flat-red" type="checkbox" name="clubs" value="${club.getIdClub()}"/>${club.getNameClub()}											
-												</li>
-											</c:forEach>
-						                 </ul>                   
-									</div> 
-							    </c:otherwise>
-							</c:choose>
+						   		</c:when> 
+						   		<c:when test="${status==400}">
+							        <div class="text-danger text-center">
+							        	<h4>Thất Bại</h4>
+							        </div>
+						   		</c:when> 
+						   		
+					      	</c:choose>
+			                 <label for="idMember">Chọn Thành Viên</label>					              
+			                  <select id="idMember" name="idMember"  class="form-control select2" style="width: 100%;">
+			                    <option value="0">--- Chọn Nhân Viên ---</option>
+			                      <c:forEach var="member" items="${members}">									
+									  <option value="${member.getIdMember()}">${member.getNameMember()}</option>
+								</c:forEach>
+			                  </select>
+							</div>  
+							<div class="form-group">
+			                 	<label for="clubs">Chọn câu lạc bộ</label>		
+				                 <ul id="clubs">
+				                 	<c:forEach var="club" items="${clubs}">				                
+										<li>
+											<input class="flat-red" type="checkbox" name="clubs" value="${club.getIdClub()}"/>${club.getNameClub()}											
+										</li>
+									</c:forEach>
+				                 </ul>                   
+							</div> 
 			             </div><!-- /.card-body -->	
 			            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		                <div class="card-footer">
@@ -156,20 +148,17 @@
 						
 							if(row.status==true){
 								view +="<td><div class='btn-group btn-group-toggle' data-toggle='buttons'>"
-								  	+"<label class='btn btn-outline-primary active btn-sm'>"
+								  	+"<label class='btn btn-primary disabled active btn-sm'>"
 							    	+"<input type='radio' autocomplete='off' checked> On </label>"
 								 	+"<label class='btn btn-outline-primary btn-sm' onclick='offActive("+row.idJoinClub+")'> <input type='radio' autocomplete='off'>Off</label></div></td>";
 							}else{
-								view +="<td><div class='btn-group btn-group-toggle disabled' data-toggle='dispose'>"
-								  	+"<label class='btn btn-outline-primary btn-sm '>"
+								view +="<td><div class='btn-group btn-group-toggle' data-toggle='dispose'>"
+								  	+"<label class='btn btn-secondary btn-sm disabled'>"
 							    	+"<input type='radio' autocomplete='off'> On </label>"
-								 	+"<label class='btn btn-outline-primary active btn-sm'> <input type='radio' autocomplete='off' checked>Off</label></div></td>";
+								 	+"<label class='btn btn-secondary btn-sm disabled'> <input type='radio' autocomplete='off' checked>Off</label></div></td>";
 							}
 								
 							view += "</tr>"; 
-							 /*$("#clubs").each(function(index1,element){
-							        console.log(element);
-							    });*/
 	                    })
 						$("#listJoinClub").append(view);
 					}else{
@@ -179,7 +168,6 @@
 							$("#messageJoinClub").append("Đã xảy ra lỗi!");
 						}
 					}
-					
 				}
 			});	
 		});		

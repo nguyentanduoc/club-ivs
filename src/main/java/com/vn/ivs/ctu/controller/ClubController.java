@@ -116,7 +116,7 @@ public class ClubController {
 	}
 	
 	@GetMapping(path = "/joinClub")
-	public String joinClub(@RequestParam(name="message",required=false)String message,ModelMap modelMap) {
+	public String joinClub(@RequestParam(name="status",required=false)String message,ModelMap modelMap) {
 		modelMap.put("action1", "club");
 		modelMap.put("action2", "joinClub");
 		modelMap.put("title", "Thêm thành viên vào Club");
@@ -127,51 +127,53 @@ public class ClubController {
 			modelMap.put("clubs", clubService.getClubByBranch(branch.getIdBranch()));
 		}else{
 			modelMap.put("status", 403);
-			modelMap.put("message", "Bạn không phải là quản lý!");
 		}		
 		if(message!=null) {
-			if(message.equals("success")) {
+			if(message.equals("200")) {
 				modelMap.put("status", 200);
-				modelMap.put("message", "Thành Công!");
 			}else {
 				modelMap.put("status", 400);
-				modelMap.put("message", "Thất Bại!");
 			}
 		}
 		return "joinClub";
 	}
 
 	@PostMapping(path = "/joinClub")
-	public String createJoinClub(@RequestParam("idMember") int idMember, @RequestParam("clubs") String[]  clubs) {
+	public String createJoinClub(@RequestParam("idMember") long idMember, @RequestParam("clubs") String[]  clubs) {
 		boolean success = true;
-		for(String s:clubs) {
+		for(String idClub:clubs) {
 			try {
-				Club club = new Club();			
-				club.setIdClub(Integer.parseInt(s));
+				Club club = clubService.getClubById(Integer.parseInt(idClub));
+				Member member = memberService.getMemberById(idMember);
 				JoinClub joinClub = new JoinClub();
 				joinClub.setDateJoin(new Date());
-				club.setIdClub(Integer.parseInt(s));
-				joinClub.setClub(club);	
-				joinClub.setStatus(true);
-				Member member = new Member();
-				member.setIdMember(idMember);
 				joinClub.setMember(member);
-				if(joinClubService.createOrUpdate(joinClub)>0) {
-					success = true;
-				}else {
-					success = false;
+				joinClub.setClub(club);
+				joinClub.setStatus(true);
+				List<JoinClub> jl = joinClubService.getJoinClubByIdMember(idMember);
+				for(JoinClub j:jl) {
+					if((j.getClub().getIdClub()==club.getIdClub())&&(j.isStatus()==true)) {
+						success = false;
+					}else {
+						success= true;					
+					}					
+				}	
+				if(success) {
+					if(joinClubService.createOrUpdate(joinClub)>0) {
+						success = true;
+					}else {
+						success = false;
+					}
 				}
 			}catch(Exception e) {
-				System.out.println(e.toString());
-				return "redirect:/club/joinClub?message=error";				
+				return "redirect:/club/joinClub?status=404";				
 			}			
 		}		
 		if(success) {
-			return "redirect:/club/joinClub?message=success";
+			return "redirect:/club/joinClub?status=200";
 		}else {
-			return "redirect:/club/joinClub?message=error";
-		}
-		
+			return "redirect:/club/joinClub?status=400";
+		}		
 	}
 	
 	@PostMapping(path="checkMember")
@@ -221,5 +223,43 @@ public class ClubController {
 		map.put("member", joinClubService.getListMemberActive(idClub));
 		map.put("status", 200);
 		return map;
+	}
+	
+	@GetMapping(path="/edit")
+	public String editClub(@RequestParam(name="id",required=false) String id,@RequestParam(name="status",required=false) String status, ModelMap map) {
+		String url="/404";
+		if(id!=null) {
+			try {
+				int intId= Integer.parseInt(id);
+				Club club  = clubService.getClubById(intId);				
+				if(club!=null) {
+					if(status!=null) {
+						map.put("status",status);
+					}
+					List<Member> members = memberService.getAllLeaderClub();
+					map.put("members",members);
+					map.put("club", club);
+					url="/editClub";
+				}else {
+					url="/404";
+				}				
+			}catch (Exception e) {
+				url="/404";
+			}
+		}		
+		return url;
+	}
+	@PostMapping(path="/edit")
+	public String updateClub(@ModelAttribute("club") Club club) {		
+		String url = "redirect:/club/edit/?id="+club.getIdClub();
+		Club clubget = clubService.getClubById(club.getIdClub());
+		clubget.setNameClub(club.getNameClub());
+		clubget.setMembers(club.getMembers());
+		if(clubService.saveOrUpdate(clubget)>0) {
+			url+="&status=200";
+		}else {
+			url+="&status=400";
+		}		
+		return url;
 	}
 }

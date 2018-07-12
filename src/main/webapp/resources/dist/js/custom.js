@@ -100,28 +100,6 @@ $(document).ready(function(){
 		})	
 	})//end change role
 	
-	//delete Branch
-	$(".deleteBranch").click(function(){
-		var r = confirm("Bạn thật sự muốn xoá?");
-		if(r){
-			var self = $(this);
-			var id = $(this).attr('data-id');
-			$.ajax({
-				url:"/Club-IVS/api/deleteBranch",
-				type:"GET",
-				data:{
-					id:id
-				},
-				success:function(data){
-					if(data="true"){
-						self.closest("tr").remove();
-					}
-				}
-			})	
-		}	
-	})// end delete Branh
-	
-	
 	//delete Dow
 	$(".deleteDow").click(function(){
 		var r = confirm("Bạn thật sự muốn xoá?");
@@ -226,16 +204,10 @@ $(document).ready(function(){
 					 text += arr[lenght-1];
 					 text = text.toLowerCase();
 					 text +="@gmail.com";
-					 $("#userNameMember").val(text); 
-
+					 $("#userNameMember").val(text);
 					 var pass = "abc123";
-					 /*var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-					 for (var i = 0; i < 8; i++)
-						  pass += possible.charAt(Math.floor(Math.random() * possible.length));*/
-					 $("#passWordMember").val(pass);		 
-					 			 
+					 $("#passWordMember").val(pass); 
 					 docheck(text);	
-					 
 					 $("#userNameMember").blur(function(){
 						 var email = $("#userNameMember").val();
 						docheck(email);

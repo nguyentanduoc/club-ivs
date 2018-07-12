@@ -70,6 +70,7 @@ pageEncoding="UTF-8" session="false"%>
 				                </tr>
 				                </thead>
 				                <tbody>
+				                <c:if test="${sums!=null}">
 				                 <c:forEach var="score" items="${sums}">
 					                  <tr>
 					                  	<td>${score.getMember().getNameMember()}</td>
@@ -87,10 +88,11 @@ pageEncoding="UTF-8" session="false"%>
 											</div>
 					                    </td>	
 					                    <td>
-					                    	<button type="button" class="btn btn-info btn-sm update" value="" data-id="${score.getIdSum()}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+					                    	<button type="button" class="btn btn-info btn-sm update" id="${score.getIdSum()}" data-id="${score.getIdSum()}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
 					                    </td>	                               
 					                  </tr>	
 			                  	 </c:forEach>  
+				                </c:if>
 				                </tbody>
 				                <tfoot>
 				                <!-- <tr>
@@ -134,11 +136,11 @@ pageEncoding="UTF-8" session="false"%>
     		$(".offRequire").change(function(){
     			check = $(this).attr('data-id');
     			status = false;
-    		});
-    		
+    		});    		
     		$(".update").click(function(){ 
     			var id = $(this).attr('data-id');
-    			var note = $("#txt-"+id).val();
+    			var note ="";
+    			note = $("#txt-"+id).val();
     			var require=false;
     			var toArise = $("#num-"+id).val();
     			if(check==id){
@@ -157,7 +159,11 @@ pageEncoding="UTF-8" session="false"%>
     					require :require 					
     				},
     				success:function(data){
-    					console.log(data);
+    					if(data.status==200){
+    						$("#"+id).addClass("active disabled");
+    					}else{
+    						alert("Xảy ra lỗi!");
+    					}
     				}	
     			})
     		});

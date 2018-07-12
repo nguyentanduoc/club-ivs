@@ -29,6 +29,11 @@ public class DateUtils {
 		return cal.get(Calendar.WEEK_OF_YEAR);
 		
 	}
+	public static int getMonth(Date date) {
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(date);        
+		return cal.get(Calendar.MONTH)+1;
+	}
 	public static void main(String []args) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String dateInString = "14-6-2018";

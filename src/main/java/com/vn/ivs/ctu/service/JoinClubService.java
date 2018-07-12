@@ -12,4 +12,5 @@ public interface JoinClubService {
 	public JoinClub getJoinClub(long idJoinClub);
 	public List<JoinClub> getListMemberActive(int idClub);
 	public boolean delete(long idJoin);
+	public List<JoinClub> getAllJoinClub(int idClub);
 }

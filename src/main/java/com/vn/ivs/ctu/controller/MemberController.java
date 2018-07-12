@@ -25,17 +25,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.dao.RoleDAO;
 import com.vn.ivs.ctu.entity.Branch;
-import com.vn.ivs.ctu.entity.Club;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.JoinDateLeave;
 import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.Role;
+import com.vn.ivs.ctu.entity.SumarizationBranch;
 import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.MemberService;
 import com.vn.ivs.ctu.service.RoleService;
+import com.vn.ivs.ctu.service.SumarizationBranchService;
+import com.vn.ivs.ctu.service.SumarizationService;
 import com.vn.ivs.ctu.utils.CustomFormBinder;
+import com.vn.ivs.ctu.utils.DateUtils;
 import com.vn.ivs.ctu.utils.PasswordEncoder;
 import com.vn.ivs.ctu.utils.SecurityUtils;
 
@@ -43,12 +46,22 @@ import com.vn.ivs.ctu.utils.SecurityUtils;
 @RequestMapping(path = "/member")
 public class MemberController {
 
-	@Autowired	RoleService roleService;
-	@Autowired	MemberService memberService;
-	@Autowired	BranchService branchSevice;
-	@Autowired	RoleDAO roleDAO;
-	@Autowired	ClubService clubSerive;
-	@Autowired JoinClubService joinClubService;
+	@Autowired
+	RoleService roleService;
+	@Autowired
+	MemberService memberService;
+	@Autowired
+	BranchService branchSevice;
+	@Autowired
+	RoleDAO roleDAO;
+	@Autowired
+	ClubService clubSerive;
+	@Autowired
+	JoinClubService joinClubService;
+	@Autowired
+	SumarizationBranchService sumarizationBranchService;
+	@Autowired
+	SumarizationService sumarizationService;
 
 	@InitBinder
 	public void bindForm(final WebDataBinder binder) {
@@ -56,9 +69,10 @@ public class MemberController {
 	}
 
 	@GetMapping(path = "/admin")
-	public String Index(@RequestParam(name="status",required=false) String status,ModelMap modelMap,Integer offset, Integer maxResults) {
-		maxResults=maxResults!=null?maxResults:5;
-		offset=offset!=null?offset:0;
+	public String Index(@RequestParam(name = "status", required = false) String status, ModelMap modelMap,
+			Integer offset, Integer maxResults) {
+		maxResults = maxResults != null ? maxResults : 5;
+		offset = offset != null ? offset : 0;
 		modelMap.put("action1", "member");
 		modelMap.put("action2", "adminMember");
 		modelMap.put("title", "Thêm thành viên");
@@ -67,20 +81,20 @@ public class MemberController {
 		modelMap.put("member", member);
 		modelMap.put("listRole", roleService.getAll());
 		modelMap.put("listMember", memberService.findAll(offset, maxResults));
-		modelMap.put("listBranch", branchSevice.getAll());		
+		modelMap.put("listBranch", branchSevice.getAll());
 		modelMap.put("count", memberService.count());
 		modelMap.put("offset", offset);
-	
-		if(status!=null) {
-			if(status.equals("200")) {
+
+		if (status != null) {
+			if (status.equals("200")) {
 				modelMap.put("status", 200);
 				modelMap.put("message", "Thành Công!");
-			}else {
+			} else {
 				modelMap.put("status", 400);
 				modelMap.put("message", "Thất Bại!");
 			}
 		}
-		
+
 		return "memberAdmin";
 	}
 
@@ -94,43 +108,44 @@ public class MemberController {
 			return "redirect:/member/admin?status=400";
 		}
 	}
-	
+
 	@GetMapping(path = "/create")
-	public String create(@RequestParam(name="status",required=false) String status,ModelMap modelMap,Integer offset, Integer maxResult) {
+	public String create(@RequestParam(name = "status", required = false) String status, ModelMap modelMap,
+			Integer offset, Integer maxResult) {
 		modelMap.put("action1", "member");
 		modelMap.put("action2", "indexMember");
 		modelMap.put("title", "Thêm thành viên");
-		maxResult=maxResult!=null?maxResult:5;
-		offset=offset!=null?offset:0;
-		if(SecurityUtils.getMyUserDetail()!=null) {
+		maxResult = maxResult != null ? maxResult : 5;
+		offset = offset != null ? offset : 0;
+		if (SecurityUtils.getMyUserDetail() != null) {
 			long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
 			Branch branch = branchSevice.getBranchByMember(idLeader);
-			if(branch!=null) {								
+			if (branch != null) {
 				List<Member> members = memberService.getAllByBranch(branch.getIdBranch());
-				Member member = new Member();				
+				Member member = new Member();
 				modelMap.put("member", member);
 				modelMap.put("listRole", roleService.getOfLeader());
 				modelMap.put("listMember", memberService.getAllByBranch(branch.getIdBranch(), offset, maxResult));
 				modelMap.put("count", members.size());
 				modelMap.put("offset", offset);
-				modelMap.put("idBranch",branch.getIdBranch());
-			}else {
+				modelMap.put("idBranch", branch.getIdBranch());
+			} else {
 				modelMap.put("status", 403);
 				modelMap.put("message", "Bạn chưa quản lý chi nhánh nào!");
-			}	
-		}else {
+			}
+		} else {
 			return "redirect:/";
 		}
-		if(status!=null) {
-			if(status.equals("200")) {
+		if (status != null) {
+			if (status.equals("200")) {
 				modelMap.put("status", 200);
 				modelMap.put("message", "Thành Công!");
-			}else {
+			} else {
 				modelMap.put("status", 400);
 				modelMap.put("message", "Thất Bại!");
 			}
 		}
-		
+
 		return "member";
 	}
 
@@ -147,10 +162,10 @@ public class MemberController {
 			} else {
 				return "redirect:/member/create?status=400";
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return "redirect:/member/create?status=400";
 		}
-		
+
 	}
 	
 	@GetMapping(path="profile")
@@ -161,45 +176,37 @@ public class MemberController {
 		modelMap.put("title", "Trang cá nhân");
 		List<JoinClub> joinclubs = joinClubService.getJoinClubByIdMember(idMember);
 		List<JoinDateLeave> days = new ArrayList<>();
-		for(JoinClub j:joinclubs) {
-			if(j.isStatus()==false) {	
-				days.add(new JoinDateLeave(j.getDateLeave(),j.getClub().getNameClub(),j.isStatus()));
-				days.add(new JoinDateLeave(j.getDateJoin(),j.getClub().getNameClub(),j.isStatus()));
-			}	else {
-				days.add(new JoinDateLeave(j.getDateJoin(),j.getClub().getNameClub(),j.isStatus()));
+		for (JoinClub j : joinclubs) {
+			if (j.isStatus() == false) {
+				days.add(new JoinDateLeave(j.getDateLeave(), j.getClub().getNameClub(), j.isStatus()));
+				days.add(new JoinDateLeave(j.getDateJoin(), j.getClub().getNameClub(), j.isStatus()));
+			} else {
+				days.add(new JoinDateLeave(j.getDateJoin(), j.getClub().getNameClub(), j.isStatus()));
 			}
 		}
-		 Collections.sort(days, new Comparator<JoinDateLeave>() {
-		      @Override
-		      public int compare(final JoinDateLeave object1, final JoinDateLeave object2) {
-		          return - object1.getDateSort().compareTo(object2.getDateSort());
-		      }
-		  });
-		 modelMap.put("listDateSort",days);
-		return "profile";		
-	}
-	/*@PostMapping(path="loadMember")
-	@ResponseBody
-	public Map<String,Object> loadMember(@RequestParam("page") int page){
-		Map<String, Object> map = new HashMap<>();
-		map.put("status","200");
-		map.put("listMember", memberService.findAll(Pagination.MAX_SIZE_MEMBER*(page-1)));
-		return map;
-	}*/
-	
-	/*@PostMapping(path="loadMemberBranch")
-	@ResponseBody
-	public Map<String,Object> loadMemberBranch(@RequestParam("page") int page,@RequestParam("idBranch") int idBranch){
-		Map<String, Object> map = new HashMap<>();
-		map.put("status","200");
-		map.put("listMember", memberService.getAllByBranch(idBranch,Pagination.MAX_SIZE_MEMBER*(page-1)));
-		return map;
-	}*/
-	
-	@GetMapping(path="editMember/{idMember}")
-	public String editMember(@PathVariable(name="idMember",required=false)String idMember,ModelMap modelMap) {
+		Collections.sort(days, new Comparator<JoinDateLeave>() {
+			@Override
+			public int compare(final JoinDateLeave object1, final JoinDateLeave object2) {
+				return -object1.getDateSort().compareTo(object2.getDateSort());
+			}
+		});
+		modelMap.put("listDateSort", days);
+		SumarizationBranch sum = new SumarizationBranch();
+		for (SumarizationBranch s : sumarizationBranchService.getSumByMember(idMember, DateUtils.getCurentMonth() - 1,
+				DateUtils.getCurentYear())) {
+			sum = s;
+		}
+		modelMap.put("score", sum);
 
-		if(idMember!=null) {
+		modelMap.put("scoreClub", sumarizationService.getSumByMemberPreMonth(idMember, DateUtils.getCurentMonth() - 1,
+				DateUtils.getCurentYear()));
+		return "profile";
+	}
+	
+	@GetMapping(path = "editMember/{idMember}")
+	public String editMember(@PathVariable(name = "idMember", required = false) String idMember, ModelMap modelMap) {
+
+		if (idMember != null) {
 			try {
 				modelMap.put("action1", "member");
 				modelMap.put("title", "Sửa thông tin");
@@ -208,19 +215,19 @@ public class MemberController {
 				modelMap.put("member", member);
 				modelMap.put("listRole", roleService.getOfLeader());
 				return "editMember";
-			}
-			catch(Exception e) {
+			} catch (Exception e) {
 				return "redirect:/404";
 			}
-		}		
-		else {
+		} else {
 			return "redirect:/404";
 		}
-	}	
-	@GetMapping(path="editAdminMember/{idMember}")
-	public String editAdminMember(@PathVariable(name="idMember",required=false)String idMember,ModelMap modelMap) {
+	}
 
-		if(idMember!=null) {
+	@GetMapping(path = "editAdminMember/{idMember}")
+	public String editAdminMember(@PathVariable(name = "idMember", required = false) String idMember,
+			ModelMap modelMap) {
+
+		if (idMember != null) {
 			try {
 				modelMap.put("action1", "member");
 				modelMap.put("title", "Member");
@@ -228,114 +235,149 @@ public class MemberController {
 				Member member = memberService.getMemberById(IntidMember);
 				modelMap.put("member", member);
 				modelMap.put("listRole", roleService.getAll());
-				return "editMember";
-			}
-			catch(Exception e) {
+				return "editMemberAdmin";
+			} catch (Exception e) {
 				return "redirect:/404";
 			}
-		}		
-		else {
+		} else {
 			return "redirect:/404";
-		}
-	}	
-	@PostMapping(path="/update")
-	public String updateMember(@RequestParam("idMember")int idMember, @RequestParam("roles") String[] roles, @RequestParam(name="status")boolean status) {
-	
-		Member member = memberService.getMemberById(idMember);
-		member.setStatus(status);
-		Set<Role>  rolesMember = new HashSet<>();
-		for(String s:roles) {
-			Role r = new Role();
-			r.setIdRole(Integer.parseInt(s));
-			rolesMember.add(r);			
-		}
-		member.setRoles(rolesMember);
-		if(memberService.saveOrUpdate(member)>0) {
-			return "redirect:/member/editMember/"+idMember;
-		}
-		else {
-			return "redirect:/member/editMember/"+idMember;
 		}
 	}
 	
-	@PostMapping(path="resetPassWord")
+	@PostMapping(path = "/update")
+	public String updateMember(@RequestParam("idMember") int idMember, @RequestParam("roles") String[] roles,
+			@RequestParam(name = "status") boolean status) {
+
+		Member member = memberService.getMemberById(idMember);
+		member.setStatus(status);
+		Set<Role> rolesMember = new HashSet<>();
+		for (String s : roles) {
+			Role r = new Role();
+			r.setIdRole(Integer.parseInt(s));
+			rolesMember.add(r);
+		}
+		member.setRoles(rolesMember);
+		if (memberService.saveOrUpdate(member) > 0) {
+			return "redirect:/member/editMember/" + idMember;
+		} else {
+			return "redirect:/member/editMember/" + idMember;
+		}
+	}
+	@PostMapping(path = "/updateAdmin")
+	public String updateMemberAdmin(@RequestParam("idMember") int idMember, @RequestParam("roles") String[] roles,
+			@RequestParam(name = "status") boolean status) {
+
+		Member member = memberService.getMemberById(idMember);
+		member.setStatus(status);
+		Set<Role> rolesMember = new HashSet<>();
+		for (String s : roles) {
+			Role r = new Role();
+			r.setIdRole(Integer.parseInt(s));
+			rolesMember.add(r);
+		}
+		member.setRoles(rolesMember);
+		if (memberService.saveOrUpdate(member) > 0) {
+			return "redirect:/member/editAdminMember/" + idMember;
+		} else {
+			return "redirect:/member/editAdminMember/" + idMember;
+		}
+	}
+
+	@PostMapping(path = "resetPassWord")
 	@ResponseBody
-	public Map<String, Object> restPassWord(int idMember){
-		Map<String, Object> map =new HashMap<>();
+	public Map<String, Object> restPassWord(int idMember) {
+		Map<String, Object> map = new HashMap<>();
 		Member member = memberService.getMemberById(idMember);
 		member.setPassWordMember(PasswordEncoder.defaultPassWord());
-		if(memberService.saveOrUpdate(member)>0) {
+		if (memberService.saveOrUpdate(member) > 0) {
 			map.put("status", 200);
 			map.put("message", "Cập nhật thành công!");
-		}else {
+		} else {
 			map.put("status", 400);
 			map.put("message", "Xảy ra lỗi!");
 		}
 		return map;
 	}
-	
+
 	@PostMapping("deleteMember")
 	@ResponseBody
-	public Map<String,Object> deleteMember(int idMember){
-		Map<String,Object> map = new HashMap<>();
-		if(memberService.delete(idMember)) {
+	public Map<String, Object> deleteMember(int idMember) {
+		Map<String, Object> map = new HashMap<>();
+		if (memberService.delete(idMember)) {
 			map.put("status", 200);
-		}
-		else {
+		} else {
 			map.put("status", 400);
 		}
 		return map;
 	}
-	/*@PostMapping(path="searchMember")
-	@ResponseBody			
-	public Map<String,Object> searchMember(String txtSearch){
-		Map<String,Object> map = new HashMap<>();
-		String[]  arraySearch =  txtSearch.split(" ");
-		
-		return map;
-	}*/
+
+	/*
+	 * @PostMapping(path="searchMember")
+	 * 
+	 * @ResponseBody public Map<String,Object> searchMember(String txtSearch){
+	 * Map<String,Object> map = new HashMap<>(); String[] arraySearch =
+	 * txtSearch.split(" ");
+	 * 
+	 * return map; }
+	 */
 	@PostMapping("updateInfo")
-	public String updateInfo(@ModelAttribute(name="member") Member member){
+	public String updateInfo(@ModelAttribute(name = "member") Member member) {
 		Member member2 = memberService.getMemberById(SecurityUtils.getMyUserDetail().getIdMember());
 		member2.setBirthDayMember(member.getBirthDayMember());
 		member2.setNameMember(member.getNameMember());
 		member2.setSexMember(member.isSexMember());
 		member2.setPhoneNumberMember(member.getPhoneNumberMember());
-		Map<String,Object> map = new HashMap<>();
-		if(memberService.saveOrUpdate(member2)>0) {
+		Map<String, Object> map = new HashMap<>();
+		if (memberService.saveOrUpdate(member2) > 0) {
 			map.put("status", 200);
-		}
-		else {
+		} else {
 			map.put("status", 400);
 		}
 		return "redirect:/member/profile";
 	}
-	@PostMapping(path="/updatePass")
-	public String updatePass(@RequestParam("reTypePassWord")String passwordMember) {
+
+	@PostMapping(path = "/updatePass")
+	public String updatePass(@RequestParam("reTypePassWord") String passwordMember) {
 		Member member = memberService.getMemberById(SecurityUtils.getMyUserDetail().getIdMember());
 		member.setPassWordMember(PasswordEncoder.BCryptPassdEncoder(passwordMember));
 		memberService.saveOrUpdate(member);
-			return "redirect:/logout";
+		return "redirect:/logout";
 	}
-	@PostMapping(path="/checkPassWord")
+
+	@PostMapping(path = "/checkPassWord")
 	@ResponseBody
-	public Map<String, Object> checkPassWord(String password){
-		Map<String, Object> map =new HashMap<>();
+	public Map<String, Object> checkPassWord(String password) {
+		Map<String, Object> map = new HashMap<>();
 		Member member = memberService.getMemberById(SecurityUtils.getMyUserDetail().getIdMember());
-		if(member!=null) {
+		if (member != null) {
 			String pass = PasswordEncoder.BCryptPassdEncoder(password);
-			
+
 			System.out.println(pass);
-			if(PasswordEncoder.matches(pass, member.getPassWordMember())) {
+			if (PasswordEncoder.matches(pass, member.getPassWordMember())) {
 				map.put("status", 200);
 				map.put("matches", true);
-			}else {
+			} else {
 				map.put("status", 200);
 				map.put("matches", false);
 			}
-		}else {
+		} else {
 			map.put("status", 400);
 			map.put("message", "Xảy ra lỗi!");
+		}
+		return map;
+	}
+
+	@PostMapping(path = "/memberConfirmDonate")
+	@ResponseBody
+	public Map<String, Object> memberConfirmDonate(long idSum) {
+		Map<String, Object> map = new HashMap<>();
+		SumarizationBranch sum = new SumarizationBranch();
+		sum = sumarizationBranchService.getById(idSum);
+		sum.setConfirm(true);
+		if (sumarizationBranchService.saveOrUpdate(sum) > 0) {
+			map.put("status", 200);
+		} else {
+			map.put("status", 400);
 		}
 		return map;
 	}

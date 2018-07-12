@@ -32,4 +32,14 @@ public class SumarizationBranchServiceImpl implements SumarizationBranchService{
 		return sumarizationBrachDAO.getSumByBranch(idBranch, month, year);
 	}
 
+	@Override
+	public List<SumarizationBranch> getComfirmDonate(int idBranch, int month, int year) {
+		return sumarizationBrachDAO.getComfirmDonate(idBranch, month, year);
+	}
+
+	@Override
+	public List<SumarizationBranch> getSumByMember(long idMember, int month, int year) {
+		return sumarizationBrachDAO.getSumByMember(idMember, month, year);
+	}
+	
 }

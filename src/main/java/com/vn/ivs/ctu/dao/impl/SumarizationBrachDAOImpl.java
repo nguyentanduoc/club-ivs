@@ -50,8 +50,29 @@ public class SumarizationBrachDAOImpl implements SumarizationBrachDAO{
 	@Override
 	public List<SumarizationBranch> getSumByBranch(int idBranch, int month, int year) {
 		try {
-			return currentSession().createQuery("from summarization_branch s where s.branch.idBranch=? and s.year=? and s.month=?",SumarizationBranch.class)
-					.setParameter(0, idBranch).setParameter(1, year).setParameter(2, month).list();
+			return currentSession().createQuery("from summarization_branch s where s.branch.idBranch=:idBranch and s.year=:year and s.month=:month",SumarizationBranch.class)
+					.setParameter("idBranch", idBranch).setParameter("year", year).setParameter("month", month).list();
+		}catch(Exception e) {
+			System.out.println(e.toString());
+			return  null;
+		}
+	}
+
+	@Override
+	public List<SumarizationBranch> getComfirmDonate(int idBranch, int month, int year) {
+		try {
+			return currentSession().createQuery("from summarization_branch s where s.branch.idBranch=:idBranch and s.year=:year and s.month=:month and s.donate=:donate",SumarizationBranch.class)
+					.setParameter("idBranch", idBranch).setParameter("year", year).setParameter("month", month).setParameter("donate", true).list();
+		}catch(Exception e) {
+			System.out.println(e.toString());
+			return  null;
+		}
+	}
+	@Override
+	public List<SumarizationBranch> getSumByMember(long idMember, int month, int year){
+		try {
+			return currentSession().createQuery("from summarization_branch s where s.member.idMember=:idMember and s.year=:year and s.month=:month and s.donate=:donate",SumarizationBranch.class)
+					.setParameter("idMember", idMember).setParameter("year", year).setParameter("month", month).setParameter("donate", true).list();
 		}catch(Exception e) {
 			System.out.println(e.toString());
 			return  null;

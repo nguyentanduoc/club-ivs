@@ -22,7 +22,6 @@ import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
 import com.vn.ivs.ctu.service.impl.DowServiceImpl;
-import com.vn.ivs.ctu.utils.SecurityUtils;
 
 
 @Controller

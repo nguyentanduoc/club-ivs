@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.ivs.ctu.entity.Branch;
-import com.vn.ivs.ctu.service.impl.BranchServiceImpl;
-import com.vn.ivs.ctu.service.impl.MemberServiceImpl;;
+import com.vn.ivs.ctu.service.BranchService;
+import com.vn.ivs.ctu.service.MemberService;;
 
 @Controller
 @RequestMapping("/branch")
 public class BranchController {
 	
-	@Autowired BranchServiceImpl  branchServiceImpl;	
-	@Autowired MemberServiceImpl memberServiceImpl;
+	@Autowired BranchService  branchService;	
+	@Autowired MemberService memberService;
 	
 	@GetMapping(path="/index")
 	public String Index(@RequestParam(name="message",required=false)String message, ModelMap modelMap) {
@@ -33,7 +33,7 @@ public class BranchController {
 		modelMap.put("title","Chi Nhánh");		
 		Branch branch  = new Branch();
 		modelMap.put("branch",branch);
-		modelMap.put("listBranch", branchServiceImpl.getAll());
+		modelMap.put("listBranch", branchService.getAll());
 		if(message!=null) {
 			if(message.equals("success")) {
 				modelMap.put("status", 200);
@@ -49,7 +49,7 @@ public class BranchController {
 	@PostMapping("/insert")
 	public String createBranch(@ModelAttribute("branch") Branch branch, BindingResult result, ModelMap modelMap) {
 				
-		if(branchServiceImpl.saveOrUpdate(branch) >  0) {
+		if(branchService.saveOrUpdate(branch) >  0) {
 			return "redirect:/branch/index?message=success";	
 		}else {
 			return "redirect:/branch/index?message=errors";	
@@ -60,10 +60,22 @@ public class BranchController {
 	@ResponseBody
 	public Map<String,Object> checkMemberBranch(long idMember){
 		Map<String,Object> map = new HashMap<>();
-		if(branchServiceImpl.getBranchByMember(idMember)==null) {
+		if(branchService.getBranchByMember(idMember)==null) {
 			map.put("status", 404);
 		}else {
 			map.put("status",200);
+		}
+		return map;
+	}
+	
+	@PostMapping(path="/deleteBranch")
+	@ResponseBody
+	public Map<String,Object> delete(int idBranch){
+		Map<String,Object> map = new HashMap<>();
+		if(branchService.delete(idBranch)) {
+			map.put("status",200);
+		}else {
+			map.put("status",400);
 		}
 		return map;
 	}

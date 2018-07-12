@@ -62,7 +62,7 @@
 									<div class="form-group row">
 										<label for="nameMember" class="col-sm-4 col-form-label">Họ Tên:</label>
 										 <div class="col-sm-8">
-											<form:input type="text" path="nameMember" class="form-control" id="nameMember" placeholder="Nhập Tên Nhân Viên" />
+											<form:input required="required" type="text" path="nameMember" class="form-control" id="nameMember" placeholder="Nhập Tên Nhân Viên" />
 										</div>
 									</div>
 									<div class="form-group row">
@@ -77,7 +77,7 @@
 										<div class="col-sm-8">
 											<form:input type="text" path="userNameMember"
 													class="form-control" id="userNameMember"
-													placeholder=""/>
+													placeholder="" required="required"/>
 										</div>										
 										<div class="nameMemberErro text-danger"></div>																					
 									</div>										
@@ -157,7 +157,7 @@
 													</td>
 													<td align="center">
 														<a href="${pageContext.request.contextPath}/member/editAdminMember/${member.getIdMember()}"> <i class="fa fa-pencil edit"></i></a>
-														<span class="deleteMember" onclick="deleteMember(${member.getIdMember()})"><i class="fa fa-times delete"></i></span> 
+														<span class="deleteMember" data-id='${member.getIdMember()}'><i class="fa fa-times delete"></i></span> 
 													</td>	
 												</tr>
 											</c:forEach>
@@ -181,14 +181,15 @@
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){			
-			function deleteMember(idMember){
+			$(".deleteMember").click(function(){
+				var id = $(this).attr('data-id');
 				$("#message").empty();
 				var view="";
 				$.ajax({
 					url:"/Club-IVS/member/deleteMember",
 					type:"POST",
 					data:{
-						idMember:idMember
+						idMember:id
 					},
 					success:function(data){		
 						if(data.status==200){
@@ -201,8 +202,8 @@
 						view="";
 					}
 				})
-			}
 			})
+		})
 	</script>
 </body>
 </html>

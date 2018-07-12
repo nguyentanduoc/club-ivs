@@ -59,7 +59,7 @@ public class ToGradeController {
 	
 	@PostMapping(path="updateScore")
 	@ResponseBody
-	public Map<String,Object> updateScore(int id, float toArise, String note, boolean require){
+	public Map<String,Object> updateScore(long id, float toArise, String note, boolean require){
 		Map<String,Object> map  = new HashMap<>();		
 		Summarization sum =  sumarizationService.getSumById(id);
 		sum.setToAriseScore(toArise);
@@ -71,7 +71,6 @@ public class ToGradeController {
 		}else {
 			map.put("status", 400);
 		}
-		map.put("status",200);
 		return map;
 	}
 	
@@ -89,7 +88,6 @@ public class ToGradeController {
 		if(sum!=null && sum.size()>0) {
 			modelMap.put("status", 200);
 			modelMap.put("sums", sum);
-			System.out.println(sum);
 		}		
 		return "scoreTotalBranch";
 	}
@@ -107,5 +105,51 @@ public class ToGradeController {
 			}
 		}
 		return modelAndView;
+	}
+	@PostMapping(path="updateScoreBranch")
+	@ResponseBody
+	public Map<String,Object> updateScoreBranch(long id, String content, boolean require){
+		Map<String,Object> map  = new HashMap<>();		
+		
+		SumarizationBranch sumBranch = sumarizationBranchService.getById(id);
+		sumBranch.setContainDonate(content);
+		sumBranch.setDonate(require);
+		if(sumarizationBranchService.saveOrUpdate(sumBranch)>0) {
+			map.put("status", 200);
+		}else {
+			map.put("status", 400);
+		}
+		return map;
+	}
+	@GetMapping(path="accessDonate")
+	public String  accessDonate(ModelMap modelMap) {
+		modelMap.put("action1","toGrade");
+		modelMap.put("action2","accessDonate");
+		modelMap.put("title","Xác nhận thưởng");
+		int month = DateUtils.getCurentMonth()-1;
+		int year = DateUtils.getCurentYear();
+		long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+		Branch branch = branchSevice.getBranchByMember(idLeader);
+		List<SumarizationBranch> sum = sumarizationBranchService.getComfirmDonate(branch.getIdBranch(), month, year);
+		
+		if(sum!=null && sum.size()>0) {
+			modelMap.put("status", 200);
+			modelMap.put("sums", sum);
+		}		
+		return "accessDonate";
+	}
+	@PostMapping(path="confirmDonate")
+	@ResponseBody
+	public Map<String,Object> confirmDonate(long id){
+		Map<String,Object> map  = new HashMap<>();		
+		
+		SumarizationBranch sumBranch = sumarizationBranchService.getById(id);
+		sumBranch.setConfirmDonate(true);
+		if(sumarizationBranchService.saveOrUpdate(sumBranch)>0) {
+			map.put("status", 200);
+		}else {
+			map.put("status", 400);
+		}
+		return map;
 	}
 }

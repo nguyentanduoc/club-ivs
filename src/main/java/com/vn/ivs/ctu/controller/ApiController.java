@@ -97,17 +97,6 @@ public class ApiController {
 		}
 	}//end dow
 	
-	//start branch
-	@PostMapping("deleteBranch")
-	@ResponseBody
-	public String deleteBranch(@RequestParam int id) {		
-		boolean rs = branchService.delete(id);
-		if(rs) {
-			return "true";
-		}else {
-			return "false";
-		}
-	}
 	@PostMapping("getBranchById")
 	@ResponseBody
 	public Map<String,Object> getBranchById(@RequestParam int id) {		

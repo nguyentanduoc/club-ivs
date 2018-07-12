@@ -29,7 +29,6 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 	@Override
 	public List<JoinClub> getJoinClubByClub(int idClub) {
 		try {
-
 			return currentSession().
 					createQuery("FROM join_club j WHERE j.club.idClub =:idClub and j.status =:status",JoinClub.class).
 					setParameter("idClub", idClub).setParameter("status", true).list();	
@@ -94,5 +93,15 @@ public class JoinClubDAOImpl implements JoinClubDAO{
 			return false;
 		}
 	}
-	
+	@Override
+	public List<JoinClub> getAllJoinClub(int idClub) {
+		try {
+			return currentSession().
+					createQuery("FROM join_club j WHERE j.club.idClub =:idClub",JoinClub.class).
+					setParameter("idClub", idClub).list();	
+		}catch(Exception ex) {
+			System.out.println(ex.toString());
+			return null;
+		}	
+	}
 }

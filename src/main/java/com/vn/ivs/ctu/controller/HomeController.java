@@ -1,5 +1,6 @@
 package com.vn.ivs.ctu.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
+import com.vn.ivs.ctu.entity.ClubView;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Member;
 import com.vn.ivs.ctu.entity.SumarizationBranch;
@@ -63,13 +65,13 @@ public class HomeController {
 		String url = "login";
 		if(auth!=null) {
 			if (RoleUtils.isAdmin(roles)) {
-				url = "/admin";
+				url = "/member/admin";
 			} else if (RoleUtils.isLeader(roles)) {
 				url = "/leader";
 			} else if (RoleUtils.isLeaderClub(roles)) {
-				url = "/leaderclub";
+				url = "/schedule/scheduletotal";
 			} else if (RoleUtils.isMember(roles)) {
-				url = "/member";
+				url = "/member/profile";
 			}
 		}
 		return "redirect:"+url;
@@ -80,7 +82,7 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
+        }	
         return "redirect:/login";
     }
 	
@@ -95,7 +97,30 @@ public class HomeController {
 	}
 	
 	@RequestMapping(path= {"leader"})
-	public String leader() {
+	public String leader(ModelMap modelMap) {
+		long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+		Branch branch = branchService.getBranchByMember(idLeader);		
+		List<Club> clubs = clubService.getClubByBranch(branch.getIdBranch());
+		List<ClubView> clv  =  new ArrayList<>();
+		for(Club c:clubs) {
+			List<JoinClub> jls = joinClubService.getAllJoinClub(c.getIdClub());
+			int index =0;
+			int deduct = 0;
+			if(jls!=null) {
+				for(JoinClub jl:jls) {
+					if(DateUtils.getMonth(jl.getDateJoin())==DateUtils.getCurentMonth()-1) {
+						index++;
+					}	
+					if(jl.getDateLeave()!=null) {
+						if(DateUtils.getMonth(jl.getDateLeave())==DateUtils.getCurentMonth()-1){
+							deduct++;
+						}
+					}				
+				}
+			clv.add(new ClubView(c.getNameClub(),index,deduct));		
+			}
+		}	
+		modelMap.put("club", clv);
 		return "index";
 	}
 	
@@ -179,16 +204,19 @@ public class HomeController {
 								requireDonate=true;
 							}
 						}
-						total = (score + (c-1)*10);
+						total = (score + (c-1)*10)/c;
 						SumarizationBranch sum =  new SumarizationBranch();
 						sum.setScoreBranch(total*Float.parseFloat("0.8"));
 						sum.setMember(member);
 						sum.setBranch(b);
-						sum.setDonate(requireDonate);
+						
+						sum.setRequireDonate(requireDonate);
+						sum.setDonate(false);
 						sum.setConfirm(false);
 						sum.setMonth(month);
 						sum.setYear(year);
-						sum.setConfirmDonate(false);						
+						sum.setConfirmDonate(false);	
+						sumarizationBranchService.saveOrUpdate(sum);
 					}
 				}catch (Exception e) {
 					System.out.println(e.toString());

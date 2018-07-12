@@ -37,14 +37,16 @@
 		<nav class="mt-2">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">			
 				<!--  admin  menu role -->
+				<sec:authorize access="hasAuthority('LEADER')">
 				<li	class="nav-item ${action1 eq  'dashboard' ? 'menu-open' : ''}">
-					<a href="#" class="nav-link ${action1 eq  'dashboard' ? 'active' : ''}">
-						<!-- <i class="nav-icon fa fa-edit"></i> -->
+					<a href="<c:url value="/leader"/>" class="nav-link ${action1 eq  'dashboard' ? 'active' : ''}">
+						<i class="nav-icon fa fa-dashboard"></i>
 						<p>
-							Dashboard
+							Thống kê
 						</p>
 					</a>
-				</li>				
+				</li>		
+				</sec:authorize>		
 				<sec:authorize access="hasAuthority('ADMIN')">
 				<!--  admin  menu role -->
 				<li	class="nav-item ${action1 eq  'role' ? 'menu-open' : ''}">
@@ -145,9 +147,9 @@
 								class="fa fa-circle-o nav-icon"></i>
 								<p>Điểm CLB</p>
 							</a>
-						</li>
-						</sec:authorize>
-						<sec:authorize access="hasAnyAuthority('LEADER')">
+						</li>						
+					</sec:authorize>
+					<sec:authorize access="hasAnyAuthority('LEADER')">
 						<li class="nav-item">
 							<a href='<c:url value="/to-grade/scoreTotalBrach"/>'
 							class="nav-link ${action2 eq  'scorebranch' ? 'active' : ''}"> <i
@@ -155,7 +157,14 @@
 								<p>Điểm Chi Nhánh</p>
 							</a>
 						</li>	
-						</sec:authorize>					
+						<li class="nav-item">
+							<a href='<c:url value="/to-grade/accessDonate"/>'
+							class="nav-link ${action2 eq  'accessDonate' ? 'active' : ''}"> <i
+								class="fa fa-circle-o nav-icon"></i>
+								<p>Xác Nhận thưởng</p>
+							</a>
+						</li>
+					</sec:authorize>					
 					</ul>				
 				</li><!-- ./menu score -->
 				</sec:authorize>

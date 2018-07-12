@@ -43,4 +43,9 @@ public class JoinClubServiceImpl implements JoinClubService{
 	public boolean delete(long idJoin) {
 		return joinClubDAO.delete(idJoin); 
 	}
+
+	@Override
+	public List<JoinClub> getAllJoinClub(int idClub) {
+		return joinClubDAO.getAllJoinClub(idClub);
+	}
 }

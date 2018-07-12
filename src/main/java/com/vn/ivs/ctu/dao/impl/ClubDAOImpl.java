@@ -39,7 +39,7 @@ public class ClubDAOImpl implements ClubDAO{
 	@Override
 	public List<Club> getClubByBrach(int idBranch){
 		try {
-			return currentSession().createQuery("from club c where c.branch.idBranch = ?",Club.class).setParameter(0, idBranch).getResultList();
+			return currentSession().createQuery("from club c where c.branch.idBranch =:idBranch",Club.class).setParameter("idBranch", idBranch).getResultList();
 		}catch(Exception e) {
 			return null;
 		}
@@ -48,7 +48,7 @@ public class ClubDAOImpl implements ClubDAO{
 	@Override
 	public Club getClubByLeader(long idLeader) {
 		try {
-			return currentSession().createQuery("from club c where c.member.idMember = ?",Club.class).setParameter(0, idLeader).getSingleResult();
+			return currentSession().createQuery("from club c where c.member.idMember =:idMember",Club.class).setParameter("idMember", idLeader).getSingleResult();
 		}catch(Exception e) {
 			return null;
 		}		
@@ -69,5 +69,4 @@ public class ClubDAOImpl implements ClubDAO{
 			return false;
 		}	
 	}
-		
 }

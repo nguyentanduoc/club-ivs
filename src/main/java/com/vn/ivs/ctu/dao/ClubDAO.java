@@ -12,5 +12,4 @@ public interface ClubDAO {
 	public Club getClubByLeader(long idLeader);
 	public Club getClubById(int id);
 	public boolean deleteClub(int id);
-
 }

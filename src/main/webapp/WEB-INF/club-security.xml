@@ -16,6 +16,7 @@
 		<intercept-url pattern="/role/index" access="hasAuthority('ADMIN')" />
 		<intercept-url pattern="/member/admin" access="hasAuthority('ADMIN')" />
 		<intercept-url pattern="/dow/index" access="hasAuthority('ADMIN')" />
+		<intercept-url pattern="/branch/index" access="hasAuthority('ADMIN')" />
 		
 		<intercept-url pattern="/member/editAdminMember/**" access="hasAuthority('ADMIN')" />
 		<intercept-url pattern="/member/create" access="hasAuthority('LEADER')" />
@@ -23,7 +24,8 @@
 		
 		<intercept-url pattern="/member/profile" access="hasAuthority('MEMBER')" />
 		<!-- <intercept-url pattern="/member/update" method="POST" access="hasAnyAuthority('MEMBER','LEADER','ADMIN')" /> -->
-
+		
+		<intercept-url pattern="/leader" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/member/create" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/member/editMember/**" access="hasAnyAuthority('LEADER')" />
 		<intercept-url pattern="/club/index" access="hasAuthority('LEADER')" />
@@ -32,6 +34,8 @@
 		<!-- <intercept-url pattern="/member/editMember/**" access="hasAuthority('LEADER')" /> -->
 		<intercept-url pattern="/to-grade/scoreTotalBrach" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/train/getAllTrain" access="hasAuthority('LEADER')" />
+		<intercept-url pattern="to-grade/accessDonate" access="hasAuthority('LEADER')" />
+				
 		<intercept-url pattern="/" access="permitAll"/>
 		<intercept-url pattern="/login" access="permitAll"/>
 		

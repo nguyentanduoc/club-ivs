@@ -41,7 +41,7 @@ public class BranchDAOImpl  implements BranchDAO{
 			currentSession().delete(branch);
 			return true;
 		}	catch(Exception ex) {
-			System.out.println("deleteRole-"+ ex.toString());
+			System.out.println("deleteBranch-"+ ex.toString());
 			return false;
 		}	
 	}

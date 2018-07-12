@@ -43,7 +43,7 @@ public class JoinClub {
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_CLUB")
 	private Club club;
-	
+
 	public Date getDateJoin() {
 		return dateJoin;
 	}

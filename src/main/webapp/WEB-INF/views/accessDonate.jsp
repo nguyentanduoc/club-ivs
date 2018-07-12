@@ -18,13 +18,13 @@ pageEncoding="UTF-8" session="false"%>
 	      <div class="container-fluid">
 	        <div class="row mb-2">
 	          <div class="col-sm-6">
-	            <h1 class="m-0 text-dark">Danh sách Bản điểm</h1>
+	            <h1 class="m-0 text-dark">Xác nhận thưởng</h1>
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
-	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href='<c:url value="/to-grade/scoreTotalBrach"/>'>Điểm Chi Nhánh</a></li>
-	              <li class="breadcrumb-item active">Bảng Điểm</li>
-	            </ol>
+	            <!-- <ol class="breadcrumb float-sm-right">
+	              <li class="breadcrumb-item"><a href="#">Danh sách</a></li>
+	              <li class="breadcrumb-item active">Bảng Điểm</li>
+	            </ol> -->
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->
 	      </div><!-- /.container-fluid -->
@@ -36,8 +36,7 @@ pageEncoding="UTF-8" session="false"%>
 	    <div class="card">
             <div class="card-header">
             	<div class="row">
-            		<div class="col-md-8">
-            			 <h3 class="card-title">Điểm Số</h3>
+            		<div class="col-md-8">            			
             		</div>
             		<div class="col-md-4">
             			 <div class="form-group row">            			 	              
@@ -58,40 +57,48 @@ pageEncoding="UTF-8" session="false"%>
 	                		<table id="example1" class="table table-bordered table-striped">
 				                <thead>
 				                <tr>
-				                  <th>Tên Thành Viên</th>
-				                  <th>Điểm Số</th>
-				                  <th>Yêu cầu thưởng</th>	
-				                  <th>Chấp Thuận thưởng</th>	
-				                  <th>Nội Dung</th>
-				                  <th>Hoàn tất</th>				                 
+					                <th>Tên Thành Viên</th>
+					                <th>Điểm Số</th>
+									<th>Nội Dung</th>
+					                <th>Xác Nhận Gửi</th>	
+					                <th>Đã Nhận</th>                
 				                </tr>
 				                </thead>
 				                <tbody>
 			                          <c:forEach var="sum" items="${sums}">
 						                  <tr>
 						                  	<td>${sum.getMember().getNameMember()}</td>
-						                    <td>${sum.getScoreBranch()}</td>						                    
-						                    <td align="center">					                   		
-						                    	<label class="btn ${sum.isRequireDonate()==false ?'btn-secondary':'btn-warning'} btn-sm ">
-													<i class="fa fa-gift" aria-hidden="true"></i>
-												</label>												
-						                    </td>							                   
-						                    <td align="center">						                     
-						                   		<div class="btn-group btn-group-toggle" data-toggle="buttons">
-							                    	<label class="btn btn-outline-primary ${sum.isDonate()==false ?'active':''} btn-sm offRequire" data-id="${sum.getIdSumBranch()}">
-														<input type="radio" name="donate" autocomplete="off"  ${sum.isDonate()==false ?'checked':''}  value="false">
-														<i class="fa fa-circle-thin" aria-hidden="true"></i>
-													</label>
-													<label class="btn btn-outline-primary btn-sm onRequire ${sum.isDonate()==true?'active':''}" data-id="${sum.getIdSumBranch()}" >
-														<input type="radio" name="donate" id="option3" autocomplete="off" ${sum.isDonate()==true?'checked':''} value="true">
-														<i class="fa fa-check" aria-hidden="true"></i>
-													</label>
-												</div>
-						                    </td>						                    
-						                    <td align="center"><input  id="txt-${sum.getIdSumBranch()}" value="${sum.getContainDonate()}" class="form-control" type="text"/></td>
+						                    <td>${sum.getScoreBranch()}</td>
+						                    <td align="center">
+						                    	<input readonly="readonly"  id="txt-${sum.getIdSumBranch()}" value="${sum.getContainDonate()}" class="form-control" type="text"/></td>
 						                    <td  align="center">
-						                    	<button type="button" class="btn btn-info btn-sm update" data-id="${sum.getIdSumBranch()}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-						                    </td>	                               
+						                    	<c:choose>
+						                    		<c:when test="${sum.isConfirmDonate()==false }">
+						                    			<button type="button" class="btn btn-outline-info btn-sm update" id="${sum.getIdSumBranch()}" data-id="${sum.getIdSumBranch()}">
+						                    				<i class="fa fa-check" aria-hidden="true"></i>
+						                    			</button>
+						                   			 </c:when>
+						                   			 <c:when test="${sum.isConfirmDonate()==true }">
+						                    			<label class="btn btn-primary btn-sm disabled">
+								                    		<i class="fa fa-check" aria-hidden="true"></i>
+								                    	</label>	
+						                   			 </c:when>
+						                    	</c:choose>			                    	
+						                    </td>	
+						                    <td  align="center">
+						                    	<c:choose>
+						                    		<c:when test="${sum.isConfirm()==false }">
+						                    			<label class="btn btn-outline-primary btn-sm disabled">
+								                    		<i class="fa fa-check" aria-hidden="true"></i>
+								                    	</label>	
+						                   			 </c:when>
+						                   			 <c:when test="${sum.isConfirm()==true }">
+						                    			<label class="btn btn-primary btn-sm active disabled">
+								                    		<i class="fa fa-check" aria-hidden="true"></i>
+								                    	</label>	
+						                   			 </c:when>
+						                    	</c:choose>			                    	
+						                    </td>						                                                 
 						                  </tr>	
 				                  	 </c:forEach>  	     
 				                </tbody>
@@ -128,37 +135,21 @@ pageEncoding="UTF-8" session="false"%>
     <jsp:include page="_shareLayout/footer.jsp"></jsp:include>
      <script>
     	$(document).ready(function(){
-    		var check;
-    		var status=false;
-    		var confirm =false;
-    		$(".onRequire").change(function(){
-    			check = $(this).attr('data-id');
-    			status = true;
-    		});
-    		$(".offRequire").change(function(){
-    			check = $(this).attr('data-id');
-    			status = false;
-    		});
-    		
+    		    		
     		$(".update").click(function(){ 
     			var id = $(this).attr('data-id');
-    			var content = $("#txt-"+id).val();
-    			var require=false;
-    			var confirm1=false;
-    			if(check==id){
-    				require=status;
-    			} 	confirm1 = confirm;
-    			
+    			    			
     			$.ajax({
-    				url:"/Club-IVS/to-grade/updateScoreBranch",
+    				url:"/Club-IVS/to-grade/confirmDonate",
     				type:"POST",
     				data:{
-    					id:id, 
-    					require:require,
-    					content:content
+    					id:id    						
     				},
     				success:function(data){
-    					console.log(data);
+    					if(data.status==200){
+    						$("#"+id).removeClass("btn-outline-primary");
+    						$("#"+id).addClass("btn-primary active");
+    					}
     				}	
     			})
     		});

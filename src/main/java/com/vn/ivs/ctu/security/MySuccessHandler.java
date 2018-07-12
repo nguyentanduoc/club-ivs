@@ -51,13 +51,13 @@ public class MySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 				}
 			}else {
 				if (RoleUtils.isAdmin(roles)) {
-					url = "/admin";
+					url = "/member/admin";
 				} else if (RoleUtils.isLeader(roles)) {
 					url = "/leader";
 				} else if (RoleUtils.isLeaderClub(roles)) {
-					url = "/leaderclub";
+					url = "/schedule/scheduletotal";
 				} else if (RoleUtils.isMember(roles)) {
-					url = "/member";
+					url = "/member/profile";
 				}
 			}
 		}catch (Exception e) {
