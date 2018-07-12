@@ -24,6 +24,7 @@
 <link rel="stylesheet"
 	href="<c:url value="/resources/plugins/iCheck/square/blue.css"/>">
 <!-- Google Font: Source Sans Pro -->
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/dist/img/favicon.ico" />
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
 	rel="stylesheet">

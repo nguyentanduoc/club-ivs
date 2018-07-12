@@ -48,8 +48,8 @@ public class TrainController {
 	
 	@GetMapping(path = "/index")
 	public String Index(ModelMap modelMap,HttpSession session) {
-		modelMap.put("action1", "train");
-		modelMap.put("action2", "index");
+		modelMap.put("action1", "schedule");
+		modelMap.put("action2", "train");
 		modelMap.put("title", "Thêm lịch thủ công");
 		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
@@ -115,7 +115,6 @@ public class TrainController {
 	@GetMapping(path = "/trainauto")
 	public String trainAuto(ModelMap modelMap, HttpSession session) {
 		modelMap.put("action1", "train");
-		modelMap.put("action2", "trainauto");
 		modelMap.put("title", "Lịch tự động tạo");
 		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {

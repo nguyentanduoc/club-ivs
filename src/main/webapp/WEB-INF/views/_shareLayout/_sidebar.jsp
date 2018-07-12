@@ -16,13 +16,18 @@
 		<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 			<div class="image">
 				<img src="${pageContext.request.contextPath}/<c:url value="resources/dist/img/user2-160x160.jpg"/>"
-					class="img-circle elevation-2" alt="User Image">
+					class="img-circle elevation-2" alt="User Image"><br/>
 			</div>
 			<div class="info">
 				<a href="#" class="d-block">
 					<c:choose>
 						<c:when test="${SecurityUtils.getMyUserDetail()!=null}">
-							<%=SecurityUtils.getMyUserDetail().getNameMember()%>
+							<%=SecurityUtils.getMyUserDetail().getNameMember()%><br/>
+							<span class="badge badge-primary badge-pill">
+								<c:forEach items="${SecurityUtils.getMyUserDetail().getRoles()}" var="role">
+									${role.getNameRole()}<br/>
+								</c:forEach>
+							</span>
 						</c:when>
 					</c:choose>
 				</a>
@@ -94,8 +99,7 @@
 				  <sec:authorize access="hasAuthority('LEADER')">
 				<li class="nav-item has-treeview ${action1 eq  'club' ? 'menu-open' : ''}">
 					<a href="#" class="nav-link ${action1 eq  'club' ? 'active' : ''}">
-					<i class="fa fa-star" aria-hidden="true"></i>
-						<!-- <i class="nav-icon fa fa-edit"></i> -->
+						<i class="fa fa-star" aria-hidden="true"></i>
 						<p>CLB<i class="fa fa-angle-left right"></i></p>
 					</a>
 					<ul class="nav nav-treeview">
@@ -125,17 +129,19 @@
 				</sec:authorize>
 				<!-- menu score -->
 				<sec:authorize access="hasAnyAuthority('LEADER','LEADER_CLUB')">
-				<li class="nav-item has-treeview">
-					<a href="#" class="nav-link">
+				<li class="nav-item has-treeview ${action1 eq  'score' ? 'menu-open' : ''}">
+					<a href="#" class="nav-link ${action1 eq  'score' ? 'active' : ''}">
 					<i class="fa fa-list-ol" aria-hidden="true"></i>
 						<!-- <i class="nav-icon fa fa-edit"></i> -->
-						<p>Bản Điểm</p>
+						<p>Bản Điểm
+							<i class="fa fa-angle-left right"></i>
+						</p>
 					</a>						
 					<ul class="nav nav-treeview">
 					<sec:authorize access="hasAnyAuthority('LEADER_CLUB')">
 						<li class="nav-item">
 							<a href='<c:url value="/to-grade/index"/>'
-							class="nav-link ${action2 eq  'create' ? 'active' : ''}"> <i
+							class="nav-link ${action2 eq  'scoreclub' ? 'active' : ''}"> <i
 								class="fa fa-circle-o nav-icon"></i>
 								<p>Điểm CLB</p>
 							</a>
@@ -144,7 +150,7 @@
 						<sec:authorize access="hasAnyAuthority('LEADER')">
 						<li class="nav-item">
 							<a href='<c:url value="/to-grade/scoreTotalBrach"/>'
-							class="nav-link ${action2 eq  'joinClub' ? 'active' : ''}"> <i
+							class="nav-link ${action2 eq  'scorebranch' ? 'active' : ''}"> <i
 								class="fa fa-circle-o nav-icon"></i>
 								<p>Điểm Chi Nhánh</p>
 							</a>
@@ -155,8 +161,8 @@
 				</sec:authorize>
 				<!-- menu profile -->
 				<sec:authorize access="hasAuthority('MEMBER')">
-				<li class="nav-item has-treeview">
-					<a href="<c:url value="/member/profile"/>" class="nav-link">
+				<li class="nav-item has-treeview ${action1 eq  'profile' ? 'menu-open' : ''}">
+					<a href="<c:url value="/member/profile"/>" class="nav-link ${action1 eq  'profile' ? 'active' : ''}">
 					<i class="fa fa-user" aria-hidden="true"></i>
 						<!-- <i class="nav-icon fa fa-edit"></i> -->
 						<p>Trang cá nhân</p>
@@ -185,8 +191,8 @@
 	          </sec:authorize>
 	          <sec:authorize access="hasAuthority('LEADER_CLUB')">
 	          <!-- menu schedule -->
-	          <li class="nav-item has-treeview">
-	            <a href="#" class="nav-link">
+	          <li class="nav-item has-treeview ${action1 eq  'schedule' ? 'menu-open' : ''}">
+	            <a href="#" class="nav-link ${action1 eq  'schedule' ? 'active' : ''}">
 	            <i class="fa fa-calendar-o" aria-hidden="true"></i>
 	              <!-- <i class="nav-icon fa fa-edit"></i> -->
 	              <p>
@@ -196,7 +202,7 @@
 	            </a>
 	            <ul class="nav nav-treeview">
 	              <li class="nav-item">
-	                <a href='<c:url value="/schedule/index"/>' class="nav-link ${action2 eq  'schedule' ? 'active' : ''}">
+	                <a href='<c:url value="/schedule/index"/>' class="nav-link ${action2 eq  'index' ? 'active' : ''}">
 	                  <i class="fa fa-circle-o nav-icon"></i>
 	                  <p>Thêm lịch tự động</p>
 	                </a>
@@ -208,7 +214,7 @@
 	                </a>
 	              </li>
 	              <li class="nav-item">
-	                <a href='<c:url value="/schedule/scheduletotal"/>' class="nav-link ${action2 eq  'schedule' ? 'active' : ''}">
+	                <a href='<c:url value="/schedule/scheduletotal"/>' class="nav-link ${action2 eq  'scheduletotal' ? 'active' : ''}">
 	                  <i class="fa fa-circle-o nav-icon"></i>
 	                  <p>Tất cả các lịch</p>
 	                </a>
@@ -217,16 +223,16 @@
 	            </ul>
 	            
 	          <!-- menu train -->
-				<li class="nav-item has-treeview">
-					<a href="<c:url value="/train/trainauto"/>" class="nav-link">
+				<li class="nav-item has-treeview ${action1 eq  'train' ? 'menu-open' : ''}">
+					<a href="<c:url value="/train/trainauto"/>" class="nav-link ${action1 eq  'train' ? 'active' : ''}">
 					<i class="fa fa-calendar-check-o" aria-hidden="true"></i>
 						<!-- <i class="nav-icon fa fa-edit"></i> -->
 						<p>Lịch tự động</p>
 					</a>					
 				</li><!-- ./menu train -->
 	          <!-- menu attendance -->
-				<li class="nav-item has-treeview">
-					<a href="<c:url value="/attendance/index"/>" class="nav-link">
+				<li class="nav-item has-treeview ${action1 eq  'attendance' ? 'menu-open' : ''}">
+					<a href="<c:url value="/attendance/index"/>" class="nav-link ${action1 eq  'attendance' ? 'active' : ''}">
 					<i class="fa fa-check-square-o" aria-hidden="true"></i>
 						<!-- <i class="nav-icon fa fa-edit"></i> -->
 						<p>Điểm danh</p>

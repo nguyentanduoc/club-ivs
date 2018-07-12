@@ -68,8 +68,8 @@ public class ScheduleController {
 	
 	@GetMapping(path = "/scheduletotal")
 	public String trainTotal(ModelMap modelMap, HttpSession session) {
-		modelMap.put("action1", "train");
-		modelMap.put("action2", "traintotal");
+		modelMap.put("action1", "schedule");
+		modelMap.put("action2", "scheduletotal");
 		modelMap.put("title", "Tổng lịch");
 		
 		Club club = (Club)session.getAttribute("club");

@@ -157,6 +157,7 @@ public class MemberController {
 	public String profileMember(ModelMap modelMap) {
 		long idMember = SecurityUtils.getMyUserDetail().getIdMember();		
 		modelMap.put("member",memberService.getMemberById(idMember));
+		modelMap.put("action1", "profile");
 		modelMap.put("title", "Trang cá nhân");
 		List<JoinClub> joinclubs = joinClubService.getJoinClubByIdMember(idMember);
 		List<JoinDateLeave> days = new ArrayList<>();

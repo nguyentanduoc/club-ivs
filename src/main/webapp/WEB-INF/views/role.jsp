@@ -22,7 +22,7 @@
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href='<c:url value="/"/>'>Trang Chủ</a></li>
+	              <li class="breadcrumb-item"><a href='<c:url value="/role/index"/>'>Trang Chủ</a></li>
 	              <li class="breadcrumb-item active">Chức Vụ</li>
 	            </ol>
 	          </div><!-- /.col -->

@@ -36,7 +36,6 @@ public class AttendanceController {
 	public String Index(ModelMap modelMap,HttpSession session) {
 
 		modelMap.put("action1","attendance");
-		modelMap.put("action2","index");
 		modelMap.put("title","Sự kiện trong tuần");
 		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
@@ -52,7 +51,6 @@ public class AttendanceController {
 	public String Diemdanh(@PathVariable("id") int id, ModelMap modelMap,HttpSession session) {
 
 		modelMap.put("action1","attendance");
-		modelMap.put("action2","diemdanh");
 		modelMap.put("title","Danh sách điểm danh");
 		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {

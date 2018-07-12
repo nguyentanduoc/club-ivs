@@ -22,8 +22,8 @@
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Điểm danh</a></li>
-	              <li class="breadcrumb-item active">Index</li>
+	              <li class="breadcrumb-item"><a href='<c:url value="/train/getAllTrain"/>'>Trang Chủ</a></li>
+	              <li class="breadcrumb-item active">Tất cả lịch Tuần</li>
 	            </ol>
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->

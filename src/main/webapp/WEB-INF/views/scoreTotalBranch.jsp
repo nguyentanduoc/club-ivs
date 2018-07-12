@@ -22,8 +22,8 @@ pageEncoding="UTF-8" session="false"%>
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Danh sách</a></li>
-	              <li class="breadcrumb-item active">Bảng Điểm</li>
+	              <li class="breadcrumb-item"><a href='<c:url value="/to-grade/scoreTotalBrach"/>'>Điểm Chi Nhánh</a></li>
+	              <li class="breadcrumb-item active">Bảng Điểm</li>
 	            </ol>
 	          </div><!-- /.col -->
 	        </div><!-- /.row -->

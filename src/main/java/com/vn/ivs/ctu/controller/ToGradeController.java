@@ -40,7 +40,9 @@ public class ToGradeController {
 	
 	@RequestMapping(path="index")
 	public String tableScore(ModelMap map, HttpSession session) {
-		
+		map.put("action1", "score");
+		map.put("action2", "scoreclub");
+		map.put("title", "Bảng Điểm");
 		Club club = (Club)session.getAttribute("club");
 		if(club!=null) {
 			List<Summarization> sums =  sumarizationService.getSumByClubPreMonth(club.getIdClub(), DateUtils.getCurentMonth()-1,DateUtils.getCurentYear());
@@ -75,6 +77,9 @@ public class ToGradeController {
 	
 	@GetMapping(path="scoreTotalBrach")
 	public String  scoreTotalBranch(ModelMap modelMap) {
+		modelMap.put("action1", "score");
+		modelMap.put("action2", "scorebranch");
+		modelMap.put("title", "Bảng Điểm");
 		int month = DateUtils.getCurentMonth()-1;
 		int year = DateUtils.getCurentYear();
 		long idLeader = SecurityUtils.getMyUserDetail().getIdMember();

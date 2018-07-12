@@ -10,6 +10,7 @@ encoding//src/main/java/com/vn/ivs/ctu/controller/HomeController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/MemberController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/RoleController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/ScheduleController.java=UTF-8
+encoding//src/main/java/com/vn/ivs/ctu/controller/ToGradeController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/controller/TrainController.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/entity/Branch.java=UTF-8
 encoding//src/main/java/com/vn/ivs/ctu/utils/VNCharacterUtils.java=UTF-8

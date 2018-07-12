@@ -26,7 +26,7 @@
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+	              <li class="breadcrumb-item"><a href='<c:url value="/train/trainauto"/>'>Trang chủ</a></li>
 	              <li class="breadcrumb-item active">Lịch tạo tự động</li>
 	            </ol>
 	          </div><!-- /.col -->

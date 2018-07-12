@@ -21,7 +21,7 @@
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Danh sách</a></li>
+	              <li class="breadcrumb-item"><a href='<c:url value="/attendance/index"/>'>Quay Lại</a></li>
 	              <li class="breadcrumb-item active">Điểm danh</li>
 	            </ol>
 	          </div><!-- /.col -->

@@ -37,6 +37,7 @@
 		
 		<intercept-url pattern="/chooseClub" access="hasAuthority('LEADER_CLUB')" />
 		<intercept-url pattern="/schedule/index" access="hasAuthority('LEADER_CLUB')" />
+		<intercept-url pattern="/train/index" access="hasAuthority('LEADER_CLUB')" />
 		<intercept-url pattern="/train/trainauto" access="hasAuthority('LEADER_CLUB')" />	
 		<intercept-url pattern="/leaderclub" access="hasAuthority('LEADER_CLUB')" />	
 		<intercept-url pattern="/schedule/scheduletotal" access="hasAuthority('LEADER_CLUB')" />	

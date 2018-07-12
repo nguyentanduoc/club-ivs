@@ -21,7 +21,7 @@
 	          </div><!-- /.col -->
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href='<c:url value="/"/>'>Trang Chủ</a></li>
+	              <li class="breadcrumb-item"><a href='<c:url value="/branch/index"/>'>Trang Chủ</a></li>
 	              <li class="breadcrumb-item active">Chi Nhánh</li>
 	            </ol>
 	          </div><!-- /.col -->
