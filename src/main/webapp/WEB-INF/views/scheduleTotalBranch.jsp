@@ -43,22 +43,21 @@
               </div>
               <div class="card-body">
         <div class="row p-2">
-         <c:forEach var="train" items="${listAllTrainOnWeek}">
+         <c:forEach var="train" items="${listTrainBranch}">
           <div class="col-lg-3 col-6">
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
                 <h3>${train.getSchedule().getClub().getNameClub()}</h3>
-                <p>${train.getSchedule().getNameSchedule()}<br/><fmt:formatDate var="fmtDate" value="${train.getDateTrain()}" pattern="dd/MM/yyyy"/>
+                <p>${train.getSchedule().getNameSchedule()}<br/>
+                ${train.getSchedule().getTimeSchedule()} - 
+                <fmt:formatDate var="fmtDate" value="${train.getDateTrain()}" pattern="dd/MM/yyyy"/>
                 <strong>${fmtDate}</strong></p>
-                
               </div>
               <div class="icon">
                 <i class="fa fa-bug"></i>
               </div>
-              <a class="small-box-footer" href='<c:url value="/attendance/diemdanh/${train.getIdTrain()}"/>' class="nav-link ${action1 eq  'diemdanh' ? 'active' : ''}">
-		            Điểm danh <i class="fa fa-arrow-circle-right"></i>
-		            </a>
+              
             </div>
           </div>
           </c:forEach>

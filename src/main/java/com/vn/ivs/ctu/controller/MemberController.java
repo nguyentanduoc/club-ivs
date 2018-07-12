@@ -158,7 +158,6 @@ public class MemberController {
 		long idMember = SecurityUtils.getMyUserDetail().getIdMember();		
 		modelMap.put("member",memberService.getMemberById(idMember));
 		modelMap.put("title", "Trang cá nhân");
-		Club club  = clubSerive.getLeaderClub(idMember);
 		List<JoinClub> joinclubs = joinClubService.getJoinClubByIdMember(idMember);
 		List<JoinDateLeave> days = new ArrayList<>();
 		for(JoinClub j:joinclubs) {
@@ -169,23 +168,13 @@ public class MemberController {
 				days.add(new JoinDateLeave(j.getDateJoin(),j.getClub().getNameClub(),j.isStatus()));
 			}
 		}
-		
 		 Collections.sort(days, new Comparator<JoinDateLeave>() {
 		      @Override
 		      public int compare(final JoinDateLeave object1, final JoinDateLeave object2) {
 		          return - object1.getDateSort().compareTo(object2.getDateSort());
 		      }
 		  });
-		 
-			
-		if(club!=null) {
-			modelMap.put("listDateSort", days);
-			modelMap.put("member",memberService.getMemberById(idMember));
-			modelMap.put("listJoinClubByIdMember", joinClubService.getJoinClubByIdMember(idMember));
-		}else {
-			modelMap.put("status", 403);
-			modelMap.put("message", "bạn không có quyền truy cập!");
-		}
+		 modelMap.put("listDateSort",days);
 		return "profile";		
 	}
 	/*@PostMapping(path="loadMember")
@@ -304,4 +293,49 @@ public class MemberController {
 		
 		return map;
 	}*/
+	@PostMapping("updateInfo")
+	public String updateInfo(@ModelAttribute(name="member") Member member){
+		Member member2 = memberService.getMemberById(SecurityUtils.getMyUserDetail().getIdMember());
+		member2.setBirthDayMember(member.getBirthDayMember());
+		member2.setNameMember(member.getNameMember());
+		member2.setSexMember(member.isSexMember());
+		member2.setPhoneNumberMember(member.getPhoneNumberMember());
+		Map<String,Object> map = new HashMap<>();
+		if(memberService.saveOrUpdate(member2)>0) {
+			map.put("status", 200);
+		}
+		else {
+			map.put("status", 400);
+		}
+		return "redirect:/member/profile";
+	}
+	@PostMapping(path="/updatePass")
+	public String updatePass(@RequestParam("reTypePassWord")String passwordMember) {
+		Member member = memberService.getMemberById(SecurityUtils.getMyUserDetail().getIdMember());
+		member.setPassWordMember(PasswordEncoder.BCryptPassdEncoder(passwordMember));
+		memberService.saveOrUpdate(member);
+			return "redirect:/logout";
+	}
+	@PostMapping(path="/checkPassWord")
+	@ResponseBody
+	public Map<String, Object> checkPassWord(String password){
+		Map<String, Object> map =new HashMap<>();
+		Member member = memberService.getMemberById(SecurityUtils.getMyUserDetail().getIdMember());
+		if(member!=null) {
+			String pass = PasswordEncoder.BCryptPassdEncoder(password);
+			
+			System.out.println(pass);
+			if(PasswordEncoder.matches(pass, member.getPassWordMember())) {
+				map.put("status", 200);
+				map.put("matches", true);
+			}else {
+				map.put("status", 200);
+				map.put("matches", false);
+			}
+		}else {
+			map.put("status", 400);
+			map.put("message", "Xảy ra lỗi!");
+		}
+		return map;
+	}
 }

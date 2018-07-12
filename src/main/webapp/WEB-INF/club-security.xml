@@ -19,18 +19,19 @@
 		
 		<intercept-url pattern="/member/editAdminMember/**" access="hasAuthority('ADMIN')" />
 		<intercept-url pattern="/member/create" access="hasAuthority('LEADER')" />
-		<intercept-url pattern="/member/editMember/**" access="hasAnyAuthority('LEADER')" />
+		<intercept-url pattern="/member/editMember/**" access="hasAnyAuthority('LEADER','ADMIN')" />
 		
 		<intercept-url pattern="/member/profile" access="hasAuthority('MEMBER')" />
-		<intercept-url pattern="/member/update" method="POST" access="hasAnyAuthority('MEMBER','LEADER')" />
+		<!-- <intercept-url pattern="/member/update" method="POST" access="hasAnyAuthority('MEMBER','LEADER','ADMIN')" /> -->
 
 		<intercept-url pattern="/member/create" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/member/editMember/**" access="hasAnyAuthority('LEADER')" />
 		<intercept-url pattern="/club/index" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/club/joinClub" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/club/listJoinClub" access="hasAuthority('LEADER')" />
-		<intercept-url pattern="/member/editMember/**" access="hasAuthority('LEADER')" />
+		<!-- <intercept-url pattern="/member/editMember/**" access="hasAuthority('LEADER')" /> -->
 		<intercept-url pattern="/to-grade/scoreTotalBrach" access="hasAuthority('LEADER')" />
+		<intercept-url pattern="/train/getAllTrain" access="hasAuthority('LEADER')" />
 		<intercept-url pattern="/" access="permitAll"/>
 		<intercept-url pattern="/login" access="permitAll"/>
 		

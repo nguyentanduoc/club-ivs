@@ -55,9 +55,8 @@ public class ScheduleController {
 		return "schedule";
 	}
 	@PostMapping ("/create")
-	public String createSchedule(@ModelAttribute("schedule") Schedule schedule, BindingResult result, ModelMap modelMap) {		
-		long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
-		Club club = clubService.getLeaderClub(idLeader);
+	public String createSchedule(@ModelAttribute("schedule") Schedule schedule, BindingResult result, ModelMap modelMap, HttpSession session) {		
+		Club club = (Club)session.getAttribute("club");
 		schedule.setClub(club);
 		if (scheduleService.create(schedule)>0) {
 			modelMap.put("status", "add complete");

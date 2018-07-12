@@ -217,7 +217,7 @@ public class ApiController {
 	//start schedule
 	@GetMapping("deleteSchedule")
 	@ResponseBody
-	public String deleteSchedule(@RequestParam int idSchedule) {		
+	public String deleteSchedule(@RequestParam long idSchedule) {		
 		boolean rs = scheduleService.deleteSchedule(idSchedule);
 		if(rs) {
 			return "true";

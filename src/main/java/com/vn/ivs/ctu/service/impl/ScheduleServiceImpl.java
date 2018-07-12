@@ -27,7 +27,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return scheduleDAO.create(schedule);		
 	}
 	
-	public boolean deleteSchedule(int idSchedule) {
+	public boolean deleteSchedule(long idSchedule) {
 		if(trainservice.getTrainBySchedule(idSchedule).size()>0) {
 			System.out.println(trainservice.getTrainBySchedule(idSchedule).size());
 			if(trainservice.deleteTrainByIdSchedule(idSchedule)) {
@@ -55,7 +55,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return scheduleDAO.getAllScheduleTotal();
 	}
 	@Override
-	public Schedule getScheduleById(int id) {
+	public Schedule getScheduleById(long id) {
 		return scheduleDAO.getScheduleById(id);
 	}
 }

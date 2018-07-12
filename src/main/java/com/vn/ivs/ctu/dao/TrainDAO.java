@@ -17,4 +17,5 @@ public interface TrainDAO {
 	public List<Train> getAllTrainByClub(int month, int year, int idClub);
 	public Train getTrainById(long id);
 	public List<Train> getTrainBySchedule(long idSchedule);
+	public List<Train> getAllTrainBranch(int idBranch);
 }

@@ -19,7 +19,7 @@ public class Schedule {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID_SCHEDULE")
-	private int idSchedule;
+	private long idSchedule;
 	
 	@Column(name="NAME_SCHEDULE",length=100)
 	private String nameSchedule;
@@ -41,11 +41,11 @@ public class Schedule {
 	@JoinColumn(name="ID_CLUB",referencedColumnName="ID_CLUB")
 	private Club club;
 	
-	public int getIdSchedule() {
+	public long getIdSchedule() {
 		return idSchedule;
 	}
 
-	public void setIdSchedule(int idSchedule) {
+	public void setIdSchedule(long idSchedule) {
 		this.idSchedule = idSchedule;
 	}
 

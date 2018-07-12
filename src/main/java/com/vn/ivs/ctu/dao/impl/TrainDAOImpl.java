@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.vn.ivs.ctu.dao.TrainDAO;
 import com.vn.ivs.ctu.entity.Train;
+import com.vn.ivs.ctu.utils.DateUtils;
 
 @Repository("trainDAOImpl")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -71,11 +72,9 @@ public class TrainDAOImpl implements TrainDAO{
 
 	@Override
 	public List<Train> getListAllTrainOnWeek(int idClub) {
-		/*Calendar cal = Calendar.getInstance();
-		int week = cal.get(Calendar.WEEK_OF_YEAR);*/
 		try {
-			return currentSession().createQuery("from train t where t.schedule.club.idClub = ?",Train.class)
-					.setParameter(0, idClub).list();
+			return currentSession().createQuery("from train t where t.schedule.club.idClub =:idClub and t.weekend=:weekend",Train.class)
+					.setParameter("idClub", idClub).setParameter("weekend", DateUtils.getCurrentWeekend()).list();
 		}catch (Exception e) {
 			System.out.println(e.toString());
 			return null;
@@ -127,6 +126,15 @@ public class TrainDAOImpl implements TrainDAO{
 		try {
 			return currentSession().createQuery("select t from train t where t.schedule.idSchedule = ?",Train.class)
 					.setParameter(0, idSchedule).list();
+		}catch(Exception ex) {
+			System.out.println(ex.toString());
+			return null;
+		}
+	}
+	public List<Train> getAllTrainBranch(int idBranch){
+		try {
+			return currentSession().createQuery("SELECT t FROM train t JOIN t.schedule s JOIN s.club c  WHERE c.branch.idBranch =:idBranch and t.weekend=:weekend",Train.class)
+					.setParameter("idBranch", idBranch).setParameter("weekend", DateUtils.getCurrentWeekend()).list();
 		}catch(Exception ex) {
 			System.out.println(ex.toString());
 			return null;

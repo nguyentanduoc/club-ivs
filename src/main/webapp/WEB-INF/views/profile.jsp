@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8" session="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 	<head>		
@@ -126,73 +127,44 @@
               <div class="card-body">
                 <div class="tab-content">
                   <div class="active tab-pane" id="settings">
-                    <form class="form-horizontal">
+                    <form:form class="form-horizontal" path="member" modelAttribute="member" action="${pageContext.request.contextPath}/member/updateInfo">
                       <div class="form-group row">
                         <label for="nameMember" class="col-md-3 col-sm-2 control-label">Họ và Tên</label>
                         <div class="col-md-9 col-sm-10">
-                          <input type="text" value="${member.getNameMember()}" class="form-control"  name = "nameMember" id="nameMember" placeholder="Nhập Họ và Tên">
+                          <form:input type="text" path="nameMember" class="form-control" placeholder="Nhập Họ và Tên"/>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="isSexMember" class="col-md-3 col-sm-2 control-label">Giới tính</label>
                         <div class="col-sm-10 col-md-9">
-                        <c:choose>
-						<c:when test="${member.isSexMember()==true}">
+                     
 							<label class="mr-2">
-			                	<input type="radio" name="isSexMember" class="minimal" checked>Nam
+			                	<form:radiobutton path="sexMember" value="true"/>Nam
 			               	</label>
 			                <label>
-			                	<input type="radio" name="isSexMember" class="minimal">Nữ
+			                	<form:radiobutton path="sexMember" value="false"/>Nữ
 			                </label>
-						</c:when>
-						<c:when test="${member.isSexMember()==false}">
-							<label class="mr-2">
-			                	<input type="radio" name="isSexMember" class="minimal">Nam
-			                </label>
-			                <label>
-			                	<input type="radio" name="isSexMember" class="minimal" checked>Nữ
-			                </label>
-						</c:when>
-					</c:choose>
-                          
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="birthDayMember" class="col-sm-2 col-md-3 control-label">Sinh Nhật</label>
                         <div class="col-sm-10 col-md-9">
-                        <c:choose>
-						<c:when test="${member.getBirthDayMember()!=null}">
-						<fmt:formatDate var="fmtDate" value="${member.getBirthDayMember()}" pattern="dd/MM/yyyy"/>
-						<input class="form-control" type="text" name="bean.dateProperty" value="${fmtDate}" 
-						name="birthDayMember" id="birthDayMember" placeholder="Nhập Ngày tháng năm sinh"/>
-						</c:when>
-						<c:otherwise>
-							<i>Đang cập nhật</i>
-						</c:otherwise>
-					</c:choose>
-						
+						<fmt:formatDate var="fmtDate" value="${member.getBirthDayMember()}" pattern="dd/MM/yyyy"/>			
+						<form:input class="form-control datepicker" path="birthDayMember" value="${fmtDate}" placeholder="Ngày tháng năm sinh"/>
 						</div>
                       </div>
                       <div class="form-group row">
                         <label for="phoneNumerMember" class="col-sm-2 col-md-3 control-label">Số Điện Thoại</label>
-                        	<div class="col-sm-10 col-md-9">
-	                        <c:choose>
-								<c:when test="${member.getPhoneNumberMember()!=null}">
-									<input type="text" value="${member.getPhoneNumberMember()}"class="form-control" name="phoneNumerMember" id="phoneNumerMember" placeholder="Số điện thoại">
-								</c:when>
-								<c:otherwise>
-									<i></i>
-								</c:otherwise>
-							</c:choose>
+                        <div class="col-sm-10 col-md-9">
+							<form:input class="form-control" placeholder="Số điện thoại" path="phoneNumberMember"/>
                         </div>
                       </div>
                       <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                           <button type="submit" class="btn btn-success submit">Cập Nhật</button>
-                           <button class="btn btn-primary">Lưu lại</button>
                         </div>
                       </div>
-                    </form>
+                    </form:form>
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="updateAvatar">
@@ -229,6 +201,7 @@
                     </form>
                   </div>
                   <div class="tab-pane" id="chagePassWord">
+                  <form class="form-horizontal" action="${pageContext.request.contextPath}/member/updatePass" method="post">
                   	<div class="form-group row">
                         <label for="oldPassWord" class="col-md-3 col-sm-2 control-label">Mật khẩu cũ</label>
                         <div class="col-md-5 col-sm-10">
@@ -255,6 +228,9 @@
                           <button id="savePassWord" type="submit" class="btn btn-primary">Lưu lại</button>
                         </div>
                       </div>
+                      <input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+                      </form>
                   </div>
                   <!-- activity -->
                   <div class="tab-pane" id="activity">
@@ -304,7 +280,6 @@
                   <div class="tab-pane direct-chat-messages" id="timeline">
                   <c:forEach var="date" items="${listDateSort}">
                     <!-- The timeline -->
-                    
                     <ul class="timeline timeline-inverse">
                       <!-- timeline time label -->
                       <li class="time-label">
@@ -324,17 +299,22 @@
                       <!-- /.timeline-label -->
                       <!-- timeline item -->
                       <li>
-                        <i class="fa fa-clock-o bg-gray"></i>
-                        <div class="timeline-item">
+                        
                         <c:choose>
                         <c:when test="${date.isStatus()==true}">
+                        <i class="fa fa-clock-o bg-warning"></i>
+                        <div class="timeline-item">
                           <h3 class="timeline-header"><a href="#">${date.getNameClub()}</a> tham gia Club</h3>
+                          </div>
 						</c:when>
 						<c:when test="${date.isStatus()==false}">
+						<i class="fa fa-clock-o bg-gray"></i>
+                        <div class="timeline-item">
                           <h3 class="timeline-header"><a href="#">${date.getNameClub()}</a> rời khỏi Club</h3>
+                          </div>
 						</c:when>
 					</c:choose>
-                          </div>
+                          
                           </li>	
                     </ul>
                     </c:forEach>
@@ -355,30 +335,41 @@
     </section>
 	    <!-- /.content -->
   	</div>
-  	<script>
-  	$(document).ready(function(){
-  	    $(document).ajaxSuccess(function(){
-  	        alert("AJAX request successfully completed");
-  	    });
-  	    $("button").click(function(){
-  	        $("div").load("demo_ajax_load.txt");
-  	    });
-  	});
-
-	  $(function () {
-	    $("#example1").DataTable();
-	    $('#example2').DataTable({
-	      "paging": true,
-	      "lengthChange": false,
-	      "searching": false,
-	      "ordering": true,
-	      "info": true,
-	      "autoWidth": false
-	    });
-	  });
-	</script>
+  	
     	<jsp:include page="_shareLayout/_footer.jsp"></jsp:include>
     </div>
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
+	<script>
+  	$(document).ready(function(){
+  	   
+  	  $(function () {
+  	    $("#example1").DataTable();
+  	    $('#example2').DataTable({
+  	      "paging": true,
+  	      "lengthChange": false,
+  	      "searching": false,
+  	      "ordering": true,
+  	      "info": true,
+  	      "autoWidth": false
+  	    });
+  	});
+  	  $("#oldPassWord").keyup(function(){
+  		$.ajax({
+			url:"/Club-IVS/member/checkPassWord",
+			type:"POST",
+			data:{
+				password:$("#oldPassWord").val()
+			},
+			success:function(data){				
+				if(data.status==200){
+					console.log(data)
+				}else{
+					$("errorGetRole").append("Xảy ra lỗi khi lấy dữ liệu!");
+				}
+			}
+		})
+	    });
+  	});
+	</script>
 	</body>
 </html>

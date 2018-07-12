@@ -24,6 +24,11 @@ public class DateUtils {
         cal.setTime(date);        
 		return cal.get(Calendar.WEEK_OF_YEAR);
 	}
+	public static int getCurrentWeekend() {
+		Calendar cal = Calendar.getInstance();
+		return cal.get(Calendar.WEEK_OF_YEAR);
+		
+	}
 	public static void main(String []args) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String dateInString = "14-6-2018";

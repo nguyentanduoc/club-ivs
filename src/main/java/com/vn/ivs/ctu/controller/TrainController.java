@@ -17,18 +17,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vn.ivs.ctu.entity.Attendance;
 import com.vn.ivs.ctu.entity.AttendanceID;
+import com.vn.ivs.ctu.entity.Branch;
 import com.vn.ivs.ctu.entity.Club;
 import com.vn.ivs.ctu.entity.DateOfWeek;
 import com.vn.ivs.ctu.entity.JoinClub;
 import com.vn.ivs.ctu.entity.Schedule;
 import com.vn.ivs.ctu.entity.Train;
 import com.vn.ivs.ctu.service.AttendanceService;
+import com.vn.ivs.ctu.service.BranchService;
 import com.vn.ivs.ctu.service.ClubService;
 import com.vn.ivs.ctu.service.DowService;
 import com.vn.ivs.ctu.service.JoinClubService;
 import com.vn.ivs.ctu.service.ScheduleService;
 import com.vn.ivs.ctu.service.TrainService;
 import com.vn.ivs.ctu.utils.DateUtils;
+import com.vn.ivs.ctu.utils.SecurityUtils;
 
 @Component
 @Controller
@@ -41,6 +44,7 @@ public class TrainController {
 	@Autowired JoinClubService joinClubService;
 	@Autowired AttendanceService attendanceService;
 	@Autowired ClubService clubService;
+	@Autowired BranchService branchService;
 	
 	@GetMapping(path = "/index")
 	public String Index(ModelMap modelMap,HttpSession session) {
@@ -121,5 +125,14 @@ public class TrainController {
 			modelMap.put("message", "bạn không có quyền truy cập!");
 		}
 		return "trainauto";
+	}
+	@GetMapping(path = "/getAllTrain")
+	public String getAllTrain(ModelMap modelMap, HttpSession session) {
+		modelMap.put("action1", "getAllTrain");
+		modelMap.put("title", "Tất cả lịch CLB");
+		long idLeader = SecurityUtils.getMyUserDetail().getIdMember();
+		Branch branch = branchService.getBranchByMember(idLeader);
+		modelMap.put("listTrainBranch", trainService.getAllTrainBranch(branch.getIdBranch()));
+		return "scheduleTotalBranch";
 	}
 }

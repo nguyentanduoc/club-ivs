@@ -154,6 +154,7 @@
 				</li><!-- ./menu score -->
 				</sec:authorize>
 				<!-- menu profile -->
+				<sec:authorize access="hasAuthority('MEMBER')">
 				<li class="nav-item has-treeview">
 					<a href="<c:url value="/member/profile"/>" class="nav-link">
 					<i class="fa fa-user" aria-hidden="true"></i>
@@ -161,6 +162,17 @@
 						<p>Trang cá nhân</p>
 					</a>					
 				</li><!-- ./menu profile -->
+				</sec:authorize>
+				<!-- menu profile -->
+				<sec:authorize access="hasAuthority('LEADER')">
+				<li class="nav-item has-treeview">
+					<a href="<c:url value="/train/getAllTrain"/>" class="nav-link ${action1 eq  'getAllTrain' ? 'active' : ''}">
+					<i class="fa fa-user" aria-hidden="true"></i>
+						<!-- <i class="nav-icon fa fa-edit"></i> -->
+						<p>Tất cả lịch tuần</p>
+					</a>					
+				</li><!-- ./menu profile -->
+				</sec:authorize>
 				<sec:authorize access="hasAuthority('ADMIN')">
 				<!-- menu date of week -->
 				<li class="nav-item has-treeview">

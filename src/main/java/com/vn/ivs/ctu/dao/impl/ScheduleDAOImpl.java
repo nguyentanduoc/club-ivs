@@ -33,7 +33,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		return schedule.getIdSchedule();
 	}
 
-	public boolean deleteSchedule(int idSchedule) {
+	public boolean deleteSchedule(long idSchedule) {
 		try {
 			Schedule loadSchedule = currentSession().load(Schedule.class,idSchedule);
 			currentSession().delete(loadSchedule);
@@ -73,7 +73,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			return null;
 		}
 	}
-	public Schedule getScheduleById(int id) {
+	public Schedule getScheduleById(long id) {
 		try {
 		return currentSession().load(Schedule.class,id);
 		}catch (Exception ex) {

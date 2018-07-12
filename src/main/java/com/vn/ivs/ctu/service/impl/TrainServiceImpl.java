@@ -87,4 +87,9 @@ public class TrainServiceImpl implements TrainService {
 	public List<Train> getTrainBySchedule(long idSchedule) {
 		return trainDAO.getTrainBySchedule(idSchedule);
 	}
+
+	@Override
+	public List<Train> getAllTrainBranch(int idBranch) {
+		return trainDAO.getAllTrainBranch(idBranch);
+	}
 }
