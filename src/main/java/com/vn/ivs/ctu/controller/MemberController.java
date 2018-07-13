@@ -311,15 +311,6 @@ public class MemberController {
 		return map;
 	}
 
-	/*
-	 * @PostMapping(path="searchMember")
-	 * 
-	 * @ResponseBody public Map<String,Object> searchMember(String txtSearch){
-	 * Map<String,Object> map = new HashMap<>(); String[] arraySearch =
-	 * txtSearch.split(" ");
-	 * 
-	 * return map; }
-	 */
 	@PostMapping("updateInfo")
 	public String updateInfo(@ModelAttribute(name = "member") Member member) {
 		Member member2 = memberService.getMemberById(SecurityUtils.getMyUserDetail().getIdMember());
@@ -349,11 +340,8 @@ public class MemberController {
 	public Map<String, Object> checkPassWord(String password) {
 		Map<String, Object> map = new HashMap<>();
 		Member member = memberService.getMemberById(SecurityUtils.getMyUserDetail().getIdMember());
-		if (member != null) {
-			String pass = PasswordEncoder.BCryptPassdEncoder(password);
-
-			System.out.println(pass);
-			if (PasswordEncoder.matches(pass, member.getPassWordMember())) {
+		if (member != null) {			
+			if (PasswordEncoder.matches(password, member.getPassWordMember())) {
 				map.put("status", 200);
 				map.put("matches", true);
 			} else {

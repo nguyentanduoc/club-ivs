@@ -30,8 +30,6 @@
 <!-- bootstrap wysihtml5 - text editor -->
 <link rel="stylesheet" href="<c:url value="/resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>">
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/dist/img/favicon.ico" />
-<!-- Google Font: Source Sans Pro -->
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}" /> 

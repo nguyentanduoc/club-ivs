@@ -15,8 +15,7 @@ public class PasswordEncoder {
 		return encoder.encode("abc123");
 	}
 	public static boolean matches(String pass1, String pass2) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();		
 		if (passwordEncoder.matches(pass1, pass2)) {
 		    return true;
 		} else {
@@ -26,6 +25,6 @@ public class PasswordEncoder {
 	public static void main(String[] args ) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String result = encoder.encode("123");
-		System.out.println(result);
+		System.out.println(encoder.matches("123",result));
 	}
 }

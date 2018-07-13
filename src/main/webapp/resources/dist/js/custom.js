@@ -262,7 +262,6 @@ $(document).ready(function(){
 				}else{
 					
 				}
-				console.log(data);
 			}
 		});		
 	});
@@ -288,7 +287,6 @@ function myFunction(idMember, idTrain,attendance) {
 			"attendance":attendance
 		},
 		success:function(data){
-			console.log(data);
 			if(data.status=="200"){	
 				$( "#tick" ).removeAttr( "onclick" );
 				$( "#tick" ).attr( "onclick",  "myFunction("+idMember+","+idTrain+","+attendance+")");

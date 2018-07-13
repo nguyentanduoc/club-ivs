@@ -228,9 +228,10 @@
 													<div class="col-md-5 col-sm-10">
 														<input type="password" class="form-control"
 															name="oldPassWord" id="oldPassWord"
-															placeholder="Nhập mật khẩu cũ"> <span
-															id="errorOldPassWord" class="text-danger"></span>
+															placeholder="Nhập mật khẩu cũ"> 
+														
 													</div>
+													<div class="text-danger" id="errorOldPassWord"></div>
 												</div>
 												<div class="form-group row">
 													<label for="newPassWord"
@@ -238,9 +239,9 @@
 													<div class="col-md-5 col-sm-10">
 														<input type="password" class="form-control"
 															name="newPassWord" id="newPassWord"
-															placeholder="Nhập mật khẩu mới"> <span
-															id="errorNewPassWord" class="text-danger"></span>
+															placeholder="Nhập mật khẩu mới"  readonly="readonly">
 													</div>
+													<div id="errorsNewPass"></div>
 												</div>
 												<div class="form-group row">
 													<label for="reTypePassWord"
@@ -248,14 +249,14 @@
 													<div class="col-md-5 col-sm-10">
 														<input type="password" class="form-control"
 															name="reTypePassWord" id="reTypePassWord"
-															placeholder="Nhập nhập lại mật khẩu"> <span
-															id="errorReTypePassWord" class="text-danger"></span>
+															placeholder="Nhập nhập lại mật khẩu"  readonly="readonly">
 													</div>
+													<div id="errorsRePass"></div>
 												</div>
 												<div class="form-group row">
 													<div class="col-sm-10 col-md-2">
 														<button id="savePassWord" type="submit"
-															class="btn btn-primary">Lưu lại</button>
+															class="btn btn-primary"  disabled="disabled">Lưu lại</button>
 													</div>
 												</div>
 												<input type="hidden" name="${_csrf.parameterName}"
@@ -274,6 +275,16 @@
 											</div>
 											<c:if test="${score.isConfirmDonate()}">
 												<c:choose>
+													<c:when test="${score.isConfirm()==false && score.isDonate()==true}">
+														<div class="alert alert-success alert-dismissible" >
+															<button type="button" class="close" data-dismiss="alert"
+																aria-hidden="true">&times;</button>
+															<h5>
+																<i class="icon fa fa-gift"></i> Thưởng
+															</h5>
+															<h6>${score.getContainDonate()}</h6>															
+														</div>
+													</c:when>
 													<c:when test="${score.isConfirm()==false}">
 														<div class="alert alert-success alert-dismissible" >
 															<button type="button" class="close" data-dismiss="alert"
@@ -374,20 +385,35 @@
 	<jsp:include page="_shareLayout/footer.jsp"></jsp:include>
 	<script>
 	$(document).ready(function () {
-		$("#oldPassWord").keyup(function () {
+		var newPass =  $("#newPassWord");
+		var reType = $("#reTypePassWord");
+		var btnSave = $("#savePassWord");
+		$("#oldPassWord").keyup(function () {			
 			$.ajax({
 				url: "/Club-IVS/member/checkPassWord",
 				type: "POST",
 				data: {
 					password: $("#oldPassWord").val()
 				},
-				success: function (
-					data) {
+				success: function (data) {
+					$("#errorOldPassWord").empty();
+					$("#errorOldPassWord").removeClass("text-danger");
+					$("#errorOldPassWord").removeClass("text-success");
 					if (data.status == 200) {
-						console.log(data)
+						if(data.matches){
+							$("#errorOldPassWord").addClass("text-success");
+							$("#errorOldPassWord").append("Mật khẩu hợp lệ.");
+							newPass.removeAttr("readonly");
+							
+						}else{
+							newPass.attr("readonly",true);
+							$("#errorOldPassWord").addClass("text-danger");
+							$("#errorOldPassWord").append("Mật khẩu không đúng.");
+						}
 					} else {
 						$("#errorGetRole").append("Xảy ra lỗi khi lấy dữ liệu!");
 					}
+					
 				}
 			});
 		});
@@ -410,6 +436,39 @@
 					}
 				}
 			});
+		});
+		newPass.keyup(function(){
+			var message =  $('#errorsNewPass');
+			message.empty();
+			reType.removeAttr("readonly");
+			var length=newPass.val().length;			
+			if ( length < 8 ) {
+			    message.append("Mật khẩu phải từ 8 ký tự <br/>");
+			    message.removeClass("text-success");
+			    message.addClass("text-danger");
+			    reType.attr("readonly",true);
+			} else {
+				 message.append("Mật khẩu hợp lệ <br/>");
+				 message.removeClass("text-danger");
+				 message.addClass("text-success");
+				 reType.removeAttr("readonly");
+			}
+		});
+		reType.keyup(function(){
+			var re = reType.val();
+			var txtnew  = newPass.val();	
+			$("#errorsRePass").empty();
+			if(re==txtnew){
+				$("#errorsRePass").append("Hợp lệ.")
+				$("#errorsRePass").removeClass("text-danger");
+				$("#errorsRePass").addClass("text-success");			
+				$("#savePassWord").attr("disabled",true);
+			}else{
+				$("#errorsRePass").append("Mật khẩu không khớp");
+				$("#errorsRePass").removeClass("text-success");
+				$("#errorsRePass").addClass("text-danger");
+				$("#savePassWord").removeAttr("disabled");
+			}
 		});
 	});
 	</script>
